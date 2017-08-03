@@ -189,6 +189,18 @@ textarea.text-edit {
     overflow: auto;
 }
 
+.article-kind {
+    list-style: none;
+    overflow: hidden;
+}
+
+.article-kind li{
+    list-style: none;
+    float: left;
+    display: block;
+    margin-right: 10px;
+}
+
 .sidebar div {
     background: #ffffff;
 }

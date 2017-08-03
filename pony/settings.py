@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'stride.urls'
+ROOT_URLCONF = 'pony.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stride.wsgi.application'
+WSGI_APPLICATION = 'pony.wsgi.application'
 
 
 # Database
@@ -98,7 +98,7 @@ DATABASES = {
         "HOST": "localhost",
     }
 }
-DATABASE_ROUTERS = ["stride.db_router.DBRouter"]
+DATABASE_ROUTERS = ["pony.db_router.DBRouter"]
 DATABASE_MAPPING = {
     "b_account": "b_account",
     "b_blog": "b_blog",
