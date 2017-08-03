@@ -1,0 +1,255 @@
+@-webkit-keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0,-100%,0);
+                transform: translate3d(0,-100%,0)
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+
+@keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0,-100%,0);
+                -ms-transform: translate3d(0,-100%,0);
+                transform: translate3d(0,-100%,0)
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                -ms-transform: none;
+                transform: none
+            }
+        }
+@-webkit-keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 100%, 0);
+                transform: translate3d(0, 100%, 0)
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+@keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, 100%, 0);
+                -ms-transform: translate3d(0, 100%, 0);
+                transform: translate3d(0, 100%, 0)
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                -ms-transform: none;
+                transform: none
+            }
+        }
+
+
+
+html, body, .swiper-container, .swiper-wrapper, .swiper-slide{
+	width:100%;
+	height:100%;
+}
+
+.swiper-slide {
+    background-position:50% 50%;
+    position:relative;
+}
+
+.slide1 {
+    display: table;
+    background:url(/static/image/about-bg.jpg) no-repeat bottom scroll;
+    background-size: cover;
+}
+
+
+.slide2 {
+    /*363b3e*/
+    background:url(/static/image/second.jpg) center center no-repeat;
+    background-size: cover;
+}
+
+.slide3 {
+    background-image:url(/static/image/3.jpg);
+}
+
+.slide4 {
+    background-image:url(/static/image/4.jpg);
+}
+
+.slide5 {
+    background-image:url(/static/image/5.jpg);
+}
+
+.slide6 {
+    background-image:url(/static/image/6.jpg);
+}
+
+
+.user-info {
+    width: 500px;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.user-info img {
+    border-radius: 50%;
+}
+
+.user-info h3 {
+    margin: 10px 0;
+    font-size: 24px;
+}
+
+.user-info .intro-p {
+    font-size: 20px;
+    color: white;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.engineer-contact a {
+    color: #42dca3;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.engineer-contact a:hover {
+    color: #1d9d6c;
+}
+
+.swiper-pagination {
+	position: fixed;
+    z-index: 100;
+    margin-top: -81.5px;
+    top: 50%;
+	right:17px;
+}
+
+.swiper-pagination-bullet {
+	width:11px;
+	height:11px;
+	border:1px solid #ddd;
+	border-radius:50%;
+	display:block;
+	margin:7px 7px 13px;
+	cursor:pointer;
+}
+
+.swiper-pagination-bullet-active {
+	background:#ddd;
+}
+
+.home-link {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+}
+
+.home-link img {
+    width: 50px;
+    height: 50px;
+}
+
+.logo{
+	position: absolute;
+    left: 60px;
+    top: 60px;
+}
+.fs16{font-size:16px;}
+.fs24{font-size:24px;}
+.pt5{padding-top:5px;}
+.pt10{padding-top:10px;}
+.mt30{margin-top:30px;}
+.mb20 {margin-bottom: 20px;}
+.mt20 {margin-top: 20px;}
+.mt15{margin-top:15px;}
+.mt40{margin-top:40px;}
+.mr35{margin-right:35px;}
+.ml10 {margin-left: 10px;}
+.line {width: 40px;height: 1px;background: #fff;}
+.dividing-line {display: inline-block;vertical-align: middle;border-left: 1px solid #fff;height: 15px;margin: 0 8px;}
+.white{color:#fff;}
+.btn{
+	display: inline-block;
+    vertical-align: middle;
+    width: 240px;
+    height: 60px;
+    line-height: 60px;
+    background: #f8ac00;
+    border-radius: 2px;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+	transition: all 1s;
+    -webkit-transition: all 1s;
+}
+.btn:hover{
+	 background: #ffc555;
+}
+.slide1 p{
+	color: #666;
+}
+.ani{
+	opacity:0;
+}
+.ani-slide .ani1-1{
+	opacity:1;
+	-webkit-animation: fadeInDown 0.5s both;
+    animation: fadeInDown 0.5s both;
+}
+.ani-slide .ani1-2{
+	opacity:1;
+    -webkit-animation: fadeInDown 1s 0.5s both;
+    animation: fadeInDown 1s 0.5s both;
+}
+.ani-slide .ani1-3{
+	opacity:1;
+    -webkit-animation: fadeInDown 1s 1s both;
+    animation: fadeInDown 1s 1s both;
+}
+.ani-slide .ani2-1,.ani-slide .ani3-1,.ani-slide .ani4-1,.ani-slide .ani5-1{
+    opacity: 1;
+    -webkit-animation: fadeInUp 1s both;
+    animation: fadeInUp 1s both;
+}
+.ani-slide .ani2-2,.ani-slide .ani3-2,.ani-slide .ani4-2,.ani-slide .ani5-2{
+    opacity: 1;
+    -webkit-animation: fadeInUp 1s 0.5s both;
+    animation: fadeInUp 1s 0.5s both;
+}
+.ani-slide .ani5-1-2{
+	opacity: 1;
+	-webkit-animation: fadeInUp 1s 0.3s both;
+    animation: fadeInUp 1s 0.3s both;
+}
+.ani-slide .ani6-1 {
+    opacity: 1;
+    -webkit-animation: fadeInDown 0.5s both;
+    animation: fadeInDown 0.5s both;
+}
+.ani-slide .ani6-2 {
+    opacity: 1;
+    -webkit-animation: fadeInDown 1s 0.5s both;
+    animation: fadeInDown 1s 0.5s both;
+}
+.ani-slide .ani6-3 {
+    opacity: 1;
+    -webkit-animation: fadeInDown 1s 1s both;
+    animation: fadeInDown 1s 1s both;
+}

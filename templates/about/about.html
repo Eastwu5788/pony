@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>关于我</title>
+
+    <!-- 网络库链接(生产环境下使用) -->
+    <!--
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    -->
+    <!-- 本地库链接 -->
+    <!-- vendor/bootstrap/css/bootstrap.min.css -->
+    <!-- 公共（仅本地） -->
+    <link rel="stylesheet" href="/static/vendor/swiper/css/swiper.min.css">
+    <link rel="stylesheet" href="/static/vendor/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/common/common.css">
+    <link rel="stylesheet" href="/static/css/about.css">
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide slide1">
+                <div class="user-info">
+                    <img src="/static/image/avatar.png" class="avatar"/>
+                    <h3>吴&nbsp;&nbsp;东</h3>
+                    <p class="intro-p">软件开发工程师</p>
+                    <div class="engineer-contact">
+                        <a href="#">
+                            <i class="fa fa-github fa-fw fa-2x"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-weibo fa-fw fa-2x"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-twitter fa-fw fa-2x"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-facebook fa-fw fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide slide2">
+
+            </div>
+            <div class="swiper-slide slide3">
+
+            </div>
+            <div class="swiper-slide slide4">
+
+            </div>
+            <div class="swiper-slide slide5">
+
+            </div>
+            <div class="swiper-slide slide6">
+
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <a href="/" class="home-link">
+        <img src="/static/image/home_href.png"/>
+    </a>
+
+
+    <!-- 网络Javascript(生产环境使用) -->
+    <!--
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    -->
+    <!-- 本地Javascript(开发环境使用) -->
+    <script src="/static/vendor/jQuery/jquery-3.2.1.min.js"></script>
+    <!-- 公共（仅本地）Javascript-->
+    <script src="/static/vendor/swiper/js/swiper.jquery.min.js"></script>
+    <script src="/static/js/about.js"></script>
+</body>
+</html>

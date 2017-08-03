@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    <section class="main-section">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content">
+                        <article class="post">
+                            <div class="post-head">
+                                <h1 class="post-title">
+                                    <a href="#">{{ data.article.title }}</a>
+                                </h1>
+                                <div class="post-meta">
+                                    <span class="post-author">
+                                        作者:<a href="#">吴东</a>
+                                        ·{{ data.article.created_time }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                               {{ data.article.content|safe }}
+                            </div>
+                        </article>
+                </main>
+
+
+                <aside class="col-md-4 sidebar">
+                    <div class="auth">
+                        <h4 class="tittle">
+                            账号登录
+                        </h4>
+
+                        <div class="login-info">
+                            <form class="login-form" action="/auth/login" method="post">
+                                <input type="email" class="user-name" placeholder="输入邮箱" name="email"/>
+                                <input type="password" class="password" placeholder="输入密码" name="password"/>
+                                <input type="submit" value="登&nbsp;&nbsp;录">
+                            </form>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div class="third-login-content">
+                            <span>第三方账号登录</span>
+                            <a href="#" class="icon login-qq"></a>
+                            <a href="#" class="icon login-wechat"></a>
+                            <a href="#" class="icon login-sina"></a>
+                            <a href="#" class="icon login-github"></a>
+                            <div class="register">
+                                还没有账号? <a href="#">立即注册</a>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+{% endblock %}

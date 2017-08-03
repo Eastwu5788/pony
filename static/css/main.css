@@ -1,0 +1,318 @@
+body {
+    background: #ebebeb;
+}
+
+/* 头部图片 */
+.header-container {
+    display: block;
+    background: url("http://static.ghostchina.com/image/6/d1/fcb3879e14429d75833a461572e64.jpg") no-repeat center 20%;
+    background-size: cover;
+    width: 100%;
+    height: 222px;
+}
+
+.main-navigation {
+    text-align: center;
+    background: #ffffff;
+    border-bottom: 2px solid #e1e1e1;
+}
+
+.collapse-navbar-collapse {
+    text-align: center;
+}
+
+.menu {
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    color: #505050;
+}
+
+.menu li {
+    list-style: none;
+    position: relative;
+    display: inline-block;
+}
+
+.menu li a {
+    display: block;
+    line-height: 4em;
+    padding: 0 21px;
+    outline: none;
+    color: #505050;
+    text-decoration: none;
+}
+
+.menu li a:hover {
+    color: #563d7c;
+}
+
+li.nav-current {
+    margin-top: -2px;
+    margin-bottom: -2px;
+    border-bottom: 2px solid #563d7c;
+}
+
+li.nav-current a {
+    color: #563d7c;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 主体内容 */
+.main-section {
+    margin: 20px 0;
+}
+
+.main-section article {
+    padding: 35px 35px;
+    background: #ffffff;
+}
+
+.post-title {
+    margin: 0;
+    text-align: center;
+}
+
+.post-title a {
+    color: #303030;
+    text-decoration: none;
+}
+
+.post-meta {
+    text-align: center;
+    margin: 14px 0 0;
+    color: #959595;
+}
+
+.post-meta a {
+    color: #563d7c;
+    text-decoration: none;
+}
+
+.post-cover {
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.post-cover img {
+    max-height: 500px;
+}
+
+.post-content {
+    margin: 30px 0;
+    color: #444443;
+    font: 400 18px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+}
+
+.post-content img {
+    max-width: 90%;
+}
+
+.post-content h1 {
+    font-size: 26px;
+    margin: 0 0 15px;
+    font-weight: 700;
+    color: #2f2f2f;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+}
+
+.post-content p {
+    color: #2f2f2f;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.post-content blockquote p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.post-content pre {
+    margin-bottom: 20px;
+    padding: 15px;
+    font-size: 13px;
+    word-wrap: normal;
+    white-space: pre;
+    overflow: auto;
+    border-radius: 0;
+    background: #f6f6f6;
+    color: #657b83;
+    font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+}
+
+
+
+.post-link a {
+    color: #563d7c;
+}
+
+
+/* 站点管理 */
+main.manage .section{
+    margin-bottom: 30px;
+    min-height: 100px;
+    padding: 35px 35px;
+    background: #ffffff;
+}
+
+
+/* 编辑文章 */
+.article-edit .post-title input {
+    width: 100%;
+    border: none;
+    font-size: 30px;
+    line-height: 30px;
+    border-radius: 0;
+    text-overflow: ellipsis;
+    box-shadow: none;
+    outline: none;
+}
+
+textarea.text-edit {
+    width: 100%;
+    height: 500px;
+    margin-top: 30px;
+
+    padding: 0;
+    resize: none;
+    color: #2f2f2f;
+    font-size: 18px;
+    line-height: 30px;
+
+    /*border: none;*/
+    outline: none;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.sidebar div {
+    background: #ffffff;
+}
+
+.sidebar .auth {
+    padding: 21px 30px;
+    margin-bottom: 30px;
+}
+
+.auth h4 {
+    margin-top: 0;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 21px;
+    position: relative;
+}
+
+.login-form input {
+    padding: 12px;
+    width: 100%;
+    border: 1px solid #d5dce5;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.login-form input:nth-child(3) {
+    font-size: 16px;
+    background: #563d7c;
+    border: none;
+    color: #ffffff;
+}
+
+.auth .line {
+    background: #eee;
+    height: 1px;
+    margin-top: 20px;
+}
+
+.auth .third-login-content {
+    padding: 20px 0 5px 0;
+}
+
+.third-login-content span:nth-child(1) {
+    color: #666;
+    display: block;
+    margin-bottom: 11px;
+}
+
+.third-login-content .icon {
+    background: url("/static/image/login-third-party-new.png") no-repeat;
+    width: 32px;
+    height: 32px;
+    margin-right: 5px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.third-login-content .icon:nth-child(2) {
+    background-position: 0 0;
+}
+
+.third-login-content .icon:nth-child(3) {
+    background-position: -37px 0;
+}
+
+.third-login-content .icon:nth-child(4) {
+    background-position: -74px 0;
+}
+
+.third-login-content .icon:nth-child(5) {
+    background-position: -187px 0;
+}
+
+.register {
+    color: #666;
+    margin-top: 20px;
+}
+
+.register a {
+    color: #563d7c;
+    text-decoration: none;
+}
+
+
+
+
+
+/* 关于我们 */
+.about .about_col {
+    width: 100px;
+}
+
+.about div:nth-child(1) .about_col {
+    float: left;
+    position: relative;
+}
+
+.about div:nth-child(2) .about_col {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.about div:nth-child(3) .about_col {
+    float: right;
+    position: relative;
+}
+
+.footer {
+    background: #ffffff;
+}
+
+.footer-top h4 {
+    color: #563d7c;
+}
+
+footer a {
+    color: #777;
+}
+
+footer a:hover {
+    color: #777;
+}
+
+.footer-bottom {
+    color: #777;
+}

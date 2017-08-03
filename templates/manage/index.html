@@ -1,0 +1,98 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    站点管理
+{% endblock %}
+
+
+{% block content %}
+
+    <section class="main-section">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-12 manage">
+                    <div class="section manage-recommend">
+                        <header class="post-title">
+                            <h1>首页推荐管理</h1>
+                        </header>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>标题</th>
+                                    <th>创建时间</th>
+                                    <th>管理</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for article in data.home_recommend %}
+                                    <tr>
+                                        <td>
+                                            <a href="/article/detail/{{ article.id }}">{{ article.id }}</a>
+                                        </td>
+                                        <td>
+                                            {{ article.article_info.title }}
+                                        </td>
+                                        <td>
+                                            {{ article.article_info.created_time }}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-default cancel-recommend" onclick="cancel_recommend({{ article.id }})">取消推荐</button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="section manage-article">
+                        <header class="post-title">
+                            <h1>文章列表管理</h1>
+                        </header>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>标题</th>
+                                    <th>创建时间</th>
+                                    <th>推荐管理</th>
+                                    <th>管理</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for article in data.blog_list %}
+                                    <tr>
+                                        <td>
+                                            <a href="/article/detail/{{ article.id }}">{{ article.id }}</a>
+                                        </td>
+                                        <td>
+                                            {{ article.title }}
+                                        </td>
+                                        <td>
+                                            {{ article.created_time }}
+                                        </td>
+                                        <td>
+                                            {% if article.recommend == 1 %}
+                                                已推荐<button class="btn btn-default">取消推荐</button>
+                                            {% else %}
+                                                未推荐<button class="btn btn-default">推荐到首页</button>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                             <button class="btn btn-danger" onclick="">删除文章</button>
+                                             <button class="btn btn-default" onclick="edit_article({{ article.id }})">编辑文章</button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="control-bar">
+                            <a href="#" class="btn btn-default" onclick="edit_article(0)">添加新文章</a>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
