@@ -2,7 +2,7 @@ import hashlib
 import time
 
 from django.shortcuts import render
-from stride.settings import *
+from pony.settings import *
 
 from PIL import Image
 
