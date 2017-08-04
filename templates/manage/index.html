@@ -4,6 +4,9 @@
     站点管理
 {% endblock %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="/static/vendor/toastr/css/toastr.min.css">
+{% endblock %}
 
 {% block content %}
 
@@ -28,7 +31,7 @@
                                 {% for article in data.home_recommend %}
                                     <tr>
                                         <td>
-                                            <a href="/article/detail/{{ article.id }}">{{ article.id }}</a>
+                                            <a href="/article/detail/{{ article.id }}">{{ article.article_info.id }}</a>
                                         </td>
                                         <td>
                                             {{ article.article_info.title }}
@@ -37,7 +40,7 @@
                                             {{ article.article_info.created_time }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-default cancel-recommend" onclick="cancel_recommend({{ article.id }})">取消推荐</button>
+                                            <button class="btn btn-default cancel-recommend" onclick="cancel_recommend({{ article.article_info.id }})">取消推荐</button>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -83,7 +86,7 @@
                                         </td>
                                         <td>
                                             {% if article.recommend == 1 %}
-                                                已推荐<a class="btn btn-default">取消推荐</a>
+                                                已推荐<a onclick="cancel_recommend({{ article.id }})" class="btn btn-default">取消推荐</a>
                                             {% else %}
                                                 未推荐<a href="/manage/recommend?article_id={{ article.id }}" class="btn btn-default">推荐到首页</a>
                                             {% endif %}
@@ -106,4 +109,33 @@
         </div>
     </section>
 
+{% endblock %}
+
+{% block javascript %}
+    <script src="/static/vendor/toastr/js/toastr.min.js"></script>
+    <script>
+        function cancel_recommend(article_id) {
+            console.log(article_id);
+            $.ajax({
+                type: "POST",
+                url: "/manage/recommend/remove",
+                data: {
+                    article_id: article_id,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function (result) {
+                    result = JSON.parse(result);
+                    if (result.code == 200) {
+                        location.reload();
+                    }else{
+                        toastr.error("请求错误", result.message);
+                    }
+                },
+                error: function (error) {
+                    console.log(error.responseText)
+                }
+
+            });
+        }
+    </script>
 {% endblock %}
