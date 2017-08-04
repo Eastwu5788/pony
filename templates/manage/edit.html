@@ -34,7 +34,7 @@
                 </li>
                 {% if data %}
                     <li>
-                        <a class="publish_markdown">
+                        <a onclick="update_article_status()" class="publish_markdown">
                             {% if data.status == 2 %}
                                 <i class="fa fa-mail-forward"></i>
                                 发布文章
@@ -85,6 +85,37 @@
 {% block javascript %}
     <script src="/static/vendor/toastr/js/toastr.min.js"></script>
     <script>
+
+        /* 更新文章状态 1、发布文章 2、取消发布 */
+        function update_article_status() {
+
+            var status = 1;
+            {% if data.status == 1 %}
+                status = 2;
+            {% endif %}
+
+            $.ajax({
+                type: "POST",
+                url: "/article/status",
+                data: {
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    article_id: {{ data.id }},
+                    status: status
+                },
+                success: function (result) {
+                    result = JSON.parse(result);
+                    if (result.code == 200) {
+                        toastr.success("成功",status == 2 ? "取消发布成功" : "发布文章成功" );
+                        location.reload();
+                    }else{
+                        toastr.error("请求失败", result.message);
+                    }
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
 
         function save_article() {
             var article_id = 0;

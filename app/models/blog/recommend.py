@@ -25,7 +25,7 @@ class HomeRecommend(models.Model):
     @staticmethod
     def query_recommend_by_share_id(share_id=0):
         try:
-            recom = HomeRecommend.objects.get(share_id=share_id)
+            recom = HomeRecommend.objects.filter(status=1).get(share_id=share_id)
             return HomeRecommend.format_recommend(recom, False)
         except:
             return None
