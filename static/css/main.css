@@ -105,11 +105,11 @@ li.nav-current a {
     font: 400 18px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
 }
 
-.post-content img {
-    max-width: 90%;
+.post-content img, .markdown-section img {
+    max-width: 100%;
 }
 
-.post-content h1 {
+.post-content h1, .markdown-section h1 {
     font-size: 26px;
     margin: 0 0 15px;
     font-weight: 700;
@@ -118,20 +118,20 @@ li.nav-current a {
     text-rendering: optimizeLegibility;
 }
 
-.post-content p {
+.post-content p, .markdown-section p {
     color: #2f2f2f;
     font-size: 16px;
     font-weight: 400;
     line-height: 1.7;
 }
 
-.post-content blockquote p {
+.post-content blockquote p, .markdown-section blockquote p {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.7;
 }
 
-.post-content pre {
+.post-content pre, .markdown-section pre {
     margin-bottom: 20px;
     padding: 15px;
     font-size: 13px;
@@ -152,15 +152,102 @@ li.nav-current a {
 
 
 /* 站点管理 */
-main.manage .section{
-    margin-bottom: 30px;
-    min-height: 100px;
+section.manage-section {
+    margin: 0;
+}
+
+main.manage .section {
     padding: 35px 35px;
     background: #ffffff;
+    margin-bottom: 30px;
+}
+
+
+/* ========  首页内容推荐  ========= */
+article .recommend-cover {
+    width: 100%;
+    height: 300px;
+    background: #f5f5f5;
+}
+
+
+article .recommend-intro {
+    width: 100%;
+    height: 200px;
+    border: none;
 }
 
 
 /* 编辑文章 */
+.edit-section {
+    margin: 0;
+    width: 50%;
+    float: left;
+    position: relative;
+    border-right: 1px solid #d9d9d9;
+}
+
+/* 编辑文章 工具栏 */
+.manage-toobar {
+    width: 100%;
+    height: 40px;
+    background: #dedede;
+    color: #555555;
+    margin: 0;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 0;
+}
+
+.manage-toobar li {
+    list-style: none;
+    line-height: 40px;
+}
+
+.manage-toobar li:nth-child(1) {
+    float: left;
+}
+
+.manage-toobar li:nth-child(2) {
+    float: right;
+}
+
+.manage-toobar li:nth-child(3) {
+    float: right;
+}
+
+.manage-toobar li a {
+    color: #555555;
+    padding: 12px 14px;
+    text-decoration: none;
+}
+
+.manage-toobar li a:hover {
+    color: #ffffff;
+    background: #555555;
+}
+
+
+.article-edit.section {
+    padding-top: 20px;
+    background: #ffffff;
+}
+
+.markdown-section {
+    width: 50%;
+    background-color: #fcfaf2;
+    padding: 40px 40px 0 40px;
+    float: right;
+    position: relative;
+    margin: 0;
+    overflow-y: auto;
+}
+
+.markdown-section h1 {
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+
 .article-edit .post-title input {
     width: 100%;
     border: none;
@@ -170,34 +257,33 @@ main.manage .section{
     text-overflow: ellipsis;
     box-shadow: none;
     outline: none;
+    padding: 0 30px 10px 40px;
 }
 
 textarea.text-edit {
     width: 100%;
     height: 500px;
-    margin-top: 30px;
 
-    padding: 0;
+    padding: 40px 40px 0;
     resize: none;
     color: #2f2f2f;
     font-size: 18px;
     line-height: 30px;
 
-    /*border: none;*/
+    border: none;
     outline: none;
     box-sizing: border-box;
     overflow: auto;
 }
 
 .article-kind {
-    list-style: none;
+    padding: 0;
     overflow: hidden;
 }
 
-.article-kind li{
-    list-style: none;
+.article-kind li {
     float: left;
-    display: block;
+    list-style: none;
     margin-right: 10px;
 }
 
@@ -284,8 +370,163 @@ textarea.text-edit {
     text-decoration: none;
 }
 
+/* ======  授权(Auth)   =======*/
+
+.auth-main {
+    width: 400px;
+    margin: 60px auto 0 auto;
+    padding: 50px 50px 30px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+}
+
+.auth-title {
+    font-weight: 400;
+    color: #969696;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+
+.auth-title a {
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.auth-title b {
+    padding: 10px;
+    font-weight: 700;
+}
+
+.auth-title .normal-title {
+    color: #969696;
+}
+
+.auth-title .normal-title:hover {
+    border-bottom: 2px solid #563d7c;
+}
+
+.auth-title .just-title {
+    font-weight: 700;
+    color: #563d7c;
+    border-bottom: 2px solid #563d7c;
+}
 
 
+
+
+
+/* 登录 */
+
+/* 注册 */
+.register-form div, .login-form div {
+    position: relative;
+}
+
+.register-form div input, .login-form div input {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 0;
+    padding: 4px 12px 4px 35px;
+    border: 1px solid #c8c8c8;
+    background-color: hsla(0, 0%, 71%, .1);
+    vertical-align: middle;
+    border-bottom: none;
+    outline: none;
+}
+
+.register-form i, .login-form i {
+    position: absolute;
+    top: 16px;
+    left: 10px;
+    font-size: 18px;
+    color: #969696;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.input-nickname input, .login-form input {
+    border-radius: 4px 4px 0 0;
+}
+
+
+.register-form div.input-pass input, .login-form div.input-pass input {
+    border-bottom: 1px solid #c8c8c8;
+    border-radius: 0 0 4px 4px;
+}
+
+.register-btn,.login-form .login-btn {
+    width: 100%;
+    padding: 9px 18px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    color: #ffffff;
+    background-color: #563d7c;
+    cursor: pointer;
+    outline: none;
+    display: block;
+    clear: both;
+    margin-top: 20px;
+}
+
+.register-legal {
+    margin: 10px 0;
+    padding: 0;
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+    color: #969696;
+}
+
+.third-register {
+    margin-top: 30px;
+}
+
+.third-register h6 {
+    position: relative;
+    margin: 0 0 20px;
+    font-size: 12px;
+    color: #b5b5b5;
+}
+
+.third-register h6:before {
+    box-sizing: border-box;
+    left: 30px;
+}
+
+.third-register h6:before, .third-register h6:after {
+    content: "";
+    border-top: 1px solid #b5b5b5;
+    display: block;
+    position: absolute;
+    width: 60px;
+    top: 5px;
+}
+
+.third-register h6:after {
+    box-sizing: border-box;
+    right: 30px;
+}
+
+
+.third-register i {
+    background-color: #563d7c;
+    color: white;
+    font-size: 25px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 5px;
+}
+
+/* ====== 授权部分结束 =======*/
 
 
 /* 关于我们 */

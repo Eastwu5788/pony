@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "auth/auth.html" %}
 
-</body>
-</html>
+{% block auth-content %}
+    <h4 class="auth-title">
+        <div class="title-container">
+            <a href="/auth/login/" class="normal-title">登录</a>
+            <b>·</b>
+            <a class="just-title">注册</a>
+        </div>
+    </h4>
+    <form action="/auth/register" method="post" class="register-form">
+        {% csrf_token %}
+        <div class="input-nickname">
+            <i class="fa fa-user"></i>
+            <input type="text" placeholder="你的昵称" name="nick_name"/>
+        </div>
+
+        <div class="input-mail">
+            <i class="fa fa-mail-forward"></i>
+            <input type="text" placeholder="邮箱" name="email" data-content="邮箱不合法"/>
+        </div>
+
+        <div class="input-pass">
+            <i class="fa fa-lock"></i>
+            <input type="text" placeholder="设置密码" name="pass_word"/>
+        </div>
+        <input type="submit" class="register-btn" value="注册"/>
+    </form>
+    <p class="register-legal">
+        点击 “注册” 即表示您同意并愿意遵守本站
+        <br/>
+        <a href="#">用户协议</a>
+        和
+        <a href="#">隐私政策</a>
+    </p>
+    <div class="third-register">
+        <h6>社交账号直接注册</h6>
+        <a href="#"><i class="fa fa-qq"></i></a>
+        <a href="#"><i class="fa fa-wechat"></i></a>
+        <a href="#"><i class="fa fa-weibo"></i></a>
+        <a href="#"><i class="fa fa-github"></i></a>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        $(".input-mail input").blur(function (){
+            console.log("结束编辑");
+            var input = $(".input-mail input");
+            var email = input.val();
+            input.attr("data-container", "body");
+            if (!IsEmail(email)) {
+                input.popover('show');
+            }else{
+                input.popover('hide')
+            }
+        });
+
+
+    </script>
+{% endblock %}

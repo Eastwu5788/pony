@@ -19,14 +19,17 @@
     <!-- 公共（仅本地） -->
     <link rel="stylesheet" href="/static/vendor/swiper/css/swiper.min.css">
     <link rel="stylesheet" href="/static/css/common/common.css">
+    <link rel="stylesheet" href="/static/vendor/awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/main.css">
 
     <!--[if lt IE 9]>
         <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
     {% block stylesheet %}
     {% endblock %}
+
 </head>
 <body>
 
@@ -45,13 +48,12 @@
                         <div class="navbar-header">
                             <span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu">
                                 <span class="sr-only">Toggle navigation</span>
-                                <i class="fa fa-bars"></i>
                             </span>
                         </div>
                         <div class="collapse-navbar-collapse">
                             <ul class="menu">
                                 <li role="presentation">
-                                    <a href="/">首页</a>
+                                    <a href="/index/">首页</a>
                                 </li>
                                 <li role="presentation">
                                     <a href="/skill/">技术</a>
@@ -144,7 +146,9 @@
             $(".menu li:nth-child({{ data.section_info }})").addClass("nav-current");
         {% endif %}
     </script>
+
     {% block javascript %}
     {% endblock %}
+
 </body>
 </html>

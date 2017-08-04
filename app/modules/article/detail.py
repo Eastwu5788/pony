@@ -3,11 +3,11 @@ import mistune
 from django.shortcuts import render
 
 from app.models.blog.article import BlogArticle
-from app.modules.common.struct import BASE_RESULT
+from app.modules.common.struct import base_result
 
 
 def article_detail_handler(request, article_id):
-    result = BASE_RESULT
+    result = base_result()
     data = dict()
 
     renderer = mistune.Renderer(hard_wrap=True, parse_inline_html=True)

@@ -54,7 +54,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>标题</th>
-                                    <th>创建时间</th>
+                                    <th>发布状态</th>
+                                    <th>作者</th>
                                     <th>推荐管理</th>
                                     <th>管理</th>
                                 </tr>
@@ -69,25 +70,35 @@
                                             {{ article.title }}
                                         </td>
                                         <td>
-                                            {{ article.created_time }}
+                                            {% if article.status == 1 %}
+                                                公开
+                                            {% elif article.status == 2 %}
+                                                编辑中
+                                            {% else %}
+                                                其它
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ article.user_info.nick_name }}
                                         </td>
                                         <td>
                                             {% if article.recommend == 1 %}
-                                                已推荐<button class="btn btn-default">取消推荐</button>
+                                                已推荐<a class="btn btn-default">取消推荐</a>
                                             {% else %}
-                                                未推荐<button class="btn btn-default">推荐到首页</button>
+                                                未推荐<a href="/manage/recommend?article_id={{ article.id }}" class="btn btn-default">推荐到首页</a>
                                             {% endif %}
                                         </td>
                                         <td>
                                              <button class="btn btn-danger" onclick="">删除文章</button>
-                                             <button class="btn btn-default" onclick="edit_article({{ article.id }})">编辑文章</button>
+                                             <a class="btn btn-default" href="/manage/edit/{{ article.id }}">编辑文章</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        {% include "base/pagination.html" %}
                         <div class="control-bar">
-                            <a href="#" class="btn btn-default" onclick="edit_article(0)">添加新文章</a>
+                            <a href="/manage/edit/0" class="btn btn-default">添加新文章</a>
                         </div>
                     </div>
                 </main>

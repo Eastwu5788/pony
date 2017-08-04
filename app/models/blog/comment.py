@@ -8,8 +8,8 @@ class BlogComment(models.Model):
     reply_id = models.IntegerField()
     content = models.CharField()
     status = models.IntegerField()
-    created_time = models.CharField()
-    updated_time = models.CharField()
+    created_time = models.DateTimeField()
+    updated_time = models.DateTimeField()
 
     class Meta:
         app_label = "b_blog"

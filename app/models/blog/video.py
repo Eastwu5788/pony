@@ -16,8 +16,8 @@ class Video(models.Model):
     hash_key = models.CharField()
     bitrate_mode = models.CharField()
     status = models.IntegerField()
-    created_time = models.CharField()
-    updated_time = models.CharField()
+    created_time = models.DateTimeField()
+    updated_time = models.DateTimeField()
 
     class Meta:
         app_label = "b_blog"

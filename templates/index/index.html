@@ -17,7 +17,7 @@
                                 </h1>
                                 <div class="post-meta">
                                     <span class="post-author">
-                                        作者:<a href="#">吴东</a>
+                                        作者:<a href="#">{{ recommend.article_info.user_info.nick_name }}</a>
                                         ·{{ recommend.article_info.created_time }}
                                     </span>
                                 </div>
@@ -59,7 +59,7 @@
                             <a href="#" class="icon login-sina"></a>
                             <a href="#" class="icon login-github"></a>
                             <div class="register">
-                                还没有账号? <a href="#">立即注册</a>
+                                还没有账号? <a href="/auth/register">立即注册</a>
                             </div>
                         </div>
                     </div>

@@ -48,6 +48,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 自定义授权帮助中间件
+    'app.middleware.auth.AuthMiddleware',
 ]
 
 ROOT_URLCONF = 'pony.urls'
@@ -71,6 +73,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pony.wsgi.application'
 
+# Session
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -78,7 +83,7 @@ WSGI_APPLICATION = 'pony.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "b_account",
+        "NAME": "b_django",
         "USER": "root",
         "PASSWORD": "root",
         "HOST": "localhost",

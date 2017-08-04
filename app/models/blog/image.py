@@ -20,8 +20,11 @@ class Image(models.Model):
 
     @staticmethod
     def query_image_by_id(image_id=0):
-        image = Image.objects.get(id=image_id)
-        return Image.format_signal_image(image)
+        try:
+            image = Image.objects.get(id=image_id)
+            return Image.format_signal_image(image)
+        except Image.DoesNotExist:
+            return dict()
 
     @staticmethod
     def format_signal_image(image, full_info=False):

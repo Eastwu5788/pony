@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "auth/auth.html" %}
 
-</body>
-</html>
+{% block auth-content %}
+    <h4 class="auth-title">
+        <div class="title-container">
+            <a class="just-title">登录</a>
+            <b>·</b>
+            <a href="/auth/register/" class="normal-title">注册</a>
+        </div>
+    </h4>
+    <form action="/auth/login/" method="post" class="login-form">
+        {% csrf_token %}
+        <div class="input-mail">
+            <i class="fa fa-mail-forward"></i>
+            <input type="email" placeholder="邮箱" name="email" data-content="邮箱不合法"/>
+        </div>
+
+        <div class="input-pass">
+            <i class="fa fa-lock"></i>
+            <input type="password" placeholder="设置密码" name="pass_word"/>
+        </div>
+
+        <input type="submit" class="login-btn" value="登录"/>
+    </form>
+
+    <div class="third-register">
+        <h6>社交账号登录</h6>
+        <a href="#"><i class="fa fa-qq"></i></a>
+        <a href="#"><i class="fa fa-wechat"></i></a>
+        <a href="#"><i class="fa fa-weibo"></i></a>
+        <a href="#"><i class="fa fa-github"></i></a>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        $(".input-mail input").blur(function (){
+            console.log("结束编辑");
+            var input = $(".input-mail input");
+            var email = input.val();
+            input.attr("data-container", "body");
+            if (!IsEmail(email)) {
+                input.popover('show');
+            }else{
+                input.popover('hide')
+            }
+        });
+
+
+    </script>
+{% endblock %}
