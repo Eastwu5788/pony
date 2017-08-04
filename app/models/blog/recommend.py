@@ -5,14 +5,14 @@ from app.models.blog.image import Image
 
 class HomeRecommend(models.Model):
 
-    share_id = models.IntegerField()
-    reco_cover = models.IntegerField()
-    reco_intro = models.CharField()
-    weight = models.IntegerField()
-    operator_id = models.IntegerField()
-    status = models.IntegerField()
-    created_time = models.CharField()
-    updated_time = models.CharField()
+    share_id = models.IntegerField(default=0)
+    reco_cover = models.IntegerField(default=0)
+    reco_intro = models.CharField(default='')
+    weight = models.IntegerField(default=0)
+    operator_id = models.IntegerField(default=0)
+    status = models.IntegerField(default=0)
+    created_time = models.DateTimeField()
+    updated_time = models.DateTimeField()
 
     @staticmethod
     def query_recommend_list(page=0, per_page=10):

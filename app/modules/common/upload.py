@@ -35,8 +35,10 @@ class UploadImage(object):
         self.images = self.pre_upload()
 
     def save(self):
+        image_info_list = []
         for item in self.images:
-            UploadImage.save_image(item)
+            image_info_list.append(UploadImage.save_image(item))
+        return image_info_list
 
     @staticmethod
     def save_image(image_info):
@@ -58,6 +60,7 @@ class UploadImage(object):
         image.hash_key = image_info["hash_key"]
         image.status = 1
         image.save()
+        return image
 
     @staticmethod
     def save_image_file(path, image):
