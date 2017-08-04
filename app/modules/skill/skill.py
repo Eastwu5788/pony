@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from app.modules.common.struct import BASE_RESULT
+from app.modules.common.struct import *
 
 
 def technology_handler(request):
-    result = BASE_RESULT
+    result = base_result()
     data = dict()
 
     data["section_info"] = "2"

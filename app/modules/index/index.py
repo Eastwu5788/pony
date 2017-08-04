@@ -2,14 +2,14 @@ from django.shortcuts import render
 
 from app.models.blog.article import BlogArticle
 from app.models.blog.recommend import HomeRecommend
-from app.modules.common.struct import BASE_RESULT
+from app.modules.common.struct import *
 
 
 PAGE_COUNT = 10
 
 
 def index_handler(request):
-    result = BASE_RESULT
+    result = base_result()
     data = dict()
 
     data["section_info"] = "1"

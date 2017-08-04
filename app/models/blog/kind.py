@@ -10,6 +10,16 @@ class BlogKind(models.Model):
     updated_time = models.CharField()
 
     @staticmethod
+    def query_user_kind(user_id=0, cache=True):
+        kind_list = BlogKind.objects.filter(user_id=user_id, status=1).all()
+        result = []
+
+        for kind in kind_list:
+            result.append(BlogKind.format_kind_info(kind))
+
+        return result
+
+    @staticmethod
     def query_format_kind(kind_id=0, cache=True):
         obj = BlogKind.objects.get(id=kind_id)
         if not obj:

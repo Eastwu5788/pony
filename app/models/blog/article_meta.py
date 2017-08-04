@@ -9,8 +9,8 @@ class BlogArticleMeta(models.Model):
     like = models.IntegerField()
     comment = models.IntegerField()
     status = models.IntegerField()
-    created_time = models.CharField()
-    updated_time = models.CharField()
+    created_time = models.DateTimeField()
+    updated_time = models.DateTimeField()
 
     class Meta:
         app_label = "b_blog"

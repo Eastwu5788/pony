@@ -1,19 +1,26 @@
 from django.db import models
 from app.models.blog.kind import BlogKind
+from app.models.account.account import UserAccount
 
 
 class BlogArticle(models.Model):
 
-    user_id = models.IntegerField()
-    kind_id = models.IntegerField()
-    title = models.CharField()
-    content = models.CharField()
-    status = models.IntegerField()
-    created_time = models.CharField()
-    updated_time = models.CharField()
+    user_id = models.IntegerField(default=0)
+    kind_id = models.IntegerField(default=0)
+    title = models.CharField(default='')
+    content = models.CharField(default='')
+    status = models.IntegerField(default=0)
+    created_time = models.DateTimeField()
+    updated_time = models.DateTimeField()
 
     @staticmethod
-    def query_articles_list(start=0, per_page=10):
+    def query_all_articles_list(start=0, per_page=10):
+        obj_list = BlogArticle.objects.exclude(status=10).all().order_by('-id')[start:per_page]
+        format_list = BlogArticle.format_articles(obj_list)
+        return format_list
+
+    @staticmethod
+    def query_published_articles_list(start=0, per_page=10):
         obj_list = BlogArticle.objects.filter(status=1).all().order_by('-id')[start:per_page]
         format_list = BlogArticle.format_articles(obj_list)
         return format_list
@@ -47,10 +54,12 @@ class BlogArticle(models.Model):
         result = dict()
 
         result["id"] = article.id
+        result["user_info"] = UserAccount.query_format_user(article.user_id)
         result["kind_info"] = BlogKind.query_format_kind(article.kind_id)
         result["title"] = article.title
         result["content"] = article.content
-        result["created_time"] = article.created_time
+        result["status"] = article.status
+        result["created_time"] = str(article.created_time.strftime("%Y-%b-%d %H:%M:%S"))
 
         return result
 
