@@ -36,6 +36,15 @@
     <!-- 顶部头 -->
     {% block header %}
         <header class="header-container">
+            {% if user_info %}
+                <div class="user-info">
+                    <a href="#">
+                        <img class="avatar" src="{{ user_info.avatar.image_a }}">
+                    </a>
+                    <p class="nick-name">{{ user_info.nick_name }}</p>
+                    <button class="btn btn-default" onclick="logout('{{ csrf_token }}')">退出登录</button>
+                </div>
+            {% endif %}
         </header>
     {% endblock %}
 
@@ -142,8 +151,8 @@
     <script src="/static/js/main.js"></script>
 
     <script type="text/javascript">
-        {% if data.section_info %}
-            $(".menu li:nth-child({{ data.section_info }})").addClass("nav-current");
+        {% if section_info %}
+            $(".menu li:nth-child({{ section_info }})").addClass("nav-current");
         {% endif %}
     </script>
 

@@ -92,7 +92,7 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                             <button class="btn btn-danger" onclick="">删除文章</button>
+                                             <button class="btn btn-danger" onclick="delete_article({{ article.id }}, '{{ csrf_token }}')">删除文章</button>
                                              <a class="btn btn-default" href="/manage/edit/{{ article.id }}">编辑文章</a>
                                         </td>
                                     </tr>
@@ -114,6 +114,7 @@
 {% block javascript %}
     <script src="/static/vendor/toastr/js/toastr.min.js"></script>
     <script>
+
         function cancel_recommend(article_id) {
             console.log(article_id);
             $.ajax({

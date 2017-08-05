@@ -13,7 +13,10 @@ class AccessToken(models.Model):
 
     @staticmethod
     def query_token_by_user_id(user_id):
-        return AccessToken.objects.order_by("-id").filter(status=1).get(user_id=user_id)
+        try:
+            return AccessToken.objects.order_by("-id").filter(status=1).get(user_id=user_id)
+        except AccessToken.DoesNotExist:
+            return None
 
     @staticmethod
     def query_token(token):

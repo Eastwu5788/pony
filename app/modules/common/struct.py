@@ -1,6 +1,43 @@
+import json
+from django.http import HttpResponse
+from app.modules.common.encoder import DateEncoder
+
 
 def base_result():
     return {"code": 200, "message": None, "data": None}
+
+
+def json_success_response(result=None):
+    """
+    请求成功的响应
+    """
+    _result = base_result()
+    _result["message"] = "成功"
+    _result["data"] = result
+    return json_response(_result)
+
+
+def json_fail_response(message="请求失败", code=500):
+    """
+    请求失败的响应
+    """
+    _result = base_result()
+    _result["code"] = code
+    _result["message"] = message
+    return json_response(_result)
+
+
+def json_response(result):
+    """
+    返回JSON响应
+    """
+    return HttpResponse(json.dumps(result, cls=DateEncoder))
+
+
+
+
+
+
 
 
 def check_request_params(request, rules):
