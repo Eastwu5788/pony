@@ -33,7 +33,7 @@ class Image(models.Model):
         if not image:
             return result
 
-        result["image_o"] = "/static/uploads/image/"+image.image_a
+        result["image_o"] = "/static/uploads/image/"+image.image_o
         result["image_a"] = "/static/uploads/image/"+image.image_a
         result["image_width"] = image.image_width
         result["image_height"] = image.image_height
