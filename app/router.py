@@ -3,8 +3,10 @@ from django.conf.urls import url
 from app.modules.index.index import index_handler
 
 from app.modules.auth.login import login_handler
+from app.modules.auth.login import login_api_handler
 from app.modules.auth.logout import logout_handler
 from app.modules.auth.register import register_handler
+from app.modules.auth.logout import logout_api_handler
 
 from app.modules.skill.skill import technology_handler
 
@@ -15,6 +17,7 @@ from app.modules.about.about import about_index_handler
 from app.modules.article.detail import article_detail_handler
 from app.modules.article.edit import edit_article_handler as edit_article
 from app.modules.article.edit import change_article_status_handler
+from app.modules.article.edit import delete_article_handler
 
 from app.modules.common.upload import upload_handler
 from app.modules.common.markdown import apply_markdown
@@ -30,6 +33,8 @@ urlpatterns = [
     url(r"^auth/login/", login_handler),
     url(r"^auth/logout/", logout_handler),
     url(r"^auth/register", register_handler),
+    url(r"^auth/api/login", login_api_handler),
+    url(r"^auth/api/logout", logout_api_handler),
 
     # === Article ===
     url(r"^article/detail/(\w+)", article_detail_handler),
@@ -53,6 +58,7 @@ urlpatterns = [
 
     # === Manage ===
     url(r"^manage/edit/(\w+)", edit_article_handler),
+    url(r"^manage/article/remove", delete_article_handler),
     url(r"^manage/recommend/remove", remove_home_recommend_handler),
     url(r"^manage/recommend", home_recommend_handler),
     url(r"^manage$", manage_handler),

@@ -1,6 +1,11 @@
 /**
  * Created by Administrator on 2017/7/31.
  */
+/* === API ===*/
+ARTICLE_DELETE = "/manage/article/remove";
+
+AUTH_LOGIN = "/auth/api/login";
+AUTH_LOGOUT = "/auth/api/logout";
 
 start_app();
 
@@ -11,22 +16,43 @@ function start_app() {
 }
 
 
-/*
- * func: 取消首页的推荐
- * article_id: 将要操作的文章ID
- * */
-function cancel_recommend(article_id) {
-    console.log(article_id);
+/* ========  授权相关  ========= */
+function login(email, password, token) {
+    $.post(AUTH_LOGIN, {email: email, pass_word: password, csrfmiddlewaretoken: token}, function (data) {
+        if(data.code == 200) {
+            location.reload();
+        }else{
+            toastr.error("请求失败", data.message);
+        }
+    }, "json");
 }
 
-/*
- * func: 编辑文章
- * article_id: 文章ID，如果为0表示创建新文章
- * */
-function edit_article(article_id) {
-    var url = "/manage/edit/"+article_id;
-    window.location.href=url;
+function logout(token) {
+    $.post(AUTH_LOGOUT, {csrfmiddlewaretoken: token}, function (data) {
+        console.log(data);
+        if(data.code == 200) {
+            location.reload();
+        }
+    }, "json");
 }
+
+
+/* ======== 文章处理相关 ======== */
+function delete_article(id, token) {
+    if(confirm("您是否要删除这篇文章?")) {
+        $.post(ARTICLE_DELETE, {article_id: id, csrfmiddlewaretoken: token}, function (data) {
+            if(data.code == 200) {
+                location.reload();
+            }else{
+                toastr.error("请求失败", data.message);
+            }
+        }, "json");
+    }
+}
+
+
+
+
 
 /* =====  正则表达式验证  =====*/
 

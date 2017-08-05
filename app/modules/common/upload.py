@@ -46,7 +46,9 @@ class UploadImage(object):
         full_a_path = os.path.join(UPLOAD_IMAGE_PATH, image_info["image_a"])
 
         image_info["pil_image"].save(full_o_path, "jpeg", quality=90)
-        image_info["pil_image"].save(full_a_path, "jpeg", quality=90)
+        thumb_image = image_info["pil_image"].copy()
+        thumb_image.thumbnail((100, 100))
+        thumb_image.save(full_a_path, "jpeg", quality=90)
 
         image = ImageModel()
         image.image_o = image_info["image_o"]

@@ -1,9 +1,7 @@
-import json
-from django.http import HttpResponse
 from app.modules.common.auth import *
 from app.models.blog.article import BlogArticle
-from app.modules.common.struct import base_result
-from app.modules.common.encoder import DateEncoder
+from app.modules.common.struct import *
+from app.models.blog.recommend import HomeRecommend
 
 
 @login_required
@@ -53,13 +51,34 @@ def change_article_status_handler(request):
     article_id = request.POST.get("article_id")
     status = eval(request.POST.get("status"))
 
-    # article = BlogArticle.objects.get(id=article_id)
-    # print(article.status)
-    # article.status = 1 if status == 1 else 2
-    # article.save()
-    #
-    # print(article.status)
-
     BlogArticle.objects.filter(id=article_id).update(status=1 if status == 1 else 2)
 
     return HttpResponse(json.dumps(result))
+
+
+@login_required
+def delete_article_handler(request):
+    if request.method == "GET":
+        return json_fail_response("get method is not support!")
+
+    # 0、prepare params
+    article_id = request.POST.get("article_id")
+    operator = request.META["user_info"]
+
+    # 1、删除文章
+    article = BlogArticle.objects.get(id=article_id)
+
+    # 2、检查删除权限
+    if article.user_id != operator.id:
+        return json_fail_response("您只能删除自己的文章!")
+
+    if article.status == 10:
+        return json_fail_response("文章已经被删除了!")
+
+    article.status = 10
+    article.save()
+
+    # 3、删除首页推荐
+    HomeRecommend.objects.filter(share_id=article_id).update(status=0)
+    return json_success_response()
+
