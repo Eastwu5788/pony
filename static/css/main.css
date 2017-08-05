@@ -430,6 +430,237 @@ textarea.text-edit {
     text-decoration: none;
 }
 
+
+/* ======  关于用户(About) =========*/
+.about-user .navbar-brand{
+    padding: 10px;
+}
+
+.about-user .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #f5f5f5;
+}
+
+.about-user .write-article {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 108px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 15px;
+    background-color: #563d7c;
+    color: #ffffff;
+    line-height: 40px;
+    position: relative;
+}
+
+
+.about-user .write-article:hover {
+    color: #ffffff;
+}
+
+.navbar-right .nav-user-avatar:hover {
+    background-color: #f5f5f5;
+}
+
+.navbar-right {
+    overflow: visible;
+}
+
+.navbar-right .user-dropdown-menu {
+    top: 100%;
+    left: auto;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    z-index: 1000;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    border-radius: 0 0 4px 4px;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+    position: absolute;
+    min-width: 100px;
+    display: none;
+    background-color: #ffffff;
+}
+
+.user-dropdown-menu li {
+    width: 100%;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.user-dropdown-menu li a {
+    padding: 0;
+    line-height: 30px;
+}
+
+.user-dropdown-menu li:hover {
+    background-color: #f5f5f5;
+}
+
+.user-dropdown-menu i {
+    margin-right: 5px;
+}
+
+.user-header {
+    margin-bottom: 20px;
+    padding-left: 15px;
+}
+
+.user-header img {
+    width: 80px;
+    height: 80px;
+    margin-top: auto;
+    margin-bottom: auto;
+    float: left;
+    position: relative;
+    border-radius: 40px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+}
+
+.user-header .content-user-info {
+    width: 100%;
+    padding-left: 100px;
+    padding-top: 5px;
+}
+
+.content-user-info h1 {
+    font-size: 21px;
+    font-weight: 700;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+}
+
+.name-gender-info i {
+    height: 17px;
+    width: 17px;
+    font-size: 17px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.content-user-info ul {
+    padding-left: 0;
+    margin-top: 5px;
+    margin-bottom: 0;
+    list-style: none;
+    overflow: hidden;
+}
+
+.content-user-info ul li {
+    margin-bottom: 6px;
+    margin-right: 7px;
+    padding-right: 7px;
+    border-right: 1px solid #f5f5f5;
+    list-style: none;
+    float: left;
+}
+
+.content-user-info ul li:nth-last-child(1) {
+    border-right: none;
+}
+
+.content-meta-info a {
+    color: #969696;
+}
+
+.content-meta-info li p {
+    margin-bottom: 0;
+    font-size: 15px;
+    color: #333;
+}
+
+.content-meta-info li i {
+    width: 12px;
+    text-align: center;
+}
+
+
+ul.user-article {
+    padding-left: 0;
+}
+
+ul.user-article li.user-article-item {
+    list-style: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-right: 2px;
+    padding-bottom: 17px;
+    margin-bottom: 17px;
+}
+
+
+.user-article-item .author-info img {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+}
+
+.user-article-item .author-info span {
+    font-size: 13px;
+    margin-left: 5px;
+}
+
+.user-article-item .author-info .author-name {
+    color: #333;
+}
+
+.user-article-item .author-info .publish-time {
+    color: #969696;
+}
+
+.user-article-item .article-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.user-article-item .title-link {
+    text-decoration: none;
+}
+
+.user-article-item .article-content {
+    font-size: 13px;
+    line-height: 24px;
+    margin-bottom: 8px;
+}
+
+.user-article-item ul {
+    padding-left: 0;
+    display: inline-block;
+    list-style: none;
+}
+
+.article-meta-info li {
+    list-style: none;
+    margin-right: 10px;
+    float: left;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.article-meta-info li a {
+    color: #b4b4b4;
+    text-decoration: none;
+}
+
+.article-meta-info li a:hover {
+    color: #787878;
+}
+
 /* ======  授权(Auth)   =======*/
 
 .auth-main {

@@ -1,18 +1,17 @@
 from django.shortcuts import render
 from app.models.blog.recommend import HomeRecommend
 from app.models.blog.article import BlogArticle
-from app.modules.common.struct import *
+from app.models.account.info import UserInfo
 from app.modules.common.auth import login_required
 
 
 @login_required
 def manage_handler(request):
-    result = base_result()
 
-    data = dict()
-    data["home_recommend"] = HomeRecommend.query_recommend_list(0)
-    data["blog_list"] = get_blog_list()
-    result["data"] = data
+    result = dict()
+    result["home_recommend"] = HomeRecommend.query_recommend_list(0)
+    result["blog_list"] = get_blog_list()
+    result["user_info"] = UserInfo.query_format_info_by_user_id(request.META["user_info"].id)
 
     return render(request, "manage/index.html", result)
 

@@ -14,19 +14,48 @@ class BlogArticle(models.Model):
     updated_time = models.DateTimeField()
 
     @staticmethod
+    def query_articles_by_user(user_id, start=0, per_page=10):
+        """
+        查询某一个人的所有文章
+        :param user_id: 用户的ID
+        :param start: 开始页
+        :param per_page: 分页数量
+        """
+        try:
+            obj_list = BlogArticle.objects.exclude(status=10).filter(user_id=user_id).order_by('-id').all()[start:per_page]
+            return BlogArticle.format_articles(obj_list)
+        except BlogArticle.DoesNotExist:
+            return []
+
+    @staticmethod
     def query_all_articles_list(start=0, per_page=10):
+        """
+        查询所有的文章列表
+        :param start: 开始页
+        :param per_page: 分页数量
+        """
         obj_list = BlogArticle.objects.exclude(status=10).all().order_by('-id')[start:per_page]
         format_list = BlogArticle.format_articles(obj_list)
         return format_list
 
     @staticmethod
     def query_published_articles_list(start=0, per_page=10):
+        """
+        查询所有公开文章列表
+        :param start: 开始页
+        :param per_page: 分页数量
+        """
         obj_list = BlogArticle.objects.filter(status=1).all().order_by('-id')[start:per_page]
         format_list = BlogArticle.format_articles(obj_list)
         return format_list
 
     @staticmethod
     def query_article_by_id(article_id=0, cache=True):
+        """
+        根据文章ID查询某一篇文章
+        :param article_id: 文章ID
+        :param cache: 是否启用缓存
+        """
         article = BlogArticle.objects.get(id=article_id)
         return BlogArticle.format_article(article)
 

@@ -9,7 +9,13 @@ AUTH_LOGOUT = "/auth/api/logout";
 
 start_app();
 
+$(".nav-user-avatar").mouseover(function () {
+    $(".navbar-right .user-dropdown-menu").css('display','block');
+});
 
+$(".nav-user-avatar").mouseout(function () {
+    $(".navbar-right .user-dropdown-menu").css('display','none');
+});
 
 /* 开启app */
 function start_app() {
@@ -31,7 +37,7 @@ function logout(token) {
     $.post(AUTH_LOGOUT, {csrfmiddlewaretoken: token}, function (data) {
         console.log(data);
         if(data.code == 200) {
-            location.reload();
+            window.location.href = "/index";
         }
     }, "json");
 }
