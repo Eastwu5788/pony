@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="/static/vendor/toastr/css/toastr.min.css">
 {% endblock %}
 
+{% block header %}
+{% endblock %}
+
+<!-- 导航栏部分 -->
+{% block navbar %}
+    {% include "base/navbar.html" %}
+{% endblock %}
+
+
 {% block content %}
 
     <section class="main-section">
@@ -28,7 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for article in data.home_recommend %}
+                                {% for article in home_recommend %}
                                     <tr>
                                         <td>
                                             <a href="/article/detail/{{ article.id }}">{{ article.article_info.id }}</a>
@@ -64,7 +73,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for article in data.blog_list %}
+                                {% for article in blog_list %}
                                     <tr>
                                         <td>
                                             <a href="/article/detail/{{ article.id }}">{{ article.id }}</a>
@@ -138,5 +147,8 @@
 
             });
         }
+
+        $("body").css("padding-top", "70px");
+        $(".main-navigation").css("border-bottom", "1px solid #f5f5f5");
     </script>
 {% endblock %}

@@ -99,7 +99,7 @@
                 url: "/article/status",
                 data: {
                     csrfmiddlewaretoken: "{{ csrf_token }}",
-                    article_id: {{ data.id }},
+                    article_id:{% if data %} {{ data.id }} {% else %} {{ '0' }} {% endif %},
                     status: status
                 },
                 success: function (result) {
