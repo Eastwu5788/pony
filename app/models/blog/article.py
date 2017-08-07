@@ -1,7 +1,7 @@
 from django.db import models
 from app.models.blog.kind import BlogKind
 from app.models.account.account import UserAccount
-
+import django.utils.timezone as timezone
 
 class BlogArticle(models.Model):
 
@@ -10,8 +10,8 @@ class BlogArticle(models.Model):
     title = models.CharField(default='')
     content = models.CharField(default='')
     status = models.IntegerField(default=0)
-    created_time = models.DateTimeField()
-    updated_time = models.DateTimeField()
+    created_time = models.DateTimeField(default=timezone.now)
+    updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def query_articles_by_user(user_id, start=0, per_page=10):

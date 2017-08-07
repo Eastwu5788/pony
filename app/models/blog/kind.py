@@ -1,13 +1,14 @@
 from django.db import models
+import django.utils.timezone as timezone
 
 
 class BlogKind(models.Model):
 
-    user_id = models.IntegerField()
-    title = models.CharField()
-    status = models.IntegerField()
-    created_time = models.CharField()
-    updated_time = models.CharField()
+    user_id = models.IntegerField(default=0)
+    title = models.CharField(default='')
+    status = models.IntegerField(default=0)
+    created_time = models.DateTimeField(timezone.now)
+    updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def query_user_kind(user_id=0, cache=True):

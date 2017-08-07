@@ -1,22 +1,23 @@
 from django.db import models
+import django.utils.timezone as timezone
 
 
 class Image(models.Model):
 
     share_id = models.IntegerField(default=0)
     user_id = models.IntegerField(default=0)
-    image_o = models.CharField()
-    image_a = models.CharField()
-    image_width = models.IntegerField()
-    image_height = models.IntegerField()
-    file_name = models.CharField()
-    file_ext = models.CharField()
-    mime_type = models.CharField()
-    file_size = models.IntegerField()
-    hash_key = models.CharField()
-    status = models.IntegerField()
-    created_time = models.DateTimeField()
-    updated_time = models.DateTimeField()
+    image_o = models.CharField(default='')
+    image_a = models.CharField(default='')
+    image_width = models.IntegerField(default=0)
+    image_height = models.IntegerField(default=0)
+    file_name = models.CharField(default='')
+    file_ext = models.CharField(default='')
+    mime_type = models.CharField(default='')
+    file_size = models.IntegerField(default=0)
+    hash_key = models.CharField(default='')
+    status = models.IntegerField(default=0)
+    created_time = models.DateTimeField(default=timezone.now)
+    updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def query_image_by_id(image_id=0):

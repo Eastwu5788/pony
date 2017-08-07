@@ -1,5 +1,6 @@
 from django.db import models
 from app.models.account.info import UserInfo
+import django.utils.timezone as timezone
 
 
 class UserAccount(models.Model):
@@ -12,8 +13,8 @@ class UserAccount(models.Model):
     open_id = models.CharField(default='')
     banned = models.IntegerField(default=0)
     status = models.IntegerField(default=0)
-    created_time = models.DateTimeField()
-    updated_time = models.DateTimeField()
+    created_time = models.DateTimeField(default=timezone.now)
+    updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def query_account_by_email(email):
