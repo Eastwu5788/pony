@@ -3,6 +3,7 @@ import mistune
 from django.shortcuts import render
 
 from app.models.blog.article import BlogArticle
+from app.models.account.account import UserInfo
 
 
 def article_detail_handler(request, article_id):
@@ -15,6 +16,9 @@ def article_detail_handler(request, article_id):
     article["content"] = markdown(article["content"])
 
     result["article"] = article
-    result["user_info"] = request.META["user_info"]
+
+    account = request.META["user_info"]
+    if account:
+        result["user_info"] = UserInfo.query_format_info_by_user_id(request.META["user_info"].id)
 
     return render(request, "article/detail.html", result)
