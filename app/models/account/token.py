@@ -1,5 +1,6 @@
 from django.db import models
 from app.modules.common.secret import get_seed
+import django.utils.timezone as timezone
 
 
 class AccessToken(models.Model):
@@ -8,8 +9,8 @@ class AccessToken(models.Model):
     access_token = models.CharField(default='')
     salt = models.CharField(default='')
     status = models.IntegerField(default=0)
-    created_time = models.DateTimeField()
-    updated_time = models.DateTimeField()
+    created_time = models.DateTimeField(default=timezone.now)
+    updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def query_token_by_user_id(user_id):

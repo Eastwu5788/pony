@@ -1,6 +1,7 @@
 from django.db import models
 from app.models.blog.article import BlogArticle
 from app.models.blog.image import Image
+import django.utils.timezone as timezone
 
 
 class HomeRecommend(models.Model):
@@ -11,8 +12,8 @@ class HomeRecommend(models.Model):
     weight = models.IntegerField(default=0)
     operator_id = models.IntegerField(default=0)
     status = models.IntegerField(default=0)
-    created_time = models.DateTimeField()
-    updated_time = models.DateTimeField()
+    created_time = models.DateTimeField(default=timezone.now)
+    updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def query_recommend_list(page=0, per_page=10):

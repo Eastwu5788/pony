@@ -1,5 +1,6 @@
 from django.db import models
 from app.models.blog.image import Image
+import django.utils.timezone as timezone
 
 
 class UserInfo(models.Model):
@@ -10,8 +11,8 @@ class UserInfo(models.Model):
     gender = models.IntegerField(default=0)
     avatar = models.IntegerField(default=0)
     status = models.IntegerField(default=0)
-    created_time = models.DateTimeField()
-    updated_time = models.DateTimeField()
+    created_time = models.DateTimeField(default=timezone.now)
+    updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def query_format_info_by_user_id(user_id, cache=True):
