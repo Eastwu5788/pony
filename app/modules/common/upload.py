@@ -1,5 +1,6 @@
 import hashlib
 import time
+from datetime import date
 
 from django.shortcuts import render
 from pony.settings import *
@@ -16,6 +17,19 @@ def upload_handler(request):
         upload_image = UploadImage(request)
         upload_image.save()
         return render(request, "upload/upload.html", {"image": upload_image})
+
+
+def generate_image_file():
+    """
+    生成图片存储文件
+    按照年/月/日/xxx.jpg分类
+    """
+    today = date.today()
+    path = "upload/%d/%02d/%02d/" % (today.year, today.month, today.day)
+    full_path = os.path.join(UPLOAD_IMAGE_PATH, path)
+    if not os.path.exists(full_path):
+        os.makedirs(full_path)
+    return path
 
 
 def hash_image(image):
@@ -98,5 +112,6 @@ class UploadImage(object):
         生成唯一的图片名称
         """
         ori_key = hash_key + "_" + size + "_" + str(time.time())
-        return hashlib.md5(ori_key.encode("utf8")).hexdigest()+".jpg"
+        img_name = hashlib.md5(ori_key.encode("utf8")).hexdigest()+".jpg"
+        return generate_image_file()+img_name
 

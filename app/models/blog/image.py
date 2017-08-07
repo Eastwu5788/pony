@@ -1,5 +1,8 @@
+import os
+
 from django.db import models
 import django.utils.timezone as timezone
+from pony.settings import IMAGE_HOST
 
 
 class Image(models.Model):
@@ -34,8 +37,8 @@ class Image(models.Model):
         if not image:
             return result
 
-        result["image_o"] = "/static/uploads/image/"+image.image_o
-        result["image_a"] = "/static/uploads/image/"+image.image_a
+        result["image_o"] = os.path.join(IMAGE_HOST, image.image_o)
+        result["image_a"] = os.path.join(IMAGE_HOST, image.image_a)
         result["image_width"] = image.image_width
         result["image_height"] = image.image_height
 
