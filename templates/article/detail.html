@@ -31,10 +31,11 @@
                             </h4>
 
                             <div class="login-info">
-                                <form class="login-form" action="/auth/login" method="post">
+                                <form class="login-form">
+                                    {% csrf_token %}
                                     <input type="email" class="user-name" placeholder="输入邮箱" name="email"/>
                                     <input type="password" class="password" placeholder="输入密码" name="password"/>
-                                    <input type="submit" value="登&nbsp;&nbsp;录">
+                                    <input type="button" class="login-btn" onclick="start_login()" value="登&nbsp;&nbsp;录">
                                 </form>
                             </div>
 
@@ -47,7 +48,7 @@
                                 <a href="#" class="icon login-sina"></a>
                                 <a href="#" class="icon login-github"></a>
                                 <div class="register">
-                                    还没有账号? <a href="#">立即注册</a>
+                                    还没有账号? <a href="/auth/register">立即注册</a>
                                 </div>
                             </div>
                         </div>
@@ -56,4 +57,14 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function start_login() {
+            var email = $(".user-name").val();
+            var password = $(".password").val();
+            login(email, password, '{{ csrf_token }}')
+        }
+    </script>
 {% endblock %}

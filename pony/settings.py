@@ -85,21 +85,21 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "b_django",
         "USER": "root",
-        "PASSWORD": "root",
+        "PASSWORD": "123456",
         "HOST": "localhost",
     },
     "b_account": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "b_account",
         "USER": "root",
-        "PASSWORD": "root",
+        "PASSWORD": "123456",
         "HOST": "localhost",
     },
     "b_blog": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "b_blog",
         "USER": "root",
-        "PASSWORD": "root",
+        "PASSWORD": "123456",
         "HOST": "localhost",
     }
 }
