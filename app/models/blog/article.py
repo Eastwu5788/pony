@@ -1,7 +1,9 @@
 from django.db import models
 from app.models.blog.kind import BlogKind
 from app.models.account.account import UserAccount
+from app.models.blog.article_meta import BlogArticleMeta
 import django.utils.timezone as timezone
+
 
 class BlogArticle(models.Model):
 
@@ -85,6 +87,7 @@ class BlogArticle(models.Model):
         result["id"] = article.id
         result["user_info"] = UserAccount.query_format_user(article.user_id)
         result["kind_info"] = BlogKind.query_format_kind(article.kind_id)
+        result["meta_info"] = BlogArticleMeta.query_article_meta_info(article.id)
         result["title"] = article.title
         result["content"] = article.content
         result["status"] = article.status

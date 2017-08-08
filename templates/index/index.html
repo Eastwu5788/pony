@@ -4,10 +4,6 @@
     苗屋
 {% endblock %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="/static/vendor/toastr/css/toastr.min.css">
-{% endblock %}
-
 {% block content %}
     <section class="main-section">
         <div class="container">
@@ -76,7 +72,6 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="/static/vendor/toastr/js/toastr.min.js"></script>
     <script>
         function start_login() {
             email = $(".user-name").val();

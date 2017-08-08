@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="/static/vendor/toastr/css/toastr.min.css">
 {% endblock %}
 
 {% block header %}
@@ -24,7 +23,7 @@
             <div class="row">
                 <main class="col-md-12 manage">
                     <div class="section manage-recommend">
-                        <header class="post-title">
+                        <header class="manage-post-title">
                             <h1>首页推荐管理</h1>
                         </header>
                         <table class="table table-bordered">
@@ -57,7 +56,7 @@
                         </table>
                     </div>
                     <div class="section manage-article">
-                        <header class="post-title">
+                        <header class="manage-post-title">
                             <h1>文章列表管理</h1>
                         </header>
 
@@ -121,7 +120,6 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="/static/vendor/toastr/js/toastr.min.js"></script>
     <script>
 
         function cancel_recommend(article_id) {

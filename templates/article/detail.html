@@ -1,6 +1,14 @@
 {% extends "base/base.html" %}
 
+{% block header %}
+{% endblock %}
+
+{% block navbar %}
+    {% include "base/navbar.html" %}
+{% endblock %}
+
 {% block content %}
+    {{ article }}
     <section class="main-section">
         <div class="container">
             <div class="row">
@@ -11,14 +19,63 @@
                                     <a href="#">{{ article.title }}</a>
                                 </h1>
                                 <div class="post-meta">
-                                    <span class="post-author">
-                                        作者:<a href="#">{{ article.user_info.nick_name }}</a>
-                                        ·{{ article.created_time }}
-                                    </span>
+                                    <a href="/user/info/{{ article.user_info.id }}">
+                                        <img class="post-meta-author-avatar" src="{{ article.user_info.avatar.image_a }}">
+                                    </a>
+                                    <div class="post-meta-base-info">
+                                        <p class="post-author">
+                                            <span>作者</span> <a href="#">{{ article.user_info.nick_name }}</a>
+                                        </p>
+                                        <ul class="post-meta-info">
+                                            <li class="post-meta-time">
+                                                {{ article.created_time }}
+                                            </li>
+                                            <li class="post-meta-comment">
+                                                评论 895
+                                            </li>
+                                            <li class="post-meta-comment">
+                                                喜欢 123
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {% if article.user_info.id == user_info.id %}
+                                        <a class="post-meta-info-edit" href="/manage/edit/{{ article.id }}">编辑文章</a>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="post-content">
                                {{ article.content|safe }}
+                            </div>
+                            <div class="article-like-info">
+                                <a class="article-like-btn" onclick="like_article()">
+                                    <i class="fa fa-heart">&nbsp;喜欢</i>
+                                    |<span>23</span>
+                                </a>
+                                <ul class="article-share">
+                                    <li class="article-share-more">
+                                        <a href="#">
+                                            <i class="fa fa-more">更多分享</i>
+                                        </a>
+                                    </li>
+                                    <li class="article-share-weibo">
+                                        <a href="#">
+                                            <i class="fa fa-weibo"></i>
+                                        </a>
+                                    </li>
+                                    <li class="article-share-wechat">
+                                        <a href="">
+                                            <i class="fa fa-wechat"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="comment-list">
+                                <div class="comment-add">
+
+                                </div>
+                                <div class="comment-history">
+
+                                </div>
                             </div>
                         </article>
                 </main>
@@ -61,10 +118,27 @@
 
 {% block javascript %}
     <script>
+
+        function like_article() {
+            {% if user_info %}
+                var article = {{ article.id }};
+                var type = 1;
+                edit_like_info(article, type, '{{ csrf_token }}' , function success() {
+                     location.reload();
+                });
+            {% else %}
+                window.location.href = "/auth/login";
+            {% endif %}
+        }
+
+
         function start_login() {
             var email = $(".user-name").val();
             var password = $(".password").val();
             login(email, password, '{{ csrf_token }}')
         }
+
+        $("body").css({"padding-top":"70px", "background":"#ffffff"});
+        $(".main-navigation").css("border-bottom", "1px solid #f5f5f5");
     </script>
 {% endblock %}

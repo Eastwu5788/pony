@@ -3,6 +3,8 @@ import mistune
 from django.shortcuts import render
 
 from app.models.blog.article import BlogArticle
+from app.models.blog.like import BlogLike
+from app.models.blog.article_meta import BlogArticleMeta
 from app.models.account.account import UserInfo
 
 
@@ -19,6 +21,14 @@ def article_detail_handler(request, article_id):
 
     account = request.META["user_info"]
     if account:
+        article["meta_info"]["liked"] = 1 if BlogLike.query_like_blog(account.id, article_id) else 0
         result["user_info"] = UserInfo.query_format_info_by_user_id(request.META["user_info"].id)
 
+    # 添加访问记录 匿名访问、非本人访问，会添加一条访问记录
+    author_id = article["user_info"]["user_id"]
+    if not account or author_id != account.id:
+        BlogArticleMeta.change_meta_record(article_id, author_id, ["hit"])
+
     return render(request, "article/detail.html", result)
+
+
