@@ -4,8 +4,12 @@
 /* === API ===*/
 ARTICLE_DELETE = "/manage/article/remove";
 
+ARTICLE_LIKE = "/article/like";
+
 AUTH_LOGIN = "/auth/api/login";
 AUTH_LOGOUT = "/auth/api/logout";
+
+
 
 start_app();
 
@@ -56,6 +60,17 @@ function delete_article(id, token) {
     }
 }
 
+
+/* ======= 点赞处理相关 ======= */
+function edit_like_info(article_id, type_id, token, success) {
+    $.post(ARTICLE_LIKE, {article_id: article_id, type_id: type_id, csrfmiddlewaretoken: token}, function (data) {
+        if (data.code == 200) {
+            success();
+        }else{
+            toastr.error("请求失败", data.message);
+        }
+    }, "json");
+}
 
 
 

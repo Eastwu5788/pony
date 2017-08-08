@@ -19,6 +19,7 @@ from app.modules.article.detail import article_detail_handler
 from app.modules.article.edit import edit_article_handler as edit_article
 from app.modules.article.edit import change_article_status_handler
 from app.modules.article.edit import delete_article_handler
+from app.modules.article.like import like_edit_handler
 
 from app.modules.common.upload import upload_handler
 from app.modules.common.markdown import apply_markdown
@@ -41,6 +42,7 @@ urlpatterns = [
     url(r"^article/detail/(\w+)", article_detail_handler),
     url(r"^article/status", change_article_status_handler),
     url(r"^article/edit", edit_article),
+    url(r"^article/like", like_edit_handler),                   # api:article/like 编辑点赞状态
 
     # === Upload ===
     url(r"^upload/", upload_handler),
@@ -56,7 +58,7 @@ urlpatterns = [
 
     # === About ===
     url(r"^about/", about_index_handler),
-    url(r"^user/info", user_info_handler),
+    url(r"^user/info/(\w+)", user_info_handler),
 
     # === Manage ===
     url(r"^manage/edit/(\w+)", edit_article_handler),

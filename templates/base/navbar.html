@@ -21,13 +21,14 @@
                             </li>
                         </ul>
                     </div>
+                    {% if user_info %}
                     <div class="collapse-navbar-collapse navbar-right">
                         <ul class="menu">
                             <li role="presentation">
                                 <span>{{ user_info.nick_name }}</span>
                             </li>
                             <li role="presentation" class="nav-user-avatar">
-                                <a href="#">
+                                <a href="/user/info/{{ user_info.id }}">
                                     <img class="user-avatar" src="{{ user_info.avatar.image_a }}"/>
                                     <i class="fa fa-caret-down"></i>
                                 </a>
@@ -55,6 +56,9 @@
                             </li>
                         </ul>
                     </div>
+                    {% else %}
+                    {% endif %}
+
                 </div>
             </div>
         </div>

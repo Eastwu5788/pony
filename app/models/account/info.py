@@ -22,6 +22,7 @@ class UserInfo(models.Model):
     @staticmethod
     def format_user_info(user_info):
         result = dict()
+        result["id"] = user_info.user_id
         result["nick_name"] = user_info.nick_name
         result["gender"] = user_info.gender
         result["avatar"] = Image.query_image_by_id(user_info.avatar)

@@ -156,4 +156,4 @@ UPLOAD_IMAGE_PATH = "/data/static/image/"
 
 # 上传视频路径
 VIDEO_HOST = "http://video.localhost.com"
-UPLOAD_VIDEO_PATH = os.path.join(os.path.join(BASE_DIR, "static"), r"uploads/video")
+UPLOAD_VIDEO_PATH = "/data/static/video/"
