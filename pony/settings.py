@@ -25,7 +25,10 @@ SECRET_KEY = 'p*ggd=o#y8ws1fmpup!jnw9m0mo=4+fs1a!l!eu%h&b=jfx$x#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "10.0.138.237",
+]
 
 
 # Application definition
@@ -150,10 +153,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 # 上传图片路径
-IMAGE_HOST = "http://image.localhost.com"
+IMAGE_HOST = "http://10.0.138.237"
 UPLOAD_IMAGE_PATH = "/data/static/image/"
 
 
 # 上传视频路径
-VIDEO_HOST = "http://video.localhost.com"
+VIDEO_HOST = "http://10.0.138.237"
 UPLOAD_VIDEO_PATH = "/data/static/video/"
