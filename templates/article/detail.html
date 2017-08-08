@@ -8,11 +8,10 @@
 {% endblock %}
 
 {% block content %}
-    {{ article }}
     <section class="main-section">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 {% if user_info %} col-md-offset-2 {% endif %} main-content">
+                <main class="col-md-8 col-md-offset-2 main-content">
                         <article class="post">
                             <div class="post-head">
                                 <h1 class="post-title">
@@ -30,11 +29,14 @@
                                             <li class="post-meta-time">
                                                 {{ article.created_time }}
                                             </li>
-                                            <li class="post-meta-comment">
-                                                评论 895
+                                            <li class="post-meta-hit">
+                                                阅读 {{ article.meta_info.hit }}
                                             </li>
                                             <li class="post-meta-comment">
-                                                喜欢 123
+                                                评论 {{ article.meta_info.comment }}
+                                            </li>
+                                            <li class="post-meta-comment">
+                                                喜欢 {{ article.meta_info.like }}
                                             </li>
                                         </ul>
                                     </div>
@@ -47,9 +49,9 @@
                                {{ article.content|safe }}
                             </div>
                             <div class="article-like-info">
-                                <a class="article-like-btn" onclick="like_article()">
+                                <a class="article-like-btn {% if article.meta_info.liked == 1 %} article-like-red {% endif %}" onclick="like_article()">
                                     <i class="fa fa-heart">&nbsp;喜欢</i>
-                                    |<span>23</span>
+                                    |<span>{{ article.meta_info.liked }}</span>
                                 </a>
                                 <ul class="article-share">
                                     <li class="article-share-more">
@@ -69,48 +71,50 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="comment-list">
-                                <div class="comment-add">
-
-                                </div>
-                                <div class="comment-history">
-
+                            <div class="article-comment-list">
+                                {% if user_info %}
+                                    <div class="article-comment-add">
+                                        <img class="article-comment-avatar" src="{{ user_info.avatar.image_a }}">
+                                        <textarea class="article-comment-text" placeholder="写下你的评论..."></textarea>
+                                        <div class="article-comment-control">
+                                            <span>Ctrl+Return发表</span>
+                                            <a class="article-comment-publish" onclick="send_comment()">发送</a>
+                                            <a class="article-comment-cancel" onclick="cancel_edit()">取消</a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="article-comment-history">
+                                    <div class="article-comment-head">
+                                        {{ article.meta_info.comment }}条评论
+                                    </div>
+                                    {% for comment in article.comment_list %}
+                                        <div class="article-comment-item">
+                                            <div class="comment-user-info">
+                                                <a href="/user/info/{{ comment.user_info.id }}">
+                                                    <img src="{{ comment.user_info.avatar.image_a }}"/>
+                                                </a>
+                                                <div class="comment-user-base-info">
+                                                    <a class="comment-user-nickname">{{ comment.user_info.nick_name }}</a>
+                                                    <p class="comment-meta-info">{{ comment.created_time }}</p>
+                                                </div>
+                                            </div>
+                                            <p class="comment-content">{{ comment.content }}</p>
+                                            <div class="comment-control-bar">
+                                                <a>
+                                                    <i class="fa fa-thumbs-o-up"></i>
+                                                    <span>赞</span>
+                                                </a>
+                                                <a>
+                                                    <i class="fa fa-comments"></i>
+                                                    <span>回复</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </article>
                 </main>
-
-                {% if not user_info %}
-                    <aside class="col-md-4 sidebar">
-                        <div class="auth">
-                            <h4 class="tittle">
-                                账号登录
-                            </h4>
-
-                            <div class="login-info">
-                                <form class="login-form">
-                                    {% csrf_token %}
-                                    <input type="email" class="user-name" placeholder="输入邮箱" name="email"/>
-                                    <input type="password" class="password" placeholder="输入密码" name="password"/>
-                                    <input type="button" class="login-btn" onclick="start_login()" value="登&nbsp;&nbsp;录">
-                                </form>
-                            </div>
-
-                            <div class="line"></div>
-
-                            <div class="third-login-content">
-                                <span>第三方账号登录</span>
-                                <a href="#" class="icon login-qq"></a>
-                                <a href="#" class="icon login-wechat"></a>
-                                <a href="#" class="icon login-sina"></a>
-                                <a href="#" class="icon login-github"></a>
-                                <div class="register">
-                                    还没有账号? <a href="/auth/register">立即注册</a>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                {% endif %}
             </div>
         </div>
     </section>
@@ -119,10 +123,41 @@
 {% block javascript %}
     <script>
 
+        function send_comment() {
+            var content = $(".article-comment-text").val();
+            if (content.length == 0) {
+                toastr.error("请求错误", "评论内容不能为空！");
+                return null;
+            }
+            comment_add({{ article.id }}, content, '{{ csrf_token }}');
+        }
+
+        // 监听焦点事件
+        $(".article-comment-text").focus(function () {
+            $(".article-comment-control").show();
+        });
+
+        // 监听键盘事件
+        $(".article-comment-text").keypress(function (event) {
+            if (event.ctrlKey && event.keyCode == 10) {
+                console.log("监听结束");
+                send_comment();
+            }
+        });
+
+
+        function cancel_edit() {
+            $(".article-comment-control").hide();
+        }
+
+
         function like_article() {
             {% if user_info %}
                 var article = {{ article.id }};
                 var type = 1;
+                {% if article.meta_info.liked == 1 %}
+                    type = 0;
+                {% endif %}
                 edit_like_info(article, type, '{{ csrf_token }}' , function success() {
                      location.reload();
                 });

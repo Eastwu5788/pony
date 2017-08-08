@@ -57,6 +57,22 @@
                         </ul>
                     </div>
                     {% else %}
+                    <div class="collapse-navbar-collapse navbar-right">
+                        <ul class="menu">
+                            <li role="presentation">
+                                <a class="menu-login-btn" href="/auth/login">登录</a>
+                            </li>
+                            <li role="presentation" class="nav-user-register">
+                                <a class="menu-register-btn" href="/auth/register">注册</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="/auth/login" class="write-article">
+                                    <i class="fa fa-edit"></i>
+                                    写文章
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     {% endif %}
 
                 </div>

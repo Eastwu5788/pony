@@ -105,6 +105,12 @@ li.nav-current a {
     margin-bottom: 30px;
 }
 
+.article-index .post-meta {
+    text-align: left;
+    margin: 10px 0;
+    color: #959595;
+}
+
 .post-title {
     margin: 0;
     text-align: left;
@@ -269,18 +275,31 @@ li.nav-current a {
 }
 
 .article-like-info .article-like-btn {
-    background-color: #ea6f5a;
+    background-color: #ffffff;
     padding: 13px 0 15px;
     border: 1px solid #ea6f5a;
     border-radius: 40px;
-    color: white;
+    color: #ea6f5a;
     font-size: 19px;
     text-decoration: none;
     cursor: pointer;
 }
 
+.article-like-info .article-like-btn:hover {
+    background-color: rgba(236,97,73,.05);
+}
+
+.article-like-info .article-like-red {
+    background-color: #ea6f5a;
+    color: #ffffff;
+}
+
+.article-like-info .article-like-red:hover {
+    background-color: #ea6f5a;
+}
+
 .article-like-btn i{
-    padding: 18px 15px 18px 30px;
+    padding: 18px 10px 18px 20px;
 }
 
 .article-like-btn span {
@@ -336,6 +355,161 @@ li.nav-current a {
 }
 
 /* 评论 */
+
+.article-comment-list {
+    padding-top: 100px;
+}
+
+.article-comment-add {
+    margin-left: 43px;
+}
+
+.article-comment-avatar {
+    width: 38px;
+    height: 38px;
+    margin-right: 5px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    left: 43px;
+    position: absolute;
+}
+
+.article-comment-text {
+    width: 100%;
+    height: 80px;
+    padding: 10px 15px;
+    font-size: 13px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background-color: hsla(0, 0%, 71%, .1);
+    resize: none;
+    display: inline-block;
+    vertical-align: top;
+    outline-style: none;
+}
+
+.article-comment-control {
+    width: 100%;
+    height: 50px;
+    transition: display 1s linear 0s;
+}
+
+.article-comment-control a {
+    float: right;
+}
+
+.article-comment-control span {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #969696;
+    display: inline-block;
+}
+
+.article-comment-control .article-comment-publish {
+    width: 78px;
+    margin: 10px 0;
+    padding: 8px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: #42c02e;
+    cursor: pointer;
+    outline: none;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.article-comment-control .article-comment-publish:hover {
+    background-color: #3db922;
+}
+
+.article-comment-control .article-comment-cancel {
+    float: right;
+    margin: 18px 30px 0 0;
+    font-size: 16px;
+    color: #969696;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.article-comment-control .article-comment-cancel:hover {
+    color: #2f2f2f;
+}
+
+/*  评论列表   */
+.article-comment-history {
+    margin-top: 30px;
+}
+
+.article-comment-history .article-comment-head {
+    padding-bottom: 20px;
+    font-size: 17px;
+    font-weight: 700;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.article-comment-history .article-comment-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.article-comment-item .comment-user-info {
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.comment-user-info img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    float: left;
+}
+
+.comment-user-info .comment-user-base-info {
+    float: left;
+    margin-left: 5px;
+}
+
+.comment-user-base-info a {
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.comment-user-base-info p {
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #969696;
+}
+
+.article-comment-item .comment-content {
+    margin: 10px 0;
+    line-height: 1.5;
+    font-size: 16px;
+    color: #333;
+}
+
+.comment-control-bar a {
+    margin-right: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #969696;
+    vertical-align: middle;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.comment-control-bar a:hover {
+
+}
 
 /*===  文章详情底部结束  ===*/
 
@@ -614,7 +788,6 @@ textarea.text-edit {
     position: relative;
 }
 
-
 .about-user .write-article:hover {
     color: #ffffff;
 }
@@ -642,6 +815,20 @@ textarea.text-edit {
     position: absolute;
     min-width: 100px;
     display: none;
+    background-color: #ffffff;
+}
+
+.navbar-right .nav-user-register a{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 5px;
+    height: 38px;
+    width: 80px;
+    line-height: 38px;
+    border: 1px solid #563d7c;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #563d7c;
     background-color: #ffffff;
 }
 

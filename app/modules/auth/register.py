@@ -6,6 +6,8 @@ from app.models.account.account import UserAccount
 from app.modules.common.secret import *
 from app.models.account.info import UserInfo
 from app.models.account.token import AccessToken
+from app.modules.common.email import Email
+from app.modules.common.secret import get_secret_password
 
 
 def register_handler(request):
@@ -20,11 +22,23 @@ def register_handler(request):
     # TODO:检查参数合法性
 
     # 检查通过 注册用户
-    register_new_account(nick_name, email, password)
+    result = register_new_account(nick_name, email, password)
 
     # TODO：发送邮箱验证邮件
+    send_active_email(email, result["token"])
 
     return HttpResponseRedirect("/auth/login/")
+
+
+def send_active_email(email="", token=None):
+
+    address = "http://10.0.138.237:8000/auth/active?access_token="+token.access_token
+    pass_port = get_secret_password(token.access_token+token.salt)
+    address += "&pass_port=" + pass_port
+
+    message = "欢迎注册eastwu.cn，点击链接激活账号:"+address
+    email_client = Email("账号激活邮件", email, message)
+    email_client.send_email()
 
 
 def register_new_account(nick_name, email, password):

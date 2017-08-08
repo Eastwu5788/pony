@@ -7,6 +7,7 @@ from app.modules.auth.login import login_api_handler
 from app.modules.auth.logout import logout_handler
 from app.modules.auth.register import register_handler
 from app.modules.auth.logout import logout_api_handler
+from app.modules.auth.active import active_account_handler
 
 from app.modules.skill.skill import technology_handler
 
@@ -20,6 +21,7 @@ from app.modules.article.edit import edit_article_handler as edit_article
 from app.modules.article.edit import change_article_status_handler
 from app.modules.article.edit import delete_article_handler
 from app.modules.article.like import like_edit_handler
+from app.modules.article.comment import *
 
 from app.modules.common.upload import upload_handler
 from app.modules.common.markdown import apply_markdown
@@ -32,9 +34,10 @@ from app.modules.manage.recommend import remove_home_recommend_handler
 
 urlpatterns = [
     # === Auth ===
-    url(r"^auth/login/", login_handler),
-    url(r"^auth/logout/", logout_handler),
+    url(r"^auth/login", login_handler),
+    url(r"^auth/logout", logout_handler),
     url(r"^auth/register", register_handler),
+    url(r"^auth/active", active_account_handler),
     url(r"^auth/api/login", login_api_handler),
     url(r"^auth/api/logout", logout_api_handler),
 
@@ -43,6 +46,7 @@ urlpatterns = [
     url(r"^article/status", change_article_status_handler),
     url(r"^article/edit", edit_article),
     url(r"^article/like", like_edit_handler),                   # api:article/like 编辑点赞状态
+    url(r"^article/comment/add", comment_add_handler),          # api:article/comment/add 评论
 
     # === Upload ===
     url(r"^upload/", upload_handler),

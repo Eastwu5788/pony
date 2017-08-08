@@ -6,6 +6,8 @@ ARTICLE_DELETE = "/manage/article/remove";
 
 ARTICLE_LIKE = "/article/like";
 
+ARTICLE_COMMENT_ADD = "/article/comment/add";
+
 AUTH_LOGIN = "/auth/api/login";
 AUTH_LOGOUT = "/auth/api/logout";
 
@@ -73,6 +75,16 @@ function edit_like_info(article_id, type_id, token, success) {
 }
 
 
+/* ======= 评论相关 ====== */
+function comment_add(article_id, content, token) {
+    $.post(ARTICLE_COMMENT_ADD, {article_id: article_id, content: content, csrfmiddlewaretoken: token}, function (result) {
+        if (result.code == 200) {
+            location.reload()
+        }else{
+            toastr.error("请求失败", result.message);
+        }
+    }, "json");
+}
 
 
 /* =====  正则表达式验证  =====*/
