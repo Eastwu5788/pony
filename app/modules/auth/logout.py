@@ -1,6 +1,7 @@
 from app.modules.common.struct import *
 from app.modules.common.auth import login_required
 
+
 def logout_handler(request):
     pass
 

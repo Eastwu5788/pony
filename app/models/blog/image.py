@@ -1,8 +1,12 @@
 import os
 
 from django.db import models
+from django.core.cache import cache
 import django.utils.timezone as timezone
 from pony.settings import IMAGE_HOST
+
+CACHE_KEY_ID = "Pony:Image:CacheId:"
+CACHE_TIME = 60*60*24
 
 
 class Image(models.Model):
@@ -23,10 +27,18 @@ class Image(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def query_image_by_id(image_id=0):
+    def query_image_by_id(image_id=0, use_cache=True):
+        key = CACHE_KEY_ID+str(image_id)
+        if use_cache:
+            image = cache.get(key)
+            if image:
+                return image
+
         try:
             image = Image.objects.get(id=image_id)
-            return Image.format_signal_image(image)
+            image = Image.format_signal_image(image)
+            cache.set(key, image, CACHE_TIME)
+            return image
         except Image.DoesNotExist:
             return dict()
 

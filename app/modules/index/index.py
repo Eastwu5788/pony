@@ -1,9 +1,8 @@
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 
-from app.models.blog.article import BlogArticle
 from app.models.blog.recommend import HomeRecommend
 from app.models.account.info import UserInfo
-from app.modules.common.struct import *
 
 
 PAGE_COUNT = 10

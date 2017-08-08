@@ -26,17 +26,18 @@ def edit_article_handler(request):
         article.status = 2
         article.save()
 
-        # format article
-        article = BlogArticle.query_article_by_id(article.id)
+        # format article, we need update cache at this time
+        article = BlogArticle.query_article_by_id(article.id, False)
         result["data"] = article
 
         # return
         return HttpResponse(json.dumps(result, cls=DateEncoder))
 
     else:
-
         # update article
         BlogArticle.objects.filter(id=article_id).update(title=title, content=content)
+        # update cache
+        BlogArticle.query_article_by_id(article_id, False)
         return HttpResponse(json.dumps(result))
 
 
@@ -50,9 +51,10 @@ def change_article_status_handler(request):
 
     article_id = request.POST.get("article_id")
     status = eval(request.POST.get("status"))
-
+    # update status
     BlogArticle.objects.filter(id=article_id).update(status=1 if status == 1 else 2)
-
+    # update cache
+    BlogArticle.query_article_by_id(article_id, False)
     return HttpResponse(json.dumps(result))
 
 
@@ -77,7 +79,8 @@ def delete_article_handler(request):
 
     article.status = 10
     article.save()
-
+    # update article cache
+    BlogArticle.query_article_by_id(article_id)
     # 3、删除首页推荐
     HomeRecommend.objects.filter(share_id=article_id).update(status=0)
     return json_success_response()

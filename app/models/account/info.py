@@ -1,6 +1,10 @@
 from django.db import models
+from django.core.cache import cache
 from app.models.blog.image import Image
 import django.utils.timezone as timezone
+
+CACHE_KEY = "Pony:UserInfo:Cache:"
+CACHE_TIME = 60*60*24
 
 
 class UserInfo(models.Model):
@@ -15,9 +19,25 @@ class UserInfo(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def query_format_info_by_user_id(user_id, cache=True):
-        user_info = UserInfo.objects.get(user_id=user_id)
-        return UserInfo.format_user_info(user_info)
+    def query_format_info_by_user_id(user_id, use_cache=True):
+        """
+        根据用户ID查询用户信息
+        :param user_id: 用户ID
+        :param use_cache: 是否使用缓存
+        """
+        key = CACHE_KEY + str(user_id)
+        if use_cache:
+            result = cache.get(key)
+            if result:
+                return result
+
+        try:
+            user_info = UserInfo.objects.get(user_id=user_id)
+            format_user_info = UserInfo.format_user_info(user_info)
+            cache.set(key, format_user_info, CACHE_TIME)
+            return format_user_info
+        except UserInfo.DoesNotExist:
+            return None
 
     @staticmethod
     def format_user_info(user_info):
