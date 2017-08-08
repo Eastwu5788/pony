@@ -1,5 +1,10 @@
 from django.db import models
+from django.core.cache import cache
 import django.utils.timezone as timezone
+
+
+CACHE_KEY_ID = "Pony:BlogArticleMeta:CacheId:"
+CACHE_TIME = 60*60*24
 
 
 class BlogArticleMeta(models.Model):
@@ -14,10 +19,17 @@ class BlogArticleMeta(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def query_article_meta_info(share_id):
+    def query_article_meta_info(share_id, use_cache=True):
+        key = CACHE_KEY_ID+str(share_id)
+        if use_cache:
+            meta = cache.get(key)
+            if meta:
+                return meta
         try:
             meta = BlogArticleMeta.objects.filter(status=1).get(share_id=share_id)
-            return BlogArticleMeta.format_article_meta_info(meta)
+            meta = BlogArticleMeta.format_article_meta_info(meta)
+            cache.set(key, meta, CACHE_TIME)
+            return meta
         except BlogArticleMeta.DoesNotExist:
             return BlogArticleMeta.format_article_meta_info()
 
@@ -69,6 +81,8 @@ class BlogArticleMeta(models.Model):
                 blog.comment -= 1
 
         blog.save()
+        # 更新缓存
+        BlogArticleMeta.query_article_meta_info(share_id, False)
 
     class Meta:
         app_label = "b_blog"

@@ -1,7 +1,11 @@
 from django.db import models
+from django.core.cache import cache
 from app.models.blog.article import BlogArticle
 from app.models.blog.image import Image
 import django.utils.timezone as timezone
+
+CACHE_KEY_ID = "Pony:HomeRecommend:CacheId:"
+CACHE_TIME = 60*20
 
 
 class HomeRecommend(models.Model):
@@ -24,11 +28,18 @@ class HomeRecommend(models.Model):
         return result
 
     @staticmethod
-    def query_recommend_by_share_id(share_id=0):
+    def query_recommend_by_share_id(share_id=0, use_cache=True):
+        key = CACHE_KEY_ID + str(share_id)
+        if use_cache:
+            recom = cache.get(key)
+            if recom:
+                return recom
         try:
             recom = HomeRecommend.objects.filter(status=1).get(share_id=share_id)
-            return HomeRecommend.format_recommend(recom, False)
-        except:
+            recom = HomeRecommend.format_recommend(recom, False)
+            cache.set(key, recom, CACHE_TIME)
+            return recom
+        except HomeRecommend.DoesNotExist:
             return None
 
     @staticmethod

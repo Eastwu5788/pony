@@ -34,6 +34,8 @@ def like_edit_handler(request):
         else:
             BlogLike.insert_like_record(user_info.id, article_id)
             BlogArticleMeta.change_meta_record(article_id, user_info.id, ["like"])
+            # 更新文章缓存
+            BlogArticle.query_article_by_id(article_id, False)
             # TODO: MongoDB 统计用户点赞、粉丝等信息
             return json_success_response()
 
@@ -44,6 +46,8 @@ def like_edit_handler(request):
             like.save()
             # 修改meta统计记录
             BlogArticleMeta.change_meta_record(article_id, user_info.id, ["like"], False)
+            # 更新缓存
+            BlogArticle.query_article_by_id(article_id, False)
             return json_success_response()
         else:
             return json_fail_response("您当前尚未点赞该动态")

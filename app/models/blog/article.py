@@ -1,8 +1,12 @@
 from django.db import models
+from django.core.cache import cache
 from app.models.blog.kind import BlogKind
 from app.models.account.account import UserAccount
 from app.models.blog.article_meta import BlogArticleMeta
 import django.utils.timezone as timezone
+
+CACHE_KEY_ID = "Pony:BlogArticle:CacheId:"
+CACHE_TIME = 60*60*24
 
 
 class BlogArticle(models.Model):
@@ -52,14 +56,25 @@ class BlogArticle(models.Model):
         return format_list
 
     @staticmethod
-    def query_article_by_id(article_id=0, cache=True):
+    def query_article_by_id(article_id=0, use_cache=True):
         """
         根据文章ID查询某一篇文章
         :param article_id: 文章ID
-        :param cache: 是否启用缓存
+        :param use_cache: 是否启用缓存
         """
-        article = BlogArticle.objects.get(id=article_id)
-        return BlogArticle.format_article(article)
+        key = CACHE_KEY_ID + str(article_id)
+        if use_cache:
+            cache_result = cache.get(key)
+            if cache_result:
+                return cache_result
+
+        try:
+            article = BlogArticle.objects.get(id=article_id)
+            article = BlogArticle.format_article(article)
+            cache.set(key, article, CACHE_TIME)
+            return article
+        except BlogArticle.DoesNotExist:
+            return None
 
     @staticmethod
     def format_articles(article_list):
