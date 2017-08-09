@@ -8,3 +8,4 @@
 4. mistune
 5. pillow
 6. python3-memcached
+7. redis
