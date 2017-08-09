@@ -25,7 +25,9 @@
                     <div class="collapse-navbar-collapse navbar-right">
                         <ul class="menu">
                             <li role="presentation">
-                                <span>{{ user_info.nick_name }}</span>
+                                <a href="/user/info/{{ user_info.id }}">
+                                    <span>{{ user_info.nick_name }}</span>
+                                </a>
                             </li>
                             <li role="presentation" class="nav-user-avatar">
                                 <a href="/user/info/{{ user_info.id }}">
