@@ -10,6 +10,7 @@ from app.models.account.account import UserInfo
 
 
 def article_detail_handler(request, article_id):
+    account = request.META["user_info"]
     result = dict()
 
     renderer = mistune.Renderer(hard_wrap=True, parse_inline_html=True)
@@ -17,11 +18,10 @@ def article_detail_handler(request, article_id):
 
     article = BlogArticle.query_article_by_id(article_id)
     article["content"] = markdown(article["content"])
-    article["comment_list"] = BlogComment.query_comment_list(article_id)
+    article["comment_list"] = BlogComment.query_comment_list(article_id, account.id if account else 0)
 
     result["article"] = article
 
-    account = request.META["user_info"]
     if account:
         article["meta_info"]["liked"] = 1 if BlogLike.query_like_blog(account.id, article_id) else 0
         result["user_info"] = UserInfo.query_format_info_by_user_id(request.META["user_info"].id)

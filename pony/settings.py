@@ -124,6 +124,11 @@ CACHES = {
     }
 }
 
+REDIS = {
+    "host": "127.0.0.1",
+    "port": 6379,
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

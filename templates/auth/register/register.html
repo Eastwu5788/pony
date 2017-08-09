@@ -17,12 +17,12 @@
 
         <div class="input-mail">
             <i class="fa fa-mail-forward"></i>
-            <input type="text" placeholder="邮箱" name="email" data-content="邮箱不合法"/>
+            <input type="email" placeholder="邮箱" name="email"/>
         </div>
 
         <div class="input-pass">
             <i class="fa fa-lock"></i>
-            <input type="password" placeholder="设置密码" name="pass_word"/>
+            <input type="password" placeholder="设置密码" name="pass_word" autocomplete="new-password"/>
         </div>
         <input type="submit" class="register-btn" value="注册"/>
     </form>
@@ -45,17 +45,36 @@
 
 {% block javascript %}
     <script>
-        $(".input-mail input").blur(function (){
-            console.log("结束编辑");
-            var input = $(".input-mail input");
-            var email = input.val();
-            input.attr("data-container", "body");
-            if (!IsEmail(email)) {
-                input.popover('show');
-            }else{
-                input.popover('hide')
-            }
-        });
+        window.onload = listen_blur;
+
+        function listen_blur() {
+            $(".input-mail input").blur(function (){
+
+                var input = $(".input-mail input");
+                var email = input.val();
+                if (!IsEmail(email)) {
+                    input.attr("data-content", "邮箱不合法");
+                    input.attr("data-container", "body");
+                    input.popover('show');
+                }else{
+                    check_email(email, '{{ csrf_token }}', function (result) {
+                        console.log(result);
+                        if (result.code == 200) {
+                            input.attr("data-container");
+                            input.popover('hide');
+                        } else {
+                            input.attr("data-content", "当前邮箱已被注册");
+                            input.attr("data-container", "body");
+                            input.popover('show');
+                        }
+                    });
+                }
+            });
+        }
+
+
+
+
 
 
     </script>
