@@ -100,9 +100,17 @@
                                             </div>
                                             <p class="comment-content">{{ comment.content }}</p>
                                             <div class="comment-control-bar">
-                                                <a>
+                                                {% if comment.meta_info.liked == 1 %}
+                                                <a onclick="comment_like(0, {{ comment.id }}, '{{ csrf_token }}')" class="comment-control-red">
+                                                {% else %}
+                                                <a onclick="comment_like(1, {{ comment.id }}, '{{ csrf_token }}')" class="comment-control-normal">
+                                                {% endif %}
                                                     <i class="fa fa-thumbs-o-up"></i>
+                                                    {% if comment.meta_info.like == 0 %}
                                                     <span>赞</span>
+                                                    {% else %}
+                                                    <span>{{ comment.meta_info.like }}</span>
+                                                    {% endif %}
                                                 </a>
                                                 <a>
                                                     <i class="fa fa-comments"></i>
@@ -122,7 +130,6 @@
 
 {% block javascript %}
     <script>
-
         function send_comment() {
             var content = $(".article-comment-text").val();
             if (content.length == 0) {

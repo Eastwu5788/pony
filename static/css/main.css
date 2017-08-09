@@ -440,6 +440,8 @@ li.nav-current a {
     color: #2f2f2f;
 }
 
+
+
 /*  评论列表   */
 .article-comment-history {
     margin-top: 30px;
@@ -497,7 +499,7 @@ li.nav-current a {
     color: #333;
 }
 
-.comment-control-bar a {
+.comment-control-bar a{
     margin-right: 10px;
     font-size: 15px;
     font-weight: 400;
@@ -505,6 +507,10 @@ li.nav-current a {
     vertical-align: middle;
     text-decoration: none;
     cursor: pointer;
+}
+
+.comment-control-bar a.comment-control-red {
+    color: #ea6f5a;
 }
 
 .comment-control-bar a:hover {

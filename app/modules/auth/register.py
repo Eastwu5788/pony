@@ -3,11 +3,11 @@ from django.db import transaction
 from django.http import HttpResponseRedirect
 
 from app.models.account.account import UserAccount
-from app.modules.common.secret import *
 from app.models.account.info import UserInfo
 from app.models.account.token import AccessToken
 from app.modules.common.email import Email
 from app.modules.common.secret import get_secret_password
+from app.modules.common.struct import *
 
 
 def register_handler(request):
@@ -20,6 +20,9 @@ def register_handler(request):
     password = request.POST.get("pass_word")
 
     # TODO:检查参数合法性
+    account = UserAccount.query_account_by_email(email)
+    if account:
+        return HttpResponseRedirect("/auth/register")
 
     # 检查通过 注册用户
     result = register_new_account(nick_name, email, password)
@@ -28,6 +31,17 @@ def register_handler(request):
     send_active_email(email, result["token"])
 
     return HttpResponseRedirect("/auth/login/")
+
+
+def check_register_email(request):
+    """
+    检查用户邮箱是否已经被注册
+    """
+    email = request.GET.get("email")
+    account = UserAccount.query_account_by_email(email)
+    if account:
+        return json_fail_response("邮箱已经被注册")
+    return json_success_response()
 
 
 def send_active_email(email="", token=None):

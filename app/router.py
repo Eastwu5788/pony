@@ -8,6 +8,7 @@ from app.modules.auth.logout import logout_handler
 from app.modules.auth.register import register_handler
 from app.modules.auth.logout import logout_api_handler
 from app.modules.auth.active import active_account_handler
+from app.modules.auth.register import check_register_email
 
 from app.modules.skill.skill import technology_handler
 
@@ -40,6 +41,7 @@ urlpatterns = [
     url(r"^auth/active", active_account_handler),
     url(r"^auth/api/login", login_api_handler),
     url(r"^auth/api/logout", logout_api_handler),
+    url(r"^auth/api/checkemail", check_register_email),
 
     # === Article ===
     url(r"^article/detail/(\w+)", article_detail_handler),
@@ -47,6 +49,7 @@ urlpatterns = [
     url(r"^article/edit", edit_article),
     url(r"^article/like", like_edit_handler),                   # api:article/like 编辑点赞状态
     url(r"^article/comment/add", comment_add_handler),          # api:article/comment/add 评论
+    url(r"^article/comment/like", comment_like_edit_handler),   # api:article/comment/like 评论点赞状态编辑
 
     # === Upload ===
     url(r"^upload/", upload_handler),
@@ -72,6 +75,6 @@ urlpatterns = [
     url(r"^manage$", manage_handler),
 
     # === Index(首页必须放在最后一个) ===
-    url(r'/index/', index_handler),
-    url(r'', index_handler),
+    url(r'index', index_handler),
+    # url(r'', index_handler),
 ]

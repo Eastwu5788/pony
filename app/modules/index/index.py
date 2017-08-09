@@ -3,7 +3,7 @@ from django.views.decorators.cache import cache_page
 
 from app.models.blog.recommend import HomeRecommend
 from app.models.account.info import UserInfo
-
+from app.modules.common.redis import Redis
 
 PAGE_COUNT = 10
 
