@@ -8,6 +8,7 @@ ARTICLE_LIKE = "/article/like";
 
 ARTICLE_COMMENT_ADD = "/article/comment/add";
 ARTICLE_COMMENT_LIKE_EDIT = "/article/comment/like";
+ARTICLE_COMMENT_REPLY = "/article/comment/reply";
 
 AUTH_LOGIN = "/auth/api/login";
 AUTH_LOGOUT = "/auth/api/logout";
@@ -27,6 +28,15 @@ $(".nav-user-avatar").mouseout(function () {
 
 /* 开启app */
 function start_app() {
+}
+
+
+function has_attr(obj, attr_name) {
+    var attr_value = obj.attr(attr_name);
+    if (typeof(attr_value) == "undefined") {
+        return false;
+    }
+    return true;
 }
 
 
@@ -85,6 +95,17 @@ function edit_like_info(article_id, type_id, token, success) {
 /* ======= 评论相关 ====== */
 function comment_add(article_id, content, token) {
     $.post(ARTICLE_COMMENT_ADD, {article_id: article_id, content: content, csrfmiddlewaretoken: token}, function (result) {
+        if (result.code == 200) {
+            location.reload();
+        }else{
+            toastr.error("请求失败", result.message);
+        }
+    }, "json");
+}
+
+/* 评论回复 */
+function comment_reply_add(comment_id, reply_add, content, token) {
+    $.post(ARTICLE_COMMENT_REPLY, {comment_id: comment_id,reply_add:reply_add, content: content, csrfmiddlewaretoken: token}, function (result) {
         if (result.code == 200) {
             location.reload();
         }else{

@@ -112,10 +112,38 @@
                                                     <span>{{ comment.meta_info.like }}</span>
                                                     {% endif %}
                                                 </a>
-                                                <a>
+                                                <a onclick="comment_reply_show({{ comment.id }}, false, 0, '')">
                                                     <i class="fa fa-comments"></i>
-                                                    <span>回复</span>
+                                                    <span>回复({{ comment.meta_info.comment }})</span>
                                                 </a>
+                                            </div>
+                                            <div class="comment-reply-content {% if not comment.reply_list %} hidden {% endif %}" id="comment-reply-{{ comment.id }}">
+                                                {% for reply in comment.reply_list %}
+                                                    <div class="comment-reply-item">
+                                                        <p class="comment-reply-text">
+                                                            <a class="comment-reply-owner">{{ reply.user_info.nick_name }}</a>:
+                                                            {% if reply.user_info.nick_name != reply.reply_info.user_info.nick_name %}
+                                                                <a class="comment-reply-user">&nbsp;@{{ reply.reply_info.user_info.nick_name }}</a>
+                                                            {% endif %}
+                                                            {{ reply.content }}
+                                                        </p>
+                                                        <div class="comment-reply-item-info">
+                                                            <span>{{ reply.created_time }}</span>
+                                                            <a class="comment-reply-add" onclick="comment_reply_show({{ comment.id }}, true, {{ reply.id }}, '{{ reply.user_info.nick_name }}')">
+                                                                <i class="fa fa-comments"></i>
+                                                                <span>回复</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="article-comment-add" id="comment-add-{{ comment.id }}">
+                                                    <textarea class="article-comment-text" id="reply-content-{{ comment.id }}" placeholder="写下您的评论..."></textarea>
+                                                    <div class="article-comment-control">
+                                                        <span>Ctrl+Return发表</span>
+                                                        <a class="article-comment-publish" onclick="reply_comment({{ comment.id }})">发送</a>
+                                                        <a class="article-comment-cancel" onclick="comment_reply_show({{ comment.id }})">取消</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -130,6 +158,56 @@
 
 {% block javascript %}
     <script>
+
+        function reply_comment(comment_id) {
+            var reply_content = $("#reply-content-"+comment_id);
+            var reply_add_div = $("#comment-add-" + comment_id);
+
+            var reply_add = 0;
+            if (has_attr(reply_add_div, "reply")) {
+                reply_add = 1;
+                comment_id = reply_add_div.attr("reply");
+            }
+
+            comment_reply_add(comment_id, reply_add,reply_content.val(), '{{ csrf_token }}');
+        }
+
+        /* 是否显示回复框的处理函数 */
+        function comment_reply_show(id, is_reply, reply_id, reply_user) {
+            var reply_div = $("#comment-reply-"+id);
+            var reply_add_div = $("#comment-add-" + id);
+            var reply_content = $("#reply-content-"+id);
+
+            var is_hidden = reply_add_div.is(":hidden");
+            var has_reply = has_attr(reply_add_div, "reply");
+
+            if (is_reply) {
+                reply_add_div.attr("reply", reply_id);
+                reply_content.attr("placeholder", "回复@"+reply_user);
+
+                if (!is_hidden && !has_reply) {
+                    return
+                }
+
+            }else{
+                reply_add_div.removeAttr("reply");
+                reply_content.attr("placeholder", "写下您的评论");
+
+                if (!is_hidden && has_reply) {
+                    return
+                }
+            }
+
+            if (is_hidden && reply_div.hasClass("hidden")) {
+                reply_div.removeClass("hidden");
+            }else{
+                if(!is_hidden && reply_div.children(".comment-reply-item").length <= 0) {
+                    reply_div.addClass("hidden");
+                }
+            }
+            reply_add_div.toggle();
+        }
+
         function send_comment() {
             var content = $(".article-comment-text").val();
             if (content.length == 0) {

@@ -23,6 +23,7 @@ from app.modules.article.edit import change_article_status_handler
 from app.modules.article.edit import delete_article_handler
 from app.modules.article.like import like_edit_handler
 from app.modules.article.comment import *
+from app.modules.article.reply import *
 
 from app.modules.common.upload import upload_handler
 from app.modules.common.markdown import apply_markdown
@@ -50,6 +51,7 @@ urlpatterns = [
     url(r"^article/like", like_edit_handler),                   # api:article/like 编辑点赞状态
     url(r"^article/comment/add", comment_add_handler),          # api:article/comment/add 评论
     url(r"^article/comment/like", comment_like_edit_handler),   # api:article/comment/like 评论点赞状态编辑
+    url(r"^article/comment/reply", comment_reply_handler),      # api:article/comment/reply 评论回复
 
     # === Upload ===
     url(r"^upload/", upload_handler),
