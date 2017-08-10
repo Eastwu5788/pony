@@ -1,2 +1,0 @@
-python3-memcached==1.51
-redis==2.10.5

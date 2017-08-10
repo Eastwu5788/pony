@@ -8,6 +8,7 @@ from app.models.blog.article_meta import BlogArticleMeta
 from app.models.blog.comment import BlogComment
 from app.models.account.account import UserInfo
 
+import json
 
 def article_detail_handler(request, article_id):
     account = request.META["user_info"]
@@ -19,7 +20,7 @@ def article_detail_handler(request, article_id):
     article = BlogArticle.query_article_by_id(article_id)
     article["content"] = markdown(article["content"])
     article["comment_list"] = BlogComment.query_comment_list(article_id, account.id if account else 0)
-
+    print(json.dumps(article["comment_list"]))
     result["article"] = article
 
     if account:

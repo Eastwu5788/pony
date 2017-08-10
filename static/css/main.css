@@ -2,6 +2,15 @@ body {
     background: #ebebeb;
 }
 
+/* 通用属性 */
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
 /* 头部图片 */
 .header-container {
     display: block;
@@ -514,8 +523,20 @@ li.nav-current a {
 }
 
 .comment-control-bar a:hover {
-
 }
+
+/* 评论回复 */
+.comment-reply-content {
+    margin-top: 20px;
+    padding: 5px 0 5px 20px;
+    border-left: 2px solid #d9d9d9;
+}
+
+.comment-reply-content .article-comment-add {
+    margin-left: 0;
+    display: none;
+}
+
 
 /*===  文章详情底部结束  ===*/
 
