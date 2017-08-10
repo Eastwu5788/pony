@@ -136,6 +136,10 @@
                                                         </div>
                                                     </div>
                                                 {% endfor %}
+                                                <a class="comment-reply-more" onclick="comment_reply_show({{ comment.id }}, false, 0, '')">
+                                                    <i class="fa fa-pencil-square-o"></i>
+                                                    <span>添加新评论</span>
+                                                </a>
                                                 <div class="article-comment-add" id="comment-add-{{ comment.id }}">
                                                     <textarea class="article-comment-text" id="reply-content-{{ comment.id }}" placeholder="写下您的评论..."></textarea>
                                                     <div class="article-comment-control">

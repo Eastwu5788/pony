@@ -371,6 +371,8 @@ li.nav-current a {
 
 .article-comment-add {
     margin-left: 43px;
+    margin-top: 15px;
+    padding-top: 15px;
 }
 
 .article-comment-avatar {
@@ -535,6 +537,54 @@ li.nav-current a {
 .comment-reply-content .article-comment-add {
     margin-left: 0;
     display: none;
+}
+
+.comment-reply-content .comment-reply-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #f0f0f0;
+}
+
+.comment-reply-item p{
+    margin: 0 0 5px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.comment-reply-item p a {
+    color: #3194d0;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.comment-reply-item .comment-reply-item-info {
+    font-size: 12px;
+    color: #969696;
+}
+
+.comment-reply-item .comment-reply-add {
+    color: #969696;
+}
+
+.comment-reply-item-info a {
+    margin-left: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.comment-reply-content .comment-reply-more {
+    font-size: 14px;
+    color: #969696;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.comment-reply-more i {
+    margin-right: 5px;
 }
 
 
