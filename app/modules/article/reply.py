@@ -44,10 +44,7 @@ def comment_reply_handler(request):
     new_comment.save()
 
     # 修改评论meta
-    if reply_comment:
-        CommentMeta.edit(reply_comment.id, ["comment"])
-    else:
-        CommentMeta.edit(comment_id, ["comment"])
+    CommentMeta.edit(reply_comment.id if reply_comment else comment_id, ["comment"])
 
     return json_success_response()
 
