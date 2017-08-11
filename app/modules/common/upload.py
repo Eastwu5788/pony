@@ -85,7 +85,8 @@ class UploadImage(object):
     def pre_upload(self):
         image_info_list = []
         ori_image = self.request.FILES.get("image")
-        image_info_list.append(UploadImage.format_image(ori_image))
+        if ori_image:
+            image_info_list.append(UploadImage.format_image(ori_image))
         return image_info_list
 
     @staticmethod

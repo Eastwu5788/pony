@@ -1082,6 +1082,112 @@ ul.user-article li.user-article-item {
     color: #787878;
 }
 
+/* ======  用户设置(Setting) =======*/
+.user-setting-content .set-row {
+    height: 90px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.user-setting-content .set-row:nth-child(2) {
+    height: 120px;
+    border-bottom: none;
+}
+
+.set-user-avatar .avatar {
+    width: 100px;
+    height: 100px;
+    margin-top: auto;
+    margin-bottom: auto;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}
+
+.set-user-avatar .btn-set-file {
+    margin-left: 100px;
+    font-size: 14px;
+    color: #563d7c;
+    padding: 4px 12px;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 40px;
+    background: none;
+    border: 1px solid #563d7c;
+    cursor: pointer;
+}
+
+.set-user-avatar input {
+    position: absolute;
+    display: block;
+    width: 82px;
+    opacity: 0;
+}
+
+.user-setting-content .set-row span {
+    width: 100px;
+    font-size: 15px;
+    color: #969696;
+    padding: 20px 0;
+    margin-top: 14px;
+    float: left;
+    display: block;
+}
+
+.user-setting-content .set-nick-name input {
+    padding: 5px 10px;
+    font-size: 15px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    background-color: hsla(0, 0%, 71%, .1);
+    margin-top: 30px;
+    margin-left: 100px;
+    float: left;
+}
+
+.user-setting-content .set-email p {
+    font-size: 15px;
+    margin-bottom: 0;
+    margin-top: 35px;
+    margin-left: 100px;
+    float: left;
+}
+
+.user-setting-content .set-submit-btn {
+    width: 100px;
+    color: #ffffff;
+    background-color: #563d7c;
+    margin: 30px 0 60px;
+    border-radius: 20px;
+    border: none;
+}
+
+.set-gender .gender-select {
+    margin: 34px 0 0 100px;
+    float: left;
+}
+
+.set-gender .gender-select input {
+    display: block;
+    margin: 5px 0 0 0;
+    float: left;
+}
+
+.set-gender .gender-select span {
+    margin: 0 20px 0 6px;
+    font-size: 15px;
+    vertical-align: middle;
+    padding: 0;
+    color: #333;
+    width: auto;
+    float: left;
+}
+
+
+
+/* ======   用户设置结束  =========*/
+
 /* ======  授权(Auth)   =======*/
 
 .auth-main {
