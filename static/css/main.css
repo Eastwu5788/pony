@@ -992,6 +992,8 @@ textarea.text-edit {
 
 .content-meta-info a {
     color: #969696;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .content-meta-info li p {

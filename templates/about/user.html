@@ -17,24 +17,33 @@
                         <img class="avatar" src="{{ author.avatar.image_a }}">
                         <div class="content-user-info">
                             <div class="name-gender-info">
-                                <h1>{{ author.nick_name }}<i class="fa fa-mars"></i></h1>
+                                <h1>
+                                    {{ author.nick_name }}
+                                    {% if author.gender == 1 %}
+                                        <i class="fa fa-mars"></i>
+                                    {% elif author.gender == 2 %}
+                                        <i class="fa fa-venus"></i>
+                                    {% else %}
+                                        <i class="fa fa-genderless"></i>
+                                    {% endif %}
+                                </h1>
                             </div>
                             <ul class="content-meta-info">
                                 <li class="user-meta-follows">
                                     <a href="#">
-                                        <p>26</p>
+                                        <p>{{ author.follows }}</p>
                                         关注<i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
                                 <li class="user-meta-fans">
                                     <a href="#">
-                                        <p>26</p>
+                                        <p>{{ author.fans }}</p>
                                         粉丝<i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
                                 <li class="user-meta-follows">
                                     <a href="#">
-                                        <p>26</p>
+                                        <p>{{ author.articles }}</p>
                                         文章<i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>

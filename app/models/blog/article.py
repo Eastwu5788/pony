@@ -1,12 +1,17 @@
 from django.db import models
+from django.db.models import Count
 from django.core.cache import cache
+import django.utils.timezone as timezone
+
 from app.models.blog.kind import BlogKind
 from app.models.account.account import UserAccount
 from app.models.blog.article_meta import BlogArticleMeta
-import django.utils.timezone as timezone
+
 
 CACHE_KEY_ID = "Pony:BlogArticle:CacheId:"
 CACHE_TIME = 60*60*24
+
+CACHE_ARTICLE_COUNT = "Pony:BlogArticle:ArticleCount:"
 
 
 class BlogArticle(models.Model):
@@ -43,6 +48,25 @@ class BlogArticle(models.Model):
         obj_list = BlogArticle.objects.exclude(status=10).all().order_by('-id')[start:per_page]
         format_list = BlogArticle.format_articles(obj_list)
         return format_list
+
+    @staticmethod
+    def query_published_article_count(user_id, use_cache=True):
+        """
+        查询某一个用户发布的文章数量
+        :param user_id: 作者ID
+        :param use_cache: 是否启用缓存
+        """
+        cache_key = CACHE_ARTICLE_COUNT + str(user_id)
+        if use_cache:
+            count = cache.get(cache_key)
+            if count:
+                return count
+
+        count = BlogArticle.objects.filter(user_id=user_id, status=1).aggregate(Count("id"))
+        count = count["id__count"]
+        if count:
+            cache.set(cache_key, count, CACHE_TIME)
+        return count
 
     @staticmethod
     def query_published_articles_list(start=0, per_page=10):

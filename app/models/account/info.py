@@ -1,7 +1,11 @@
 from django.db import models
 from django.core.cache import cache
-from app.models.blog.image import Image
 import django.utils.timezone as timezone
+
+from app.models.blog.image import Image
+from app.models.account.follow import UserFollow
+import app.models.blog.article
+
 
 CACHE_KEY = "Pony:UserInfo:Cache:"
 CACHE_TIME = 60*60*24
@@ -46,6 +50,9 @@ class UserInfo(models.Model):
         result["nick_name"] = user_info.nick_name
         result["gender"] = user_info.gender
         result["avatar"] = Image.query_image_by_id(user_info.avatar)
+        result["fans"] = UserFollow.query_user_meta_count(user_info.user_id, False)
+        result["follows"] = UserFollow.query_user_meta_count(user_info.user_id)
+        result["articles"] = app.models.blog.article.BlogArticle.query_published_article_count(user_id=user_info.user_id)
         return result
 
     class Meta:
