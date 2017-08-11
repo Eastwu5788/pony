@@ -16,6 +16,7 @@ from app.modules.life.life import life_index_handler
 
 from app.modules.about.about import about_index_handler
 from app.modules.about.user import user_info_handler
+from app.modules.about.set import user_setting_handler
 
 from app.modules.article.detail import article_detail_handler
 from app.modules.article.edit import edit_article_handler as edit_article
@@ -68,6 +69,7 @@ urlpatterns = [
     # === About ===
     url(r"^about/", about_index_handler),
     url(r"^user/info/(\w+)", user_info_handler),
+    url(r"^user/setting", user_setting_handler),
 
     # === Manage ===
     url(r"^manage/edit/(\w+)", edit_article_handler),
