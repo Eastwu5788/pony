@@ -30,6 +30,9 @@ def edit_article_handler(request):
         article = BlogArticle.query_article_by_id(article.id, False)
         result["data"] = article
 
+        # 更新文章数量缓存
+        BlogArticle.query_published_article_count(user_info.id, False)
+
         # return
         return HttpResponse(json.dumps(result, cls=DateEncoder))
 
@@ -43,6 +46,8 @@ def edit_article_handler(request):
 
 @login_required
 def change_article_status_handler(request):
+    account = request.META["user_info"]
+
     result = base_result()
     if request.method == "GET":
         result["code"] = 500
@@ -55,6 +60,9 @@ def change_article_status_handler(request):
     BlogArticle.objects.filter(id=article_id).update(status=1 if status == 1 else 2)
     # update cache
     BlogArticle.query_article_by_id(article_id, False)
+    # 更新文章数量缓存
+    BlogArticle.query_published_article_count(account.id)
+
     return HttpResponse(json.dumps(result))
 
 
@@ -81,6 +89,8 @@ def delete_article_handler(request):
     article.save()
     # update article cache
     BlogArticle.query_article_by_id(article_id)
+    # 更新文章数量缓存
+    BlogArticle.query_published_article_count(operator.id, False)
     # 3、删除首页推荐
     HomeRecommend.objects.filter(share_id=article_id).update(status=0)
     return json_success_response()

@@ -29,7 +29,7 @@ def comment_add_handler(request):
     comment.save()
 
     # 添加评论数量记录
-    BlogArticleMeta.change_meta_record(article_id, account.id, ["comment"])
+    BlogArticleMeta.change_meta_record(article_id, article.user_id, ["comment"])
     # 更新文章
     BlogArticle.query_article_by_id(article_id, False)
     return json_success_response()
