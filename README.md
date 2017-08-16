@@ -1,5 +1,5 @@
 # Pony
-基于Python的个人博客框架
+我的个人博客源代码
 
 # 数据库创建
 [https://github.com/Eastwu5788/pony/wiki](https://github.com/Eastwu5788/pony/wiki)
