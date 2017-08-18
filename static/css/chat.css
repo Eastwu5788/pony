@@ -1,0 +1,314 @@
+/* 通用属性 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Helvetica Neue,Helvetica,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/2zrdI1g.jpg") no-repeat 50%;
+    background-size: cover;
+}
+
+body, html {
+    height: 100%;
+}
+
+
+/* 主视图 */
+.chat-main {
+    min-width: 800px;
+    max-width: 1000px;
+    height: 100%;
+    min-height: 600px;
+    margin: 0 auto;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: padding .3s linear;
+    backface-visibility: hidden;
+}
+
+.chat-panel {
+    position: relative;
+    width: 280px;
+    height: 100%;
+    float: left;
+    background: #2e3238;
+}
+
+.chat-panel-header {
+    padding: 18px;
+    position: relative;
+}
+
+.chat-panel-avatar {
+    display: table-cell;
+    vertical-align: middle;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: nowrap;
+    padding-right: 10px;
+}
+
+.chat-panel-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    display: block;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.chat-panel-info {
+    display: table-cell;
+    vertical-align: middle;
+    word-wrap: break-word;
+    word-break: break-all;
+    width: 200px;
+}
+
+.chat-panel-info h3 {
+    margin: 0;
+}
+
+.chat-panel-info .chat-panel-nickname span {
+    display: inline-block;
+    font-weight: 400;
+    width: 156px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    color: #fff;
+    font-size: 18px;
+    vertical-align: top;
+    line-height: 31px;
+    text-decoration: none;
+}
+
+.chat-panel-info .chat-panel-nickname .chat-panel-more {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -434px -398px;
+    background-size: 487px 462px;
+}
+
+.chat-panel-search-bar {
+    position: relative;
+    width: 244px;
+    margin: 0 auto 6px;
+}
+
+.chat-panel-search-bar .chat-panel-search {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    position: absolute;
+    z-index: 101;
+    top: 1px;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -60px -432px;
+    background-size: 487px 462px;
+}
+
+.chat-panel-search-bar .chat-panel-search-input {
+    width: 214px;
+    height: 32px;
+    line-height: 32px;
+    border: 0;
+    border-radius: 2px;
+    background-color: #26292e;
+    color: #fff;
+    padding-left: 30px;
+    font-size: 12px;
+}
+
+
+.chat-panel-tab {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #24272c;
+}
+
+.chat-panel-tab-item {
+    float: left;
+    width: 33.3333%;
+    position: relative;
+}
+
+.chat-panel-tab-item:nth-child(1) {
+    border-right: 1px solid #24272c;
+}
+
+.chat-panel-tab-item:nth-child(2) {
+    border-right: 1px solid #24272c;
+}
+
+.chat-panel-tab-item a {
+    display: block;
+    text-align: center;
+}
+
+.chat-panel-tab-item i {
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+}
+
+
+.chat-panel-tab-item .chat-panel-tab-chat {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -185px -96px;
+    background-size: 487px 462px;
+}
+
+
+.chat-panel-tab-item .chat-panel-tab-public {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -376px -322px;
+    background-size: 487px 462px;
+}
+
+.chat-panel-tab-item .chat-panel-tab-friends {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -220px -96px;
+    background-size: 487px 462px;
+}
+
+.chat-list-scrollbar-dynamic {
+    position: absolute;
+    top: 154px;
+    right: 0;
+    bottom: 0;
+    left:0;
+}
+
+
+.chat-content-view {
+    height: 100%;
+}
+
+.chat-area {
+    position: relative;
+    background-color: #eee;
+    height: 100%;
+    overflow: hidden;
+}
+
+.chat-area .chat-area-hd {
+    position: relative;
+    padding: 10px 0;
+    margin: 0 19px;
+    border-bottom: 1px solid #d6d6d6;
+    background-color: #eee;
+    z-index: 1024;
+    text-align: center;
+}
+
+.chat-area-hd a {
+    vertical-align: middle;
+    max-width: 300px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #000;
+    font-weight: 400;
+    font-size: 14px;
+    height: 25px;
+}
+
+
+.chat-scrollbar-ares {
+    bottom: 180px;
+    overflow: hidden;
+    height: 420px;
+    padding: 0 19px;
+}
+
+.chat-area-control {
+    height: 180px;
+    margin-right: 19px;
+    border-top: 1px solid #d6d6d6;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.chat-area-control .chat-tool-bar {
+    padding: 5px 17px;
+}
+
+.chat-tool-bar a {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+}
+
+.chat-tool-bar a.chat-tool-emoji {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -404px -398px;
+    background-size: 487px 462px;
+}
+
+.chat-tool-bar a.chat-tool-screen {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -30px -432px;
+    background-size: 487px 462px;
+}
+
+.chat-tool-bar a.chat-tool-file {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-position: -120px -432px;
+    background-size: 487px 462px;
+}
+
+.chat-area-input .chat-input{
+    height: 6em;
+    overflow: auto;
+    overflow-x: hidden;
+    padding-left: 20px;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: normal;
+    width: 100%;
+    background-color: #eee;
+}
+
+.chat-area-action {
+    text-align: right;
+    margin-top: 5px;
+}
+
+.chat-area-action span {
+    color: #888;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-right: 7px;
+    text-align: right;
+}
+
+.chat-area-action a {
+    background-color: #fff;
+    color: #222;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: inline-block;
+    border: 1px solid #c1c1c1;
+    padding: 3px 20px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
+
