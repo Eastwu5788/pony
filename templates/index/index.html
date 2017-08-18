@@ -4,6 +4,13 @@
     苗屋
 {% endblock %}
 
+{% block header %}
+{% endblock %}
+
+{% block navbar %}
+    {% include "base/navbar.html" %}
+{% endblock %}
+
 {% block content %}
     <section class="main-section article-index">
         <div class="container">
@@ -78,5 +85,8 @@
             password = $(".password").val();
             login(email, password, "{{ csrf_token }}");
         }
+
+        $("body").css({"padding-top":"70px"});
+        $(".main-navigation").css("border-bottom", "1px solid #f5f5f5");
     </script>
 {% endblock %}

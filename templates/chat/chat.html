@@ -1,0 +1,106 @@
+{% extends "base/base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/static/css/chat.css">
+{% endblock %}
+
+
+{% block header %}
+{% endblock %}
+
+
+{% block navbar %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="chat-main">
+        <div class="chat-panel">
+            <div class="chat-panel-header">
+                <div class="chat-panel-avatar">
+                    <img src="{{ user_info.avatar.image_a }}">
+                </div>
+                <div class="chat-panel-info">
+                    <h3 class="chat-panel-nickname">
+                        <span class="chat-panel-display-name">{{ user_info.nick_name }}</span>
+                        <a>
+                            <i class="chat-panel-more"></i>
+                        </a>
+                    </h3>
+                </div>
+            </div>
+            <div class="chat-panel-search-bar">
+                <i class="chat-panel-search"></i>
+                <input class="chat-panel-search-input" placeholder="Search">
+            </div>
+            <div class="chat-panel-tab">
+                <div class="chat-panel-tab-item">
+                    <a>
+                        <i class="chat-panel-tab-chat"></i>
+                    </a>
+                </div>
+                <div class="chat-panel-tab-item">
+                    <a>
+                        <i class="chat-panel-tab-public"></i>
+                    </a>
+                </div>
+                <div class="chat-panel-tab-item">
+                    <a>
+                        <i class="chat-panel-tab-friends"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="chat-list-scrollbar-dynamic">
+
+            </div>
+        </div>
+        <div class="chat-content-view">
+            <div class="chat-area">
+                <div class="chat-area-hd">
+                    <a>
+                        暂无回话
+                    </a>
+                </div>
+                <div class="chat-scrollbar-ares">
+
+                </div>
+                <div class="chat-area-control">
+                    <div class="chat-tool-bar">
+                        <a class="chat-tool-emoji">
+                        </a>
+                        <a class="chat-tool-screen">
+                        </a>
+                        <a class="chat-tool-file">
+                        </a>
+                    </div>
+                    <div class="chat-area-input">
+                        <textarea class="chat-input"></textarea>
+                    </div>
+                    <div class="chat-area-action">
+                        <span>Press Ctrl+Enter to start a new line</span>
+                        <a class="chat-action-send">Send</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block footer%}
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="/static/js/im/webim.config.js"></script>
+    <script type="text/javascript" src="/static/vendor/im/js/strophe-1.2.8.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/im/js/websdk-1.4.12.min.js"></script>
+    <script type="text/javascript" src="/static/js/im/im_ui.js"></script>
+    <script type="text/javascript" src="/static/js/im/im.js"></script>
+
+    <script type="text/javascript">
+        {% if user_info %}
+            var name = {{ user_info.id }} + "";
+            login_ease_mob_im(name, name);
+        {% endif %}
+    </script>
+{% endblock %}

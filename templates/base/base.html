@@ -60,7 +60,7 @@
                                 <span class="sr-only">Toggle navigation</span>
                             </span>
                         </div>
-                        <div class="collapse-navbar-collapse">
+                        <div class="collapse-navbar-collapse navbar-left">
                             <ul class="menu">
                                 <li role="presentation">
                                     <a href="/index/">首页</a>
@@ -69,7 +69,7 @@
                                     <a href="/skill/">技术</a>
                                 </li>
                                 <li role="presentation">
-                                    <a href="/life/">生活</a>
+                                    <a href="/chat">聊天</a>
                                 </li>
                                 <li role="presentation">
                                     <a href="/about/">关于</a>
@@ -154,7 +154,7 @@
 
     <script type="text/javascript">
         {% if section_info %}
-            $(".menu li:nth-child({{ section_info }})").addClass("nav-current");
+            $(".navbar-left .menu li:nth-child({{ section_info }})").addClass("nav-current");
         {% endif %}
     </script>
 

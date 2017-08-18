@@ -12,7 +12,7 @@ from app.modules.auth.register import check_register_email
 
 from app.modules.skill.skill import technology_handler
 
-from app.modules.life.life import life_index_handler
+from app.modules.im.chat import *
 
 from app.modules.about.about import about_index_handler
 from app.modules.about.user import user_info_handler
@@ -63,8 +63,8 @@ urlpatterns = [
     # === Tech ===
     url(r"^skill/", technology_handler),
 
-    # === Lift ===
-    url(r"^life/", life_index_handler),
+    # === Chat ===
+    url(r"^chat/", chat_module_handler),
 
     # === About ===
     url(r"^about/", about_index_handler),
