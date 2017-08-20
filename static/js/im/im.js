@@ -1,18 +1,45 @@
 // 存储所有回话的列表
 var conversation_list = [];
+// 存储所有好友列表
+var friend_list = [];
+
+var current_user_id = "";
 
 function user(data) {
 
 }
 
 function Conversation(message) {
-    this.from = message.from;
-    this.to = message.to;
-    this.messages = [message];
+    console.log(message);
+    this.messages = message === null ? [] : [message];
+    this.contact = message === null ? "" : message.contact;
+    this.user_info = null;
 
     // 向回话中追加一跳新消息
     this.add_message = function (message) {
-        this.messages.append(message);
+        this.messages.unshift(message);
+    };
+
+    // 发送一条文本消息
+    this.send_text_message = function (msg_str, user_info, func) {
+        var id = conn.getUniqueId();
+        var msg = new WebIM.message("txt", id);
+        msg.set({
+            msg: msg_str,
+            to: this.contact,
+            ext: {"user_info": user_info},
+            roomType: false,
+            success: function (id, serverMsgId) {
+                var message = txt_message_handler(false, serverMsgId, this, "", "");
+                func(true, message);
+            },
+            fail: function (id, serverMsgId) {
+                var message = txt_message_handler(true, serverMsgId, this, "500", "消息发送失败!");
+                func(false, message);
+            }
+        });
+        msg.body.chatType = 'singleChat';
+        conn.send(msg.body);
     }
 }
 
@@ -60,6 +87,8 @@ function login_ease_mob_im(user_name, password) {
         appKey: WebIM.config.appkey
     };
     conn.open(options);
+    // 存储当前用户ID
+    current_user_id = user_name;
 }
 
 // 环信退出
@@ -83,6 +112,7 @@ function receive_text_message(message) {
     // 接收到消息后，需要讲消息追加到回话中
     add_message_to_conversation(message);
 }
+
 
 // 接收到表情消息
 function receive_emoji_message(message) {
@@ -124,16 +154,34 @@ function receive_error_message(message) {
     console.log(message);
 }
 
+function query_friend_list(func) {
+    conn.getRoster({
+       success: function (roster) {
+           $.each(roster, function (index, ros) {
+                 if (ros.subscription === "both" || ros.subscription === "to") {
+                     friend_list.push(ros);
+                 }
+           });
+           func(friend_list);
+       }
+    });
+}
+
 // 新添加一条消息到回话列表中
 function add_message_to_conversation(message) {
-    var conversation = query_conversation_by_from(message.form);
-    if (conversation == null) {
+    // 对象添加属性
+    message.contact = (message.from === current_user_id) ? message.to : message.from;
+
+
+    var conversation = query_conversation_by_from(message.contact);
+    if (conversation === null) {
         // 新建一条会话，并插入到会话列表中
         conversation = new Conversation(message);
         conversation_list.unshift(conversation);
         // 新增一条会话
         insert_conversation(conversation);
     }else{
+        console.log(conversation);
         conversation.add_message(message);
         // 会话中新增一条消息
         insert_message_for_conversation(conversation);
@@ -141,12 +189,34 @@ function add_message_to_conversation(message) {
 }
 
 // 查询form用户的回话
-function query_conversation_by_from(from) {
+function query_conversation_by_from(contact) {
+    var checked_conversation = null;
     // 检查该消息的发送者在会话列表中是否存在
-    for (var conversation in conversation_list) {
-        if (conversation.from = from) {
-            return conversation;
+    $.each(conversation_list, function (index, conversation) {
+        if (conversation.contact === contact) {
+            checked_conversation = conversation;
+            return false;
         }
-    }
-    return null
+    });
+    return checked_conversation;
 }
+
+// 处理消息解析
+function txt_message_handler(error, id, send_msg, errorCode, errorText) {
+    var msg = {
+        id: id,
+        type: "chat",
+        from: current_user_id,
+        to: send_msg.to,
+        data: send_msg.body.msg,
+        ext: {},
+        error: error,
+        errorCode: errorCode,
+        errorText: errorText
+    };
+    return msg;
+}
+
+
+
+

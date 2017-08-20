@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2017/7/31.
  */
+
 /* === API ===*/
 ARTICLE_DELETE = "/manage/article/remove";
 
@@ -15,6 +16,7 @@ AUTH_LOGOUT = "/auth/api/logout";
 AUTH_CHECK_EMAIL = "/auth/api/checkemail";
 
 
+USER_INFO = "/user/api/info";
 
 start_app();
 
@@ -38,6 +40,17 @@ function has_attr(obj, attr_name) {
     }
     return true;
 }
+
+/* ======== 用户账户相关 ======= */
+function user_info(user_id, func) {
+    $.get(USER_INFO, {user_id: user_id, csrfmiddlewaretoken: csrf_token},function (data) {
+        if (data) {
+           func(data.user_info);
+        }
+
+    }, "json");
+}
+
 
 
 /* ========  授权相关  ========= */
