@@ -45,7 +45,7 @@
                     </a>
                 </div>
                 <div class="chat-panel-tab-item">
-                    <a>
+                    <a onclick="show_friends()">
                         <i class="chat-panel-tab-friends"></i>
                     </a>
                 </div>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="chat-area-action">
                         <span>Press Ctrl+Enter to start a new line</span>
-                        <a class="chat-action-send">Send</a>
+                        <a class="chat-action-send" onclick="send_message_handler({{ user_info }})">Send</a>
                     </div>
                 </div>
             </div>
@@ -98,6 +98,8 @@
     <script type="text/javascript" src="/static/js/im/im.js"></script>
 
     <script type="text/javascript">
+        csrf_token = '{{ csrf_token }}';
+
         {% if user_info %}
             var name = {{ user_info.id }} + "";
             login_ease_mob_im(name, name);

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from app.modules.common.auth import login_required
 from app.models.blog.article import BlogArticle
 from app.models.account.info import UserInfo
+from django.http.response import HttpResponse
+import json
 
 
 def user_info_handler(request, user_id):
@@ -17,5 +19,11 @@ def user_info_handler(request, user_id):
             article["content"] = article["content"][:200]
 
     return render(request, "about/user.html", result)
+
+
+def user_info_api_handler(request):
+    user_id = request.GET.get("user_id")
+    user_info = UserInfo.query_format_info_by_user_id(user_id)
+    return HttpResponse(json.dumps({"user_info": user_info}))
 
 
