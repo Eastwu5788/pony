@@ -5,29 +5,77 @@ var friend_list = [];
 
 var current_user_id = "";
 
+// 缓存用户信息列表
+var cache_user_info_list = [];
+
+// 当前活跃回话
+var current_conversation = null;
+
 function user(data) {
 
 }
 
 function Conversation(message) {
     console.log(message);
-    this.messages = message === null ? [] : [message];
+    this.messages = [];
     this.contact = message === null ? "" : message.contact;
     this.user_info = null;
 
     // 向回话中追加一跳新消息
     this.add_message = function (message) {
+        var now = new Date().getTime();
+        if (this.messages.length > 0) {
+            var last_msg = this.messages[0];
+            if (last_msg.type !== "time") {
+                if(now - last_msg.timeStamp > 60000) {
+                    this.messages.unshift(time_message_handler());
+                }
+            }
+        }else{
+            this.messages.unshift(time_message_handler());
+        }
+        message.timeStamp = now;
         this.messages.unshift(message);
     };
 
+    this.last_message = function () {
+        if(this.messages.length > 0) {
+            var msg = this.messages[0];
+            return msg.data;
+        }else{
+            return null;
+        }
+    };
+
+    // 获取联系人信息
+    this.contact_user_info = function (func) {
+        if (this.messages.length > 0) {
+            var msg = this.messages[0];
+            for (var index=0, len = msg.ext.user_list.length; index < len; index++ ) {
+                var user_info = msg.ext.user_list[index];
+                if (user_info.id === parseInt(this.contact)) {
+                    this.user_info = user_info;
+                    func(user_info);
+                    return null;
+                }
+            }
+        }else{
+            query_user_info(this.contact, function (user_info) {
+                this.user_info = user_info;
+                func(user_info);
+            });
+        }
+    };
+
     // 发送一条文本消息
-    this.send_text_message = function (msg_str, user_info, func) {
+    this.send_text_message = function (msg_str, user_info, contact_info, func) {
         var id = conn.getUniqueId();
         var msg = new WebIM.message("txt", id);
+
         msg.set({
             msg: msg_str,
             to: this.contact,
-            ext: {"user_info": user_info},
+            ext: {"user_list":[user_info, contact_info]},
             roomType: false,
             success: function (id, serverMsgId) {
                 var message = txt_message_handler(false, serverMsgId, this, "", "");
@@ -87,7 +135,6 @@ function login_ease_mob_im(user_name, password) {
         appKey: WebIM.config.appkey
     };
     conn.open(options);
-    // 存储当前用户ID
     current_user_id = user_name;
 }
 
@@ -108,7 +155,8 @@ function logout_success(message) {
 
 // 接收到文本消息
 function receive_text_message(message) {
-    console.log(message);
+    var audio = document.getElementById("audio-msg-play");
+    audio.play();
     // 接收到消息后，需要讲消息追加到回话中
     add_message_to_conversation(message);
 }
@@ -155,16 +203,29 @@ function receive_error_message(message) {
 }
 
 function query_friend_list(func) {
-    conn.getRoster({
-       success: function (roster) {
-           $.each(roster, function (index, ros) {
-                 if (ros.subscription === "both" || ros.subscription === "to") {
-                     friend_list.push(ros);
-                 }
-           });
-           func(friend_list);
-       }
-    });
+    if (friend_list.length > 0) {
+        func();
+    }else{
+        conn.getRoster({
+            success: function (roster) {
+                var friends = [];
+                $.each(roster, function (index, ros) {
+                    if (ros.subscription === "both" || ros.subscription === "to") {
+                        friends.push(ros);
+                    }
+                });
+                $.each(friends, function (index, ros) {
+                    query_user_info(ros.name, function (user_info) {
+                        friend_list.push(user_info);
+                        if (friend_list.length === friends.length) {
+                            func();
+                            return null;
+                        }
+                    });
+                });
+            }
+        });
+    }
 }
 
 // 新添加一条消息到回话列表中
@@ -177,9 +238,14 @@ function add_message_to_conversation(message) {
     if (conversation === null) {
         // 新建一条会话，并插入到会话列表中
         conversation = new Conversation(message);
-        conversation_list.unshift(conversation);
-        // 新增一条会话
-        insert_conversation(conversation);
+        conversation.add_message(message);
+        conversation.contact_user_info(function () {
+            console.log("-----");
+            console.log(conversation);
+            conversation_list.unshift(conversation);
+            // 新增一条会话
+            insert_conversation(conversation);
+        });
     }else{
         console.log(conversation);
         conversation.add_message(message);
@@ -209,7 +275,7 @@ function txt_message_handler(error, id, send_msg, errorCode, errorText) {
         from: current_user_id,
         to: send_msg.to,
         data: send_msg.body.msg,
-        ext: {},
+        ext: send_msg.ext,
         error: error,
         errorCode: errorCode,
         errorText: errorText
@@ -217,6 +283,53 @@ function txt_message_handler(error, id, send_msg, errorCode, errorText) {
     return msg;
 }
 
+function time_message_handler() {
+    var time_stamp = new Date().getTime();
+    var msg = {
+        id: time_stamp,
+        type: "time",
+        from: "",
+        to: "",
+        data: "",
+        timeStamp: time_stamp,
+        ext: {},
+        error: "",
+        errorCode: "",
+        errorText: ""
+    };
+    return msg
+}
+
+function query_user_info_from_message(message, user_id) {
+    console.log(message);
+    for(var index=0, len = message.ext.user_list.length; index < len; index++) {
+        var user_info = message.ext.user_list[index];
+        console.log(user_info);
+        if (user_info.id.toString() === user_id.toString()) {
+            return user_info;
+        }
+    }
+    return null;
+}
+
+/*=================  Util ===========*/
+// TODO: 内存缓存设计 1.hash_key->value 2.内存回收 3.命中率 参考：Memcached
+function query_user_info(user_id, func) {
+    // 1.查找缓存
+    for (var i=0, len=cache_user_info_list.length; i < len; i++) {
+        var user = cache_user_info_list[i];
+        if (user.id.toString() === user_id.toString()) {
+            func(user);
+            return null;
+        }
+    }
+
+    // 2.服务器异步查询
+    get_user_info(user_id, function (data) {
+        cache_user_info_list.unshift(data);
+        func(data);
+    });
+}
 
 
 

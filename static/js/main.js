@@ -42,7 +42,7 @@ function has_attr(obj, attr_name) {
 }
 
 /* ======== 用户账户相关 ======= */
-function user_info(user_id, func) {
+function get_user_info(user_id, func) {
     $.get(USER_INFO, {user_id: user_id, csrfmiddlewaretoken: csrf_token},function (data) {
         if (data) {
            func(data.user_info);

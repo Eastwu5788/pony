@@ -35,18 +35,18 @@
             </div>
             <div class="chat-panel-tab">
                 <div class="chat-panel-tab-item">
-                    <a>
-                        <i class="chat-panel-tab-chat"></i>
+                    <a onclick="show_conversation()">
+                        <i class="chat-panel-tab-chat active"></i>
                     </a>
                 </div>
                 <div class="chat-panel-tab-item">
-                    <a>
-                        <i class="chat-panel-tab-public"></i>
+                    <a onclick="show_notification()">
+                        <i class="chat-panel-tab-notification normal"></i>
                     </a>
                 </div>
                 <div class="chat-panel-tab-item">
                     <a onclick="show_friends()">
-                        <i class="chat-panel-tab-friends"></i>
+                        <i class="chat-panel-tab-friends normal"></i>
                     </a>
                 </div>
             </div>
@@ -84,6 +84,7 @@
             </div>
         </div>
     </div>
+    <audio id="audio-msg-play" preload="metadata" src="https://wx2.qq.com/zh_CN/htmledition/v2/sound/msg.mp3"></audio>
 {% endblock %}
 
 
@@ -104,5 +105,11 @@
             var name = {{ user_info.id }} + "";
             login_ease_mob_im(name, name);
         {% endif %}
+
+        $(".chat-input").keypress(function (event) {
+            if(event.key === "Enter") {
+                send_message_handler({{ user_info | safe }});
+            }
+        });
     </script>
 {% endblock %}

@@ -163,24 +163,46 @@ body, html {
 }
 
 
-.chat-panel-tab-item .chat-panel-tab-chat {
+.chat-panel-tab-chat {
     background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-size: 487px 462px;
+}
+
+.chat-panel-tab-chat.active {
     background-position: -185px -96px;
-    background-size: 487px 462px;
+}
+
+.chat-panel-tab-chat.normal {
+    background-position: -150px -96px;
 }
 
 
-.chat-panel-tab-item .chat-panel-tab-public {
+.chat-panel-tab-notification {
     background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+    background-size: 487px 462px;
+}
+
+.chat-panel-tab-notification.normal {
     background-position: -376px -322px;
+}
+
+.chat-panel-tab-notification.active {
+    background-position: -304px -281px;
+}
+
+.chat-panel-tab-friends {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
     background-size: 487px 462px;
 }
 
-.chat-panel-tab-item .chat-panel-tab-friends {
-    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png");
+.chat-panel-tab-friends.normal {
     background-position: -220px -96px;
-    background-size: 487px 462px;
 }
+
+.chat-panel-tab-friends.active {
+    background-position: -304px -246px;
+}
+
 
 .chat-list-scrollbar-dynamic {
     position: absolute;
@@ -190,12 +212,16 @@ body, html {
     left:0;
 }
 
-.chat-con-type-common, .chat-friend-common {
+.chat-conversation-item, .chat-friend-item {
     overflow: hidden;
     padding: 12px 18px 11px;
     border-bottom: 1px solid #292c33;
     cursor: pointer;
     position: relative;
+}
+
+.chat-conversation-item.active {
+    background-color: #3a3f45;
 }
 
 .chat-con-avatar {
@@ -239,8 +265,11 @@ body, html {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+    max-width: 180px;
     height: 1.5em;
     margin: 0;
+    white-space: nowrap;
+    word-wrap: normal;
 }
 
 
@@ -279,10 +308,85 @@ body, html {
 
 
 .chat-scrollbar-ares {
-    bottom: 180px;
-    overflow: hidden;
+    /*bottom: 180px;*/
+    overflow: auto;
     height: 420px;
     padding: 0 19px;
+}
+
+.message-time-container {
+    text-align: center;
+    margin: 10px auto;
+    max-width: 50%;
+}
+
+.message-time-container .message-time-text {
+    font-size: 12px;
+    padding: 1px 18px;
+    color: #b2b2b2;
+    border-radius: 2px;
+}
+
+.message-container {
+    margin-bottom: 16px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.message-user-href-right {
+    float: right;
+}
+
+.message-user-href-left {
+    float: left;
+}
+
+/* 用户头像 */
+.message-user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+
+
+.message-bubble {
+    max-width: 460px;
+    min-height: 1em;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 0 10px;
+}
+
+.message-bubble-left {
+    text-align: left;
+    float: left;
+    background-color: #fff;
+}
+
+.message-bubble-right {
+    text-align: right;
+    float: right;
+    background-color: #b2e281;
+}
+
+.message-content {
+    padding: 9px 13px;
+    margin-bottom: 0;
+}
+
+.message-content-left {
+    text-align: left;
+    float: left;
+}
+
+.message-content-right {
+    text-align: right;
+    float: right;
 }
 
 .chat-area-control {
