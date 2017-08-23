@@ -5,9 +5,10 @@ from django.http import HttpResponseRedirect
 from app.models.account.account import UserAccount
 from app.models.account.info import UserInfo
 from app.models.account.token import AccessToken
-from app.modules.common.email import Email
+from app.modules.common.util_email import Email
 from app.modules.common.secret import get_secret_password
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
+from app.modules.common.easemob import generate_ease_mob_id
 
 
 def register_handler(request):
@@ -72,6 +73,8 @@ def register_new_account(nick_name, email, password):
 
         user_info = UserInfo()
         user_info.user_id = account.id
+        # 生成环信账号
+        user_info.ease_mob = generate_ease_mob_id(account.id)
         user_info.nick_name = nick_name
         user_info.gender = 0
         user_info.avatar = 0

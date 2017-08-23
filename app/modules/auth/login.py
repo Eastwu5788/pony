@@ -4,7 +4,7 @@ from django.http.response import HttpResponseRedirect
 from app.models.account.account import UserAccount
 from app.modules.common.secret import *
 from app.models.account.token import AccessToken
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
 
 
 def login_handler(request):

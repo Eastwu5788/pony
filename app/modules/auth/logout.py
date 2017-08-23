@@ -1,4 +1,4 @@
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
 from app.modules.common.auth import login_required
 
 

@@ -1007,6 +1007,23 @@ textarea.text-edit {
     text-align: center;
 }
 
+.content-meta-info .user-meta-chat {
+    margin: 5px 0 0 0;
+    padding: 0;
+    border: none;
+}
+
+.user-meta-chat a {
+    width: 60px;
+    height: 30px;
+    color: #ea6f5a;
+    border: 1px solid #ea6f5a;
+    display: block;
+    line-height: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
 
 ul.user-article {
     padding-left: 0;

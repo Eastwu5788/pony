@@ -1,6 +1,6 @@
 from app.modules.common.auth import *
 from app.models.blog.article import BlogArticle
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
 from app.models.blog.recommend import HomeRecommend
 
 

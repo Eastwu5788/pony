@@ -27,3 +27,9 @@ def user_info_api_handler(request):
     return HttpResponse(json.dumps({"user_info": user_info}))
 
 
+def user_info_api_by_ease_mob_handler(request):
+    ease_mob = request.GET.get("ease_mob")
+    user_info = UserInfo.query_format_info_by_ease_mob(ease_mob)
+    return HttpResponse(json.dumps({"user_info": user_info}))
+
+

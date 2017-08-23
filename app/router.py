@@ -70,6 +70,7 @@ urlpatterns = [
     url(r"^about/", about_index_handler),
     url(r"^user/info/(\w+)", user_info_handler),
     url(r"^user/api/info", user_info_api_handler),
+    url(r"^user/api/easemob", user_info_api_by_ease_mob_handler),
     url(r"^user/setting", user_setting_handler),
 
     # === Manage ===
