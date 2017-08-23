@@ -1,5 +1,5 @@
 from app.modules.common.auth import login_required
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
 from app.models.blog.article import BlogArticle
 from app.models.blog.like import BlogLike
 from app.models.blog.article_meta import BlogArticleMeta

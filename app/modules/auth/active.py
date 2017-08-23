@@ -2,8 +2,10 @@ from django.shortcuts import redirect
 
 from app.models.account.account import UserAccount
 from app.models.account.token import AccessToken
-from app.modules.common.struct import *
+from app.models.account.info import UserInfo
+from app.modules.common.util_struct import *
 from app.modules.common.secret import verify_password
+from app.modules.common.easemob import register_ease_mob
 
 
 def active_account_handler(request):
@@ -30,5 +32,10 @@ def active_account_handler(request):
 
     account.status = 1
     account.save()
+
+    # 注册环信
+    user_info = UserInfo.query_format_info_by_user_id(account.id, use_cache=False)
+    register_ease_mob(user_info['ease_mob'])
+
     return redirect("/auth/login")
 

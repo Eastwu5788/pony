@@ -1,6 +1,6 @@
 import mistune
 from django.shortcuts import render
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
 from app.models.blog.article import BlogArticle
 from app.models.blog.kind import BlogKind
 from app.modules.common.auth import *

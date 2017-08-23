@@ -5,7 +5,7 @@ from django.http.response import HttpResponseRedirect
 from django.http.response import HttpResponse
 
 from app.modules.common.auth import login_required
-from app.modules.common.struct import base_result
+from app.modules.common.util_struct import base_result
 from app.modules.common.upload import UploadImage
 
 from app.models.blog.article import BlogArticle

@@ -11,12 +11,13 @@ var cache_user_info_list = [];
 // 当前活跃回话
 var current_conversation = null;
 
+var start_contact = "";
+
 function user(data) {
 
 }
 
 function Conversation(message) {
-    console.log(message);
     this.messages = [];
     this.contact = message === null ? "" : message.contact;
     this.user_info = null;
@@ -53,7 +54,7 @@ function Conversation(message) {
             var msg = this.messages[0];
             for (var index=0, len = msg.ext.user_list.length; index < len; index++ ) {
                 var user_info = msg.ext.user_list[index];
-                if (user_info.id === parseInt(this.contact)) {
+                if (user_info.ease_mob === this.contact) {
                     this.user_info = user_info;
                     func(user_info);
                     return null;
@@ -71,7 +72,6 @@ function Conversation(message) {
     this.send_text_message = function (msg_str, user_info, contact_info, func) {
         var id = conn.getUniqueId();
         var msg = new WebIM.message("txt", id);
-
         msg.set({
             msg: msg_str,
             to: this.contact,
@@ -145,12 +145,13 @@ function logout_ease_mob_im() {
 
 // 连接成功回调
 function login_success(message) {
-    console.log(message)
+    console.log(message);
 }
 
 // 断开连接回调
-function logout_success(message) {
-    
+function logout_success() {
+    // 异常断开之后，需要退出当前账号
+    logout(csrf_token);
 }
 
 // 接收到文本消息
@@ -233,21 +234,17 @@ function add_message_to_conversation(message) {
     // 对象添加属性
     message.contact = (message.from === current_user_id) ? message.to : message.from;
 
-
     var conversation = query_conversation_by_from(message.contact);
     if (conversation === null) {
         // 新建一条会话，并插入到会话列表中
         conversation = new Conversation(message);
         conversation.add_message(message);
         conversation.contact_user_info(function () {
-            console.log("-----");
-            console.log(conversation);
             conversation_list.unshift(conversation);
             // 新增一条会话
             insert_conversation(conversation);
         });
     }else{
-        console.log(conversation);
         conversation.add_message(message);
         // 会话中新增一条消息
         insert_message_for_conversation(conversation);
@@ -300,12 +297,10 @@ function time_message_handler() {
     return msg
 }
 
-function query_user_info_from_message(message, user_id) {
-    console.log(message);
+function query_user_info_from_message(message, ease_mob) {
     for(var index=0, len = message.ext.user_list.length; index < len; index++) {
         var user_info = message.ext.user_list[index];
-        console.log(user_info);
-        if (user_info.id.toString() === user_id.toString()) {
+        if (user_info.ease_mob === ease_mob) {
             return user_info;
         }
     }
@@ -314,18 +309,18 @@ function query_user_info_from_message(message, user_id) {
 
 /*=================  Util ===========*/
 // TODO: 内存缓存设计 1.hash_key->value 2.内存回收 3.命中率 参考：Memcached
-function query_user_info(user_id, func) {
+function query_user_info(ease_mob, func) {
     // 1.查找缓存
     for (var i=0, len=cache_user_info_list.length; i < len; i++) {
         var user = cache_user_info_list[i];
-        if (user.id.toString() === user_id.toString()) {
+        if (user.ease_mob.toString() === ease_mob.toString()) {
             func(user);
             return null;
         }
     }
 
     // 2.服务器异步查询
-    get_user_info(user_id, function (data) {
+    request_user_ease_mob_info(ease_mob, function (data) {
         cache_user_info_list.unshift(data);
         func(data);
     });

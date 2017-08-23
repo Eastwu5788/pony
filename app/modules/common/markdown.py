@@ -1,7 +1,7 @@
 import mistune
 import json
 from django.http import HttpResponse
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
 
 
 def apply_markdown(request):

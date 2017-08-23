@@ -72,12 +72,13 @@ function start_conversation_with_contact(contact) {
         // 新建一条会话，并插入到会话列表中
         con = new Conversation(null);
         con.contact = contact;
+        console.log("新建回话");
         con.contact_user_info(function (user_info) {
             con.user_info = user_info;
             conversation_list.unshift(con);
             show_conversation();
-            console.log(con);
             show_conversation_detail(con);
+            console.log("新建回话", con);
         });
     }else{
         show_conversation();
@@ -154,7 +155,6 @@ function change_tab_status(class_str, active) {
 * 发送一条新消息的处理函数
 * */
 function send_message_handler(user_info) {
-    console.log(user_info);
 
     if (current_conversation === null) {
         toastr.error("Error", "当前回话不存在");
@@ -181,10 +181,10 @@ function send_message_handler(user_info) {
 
 function friend_item_factory(friend) {
     var div = $("<div class='chat-friend-item'></div>");
-    div.attr("id", "chat-friend-"+friend.id);
+    div.attr("id", "chat-friend-"+friend.ease_mob);
 
     var click_a = $("<a class='click-href'></a>");
-    click_a.attr("data", friend.id);
+    click_a.attr("data", friend.ease_mob);
     click_a.click(function () {
         start_conversation_with_contact($(".click-href").attr("data"));
     });
@@ -248,7 +248,7 @@ function message_factory(message) {
 
     var user_info = null;
     // 我发送给对方的消息
-    if (message.from.toString() === current_user_id.toString()) {
+    if (message.from === current_user_id) {
         user_info = query_user_info_from_message(message, current_user_id);
 
         // 内容居于右侧
@@ -270,8 +270,6 @@ function message_factory(message) {
     if (user_info !== null) {
         msg_user_avatar.attr("src", user_info.avatar.image_a);
     }
-
-    console.log("ssasdafd");
 
     return msg_div;
 }

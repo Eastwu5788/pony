@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from app.modules.common.struct import *
+from app.modules.common.util_struct import *
 
 
 def technology_handler(request):

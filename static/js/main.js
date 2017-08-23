@@ -17,6 +17,7 @@ AUTH_CHECK_EMAIL = "/auth/api/checkemail";
 
 
 USER_INFO = "/user/api/info";
+USER_EASE_MOB_INFO = "/user/api/easemob";
 
 start_app();
 
@@ -44,6 +45,15 @@ function has_attr(obj, attr_name) {
 /* ======== 用户账户相关 ======= */
 function get_user_info(user_id, func) {
     $.get(USER_INFO, {user_id: user_id, csrfmiddlewaretoken: csrf_token},function (data) {
+        if (data) {
+           func(data.user_info);
+        }
+
+    }, "json");
+}
+
+function request_user_ease_mob_info(ease_mob, func) {
+    $.get(USER_EASE_MOB_INFO, {ease_mob: ease_mob, csrfmiddlewaretoken: csrf_token},function (data) {
         if (data) {
            func(data.user_info);
         }

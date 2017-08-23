@@ -47,6 +47,13 @@
                                         文章<i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
+                                {% if author.id != user_info.id %}
+                                <li class="user-meta-chat">
+                                    <a href="/chat/?contact={{ author.ease_mob }}">
+                                        私信Ta
+                                    </a>
+                                </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
