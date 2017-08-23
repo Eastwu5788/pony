@@ -1,0 +1,46 @@
+.chat-tool-bar .qq-face a {
+    float: left;
+    width: 28px;
+    height: 28px;
+    font-size: 0;
+    text-indent: -999em;
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+    cursor: pointer;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/15BPafa.png") no-repeat;
+}
+
+
+.face-container {
+    top: -200px;
+    left: 15px;
+    width: 420px;
+    height: 195px;
+    background: #fff;
+    position: absolute;
+    overflow: hidden;
+}
+
+.face-container .qq-face {
+    width: 100%;
+    height: 100%;
+}
+
+.qqemoji {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/3gXSfR9.png") 0 0 no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: middle;
+}
+
+.emoji0 {
+    background-position: 0 0;
+}
+
+.emoji1 {
+    background-position: -24px 0;
+}
+
+

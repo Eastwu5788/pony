@@ -13,6 +13,8 @@ var current_conversation = null;
 
 var start_contact = "";
 
+
+
 function user(data) {
 
 }
@@ -72,11 +74,13 @@ function Conversation(message) {
     this.send_text_message = function (msg_str, user_info, contact_info, func) {
         var id = conn.getUniqueId();
         var msg = new WebIM.message("txt", id);
+
         msg.set({
             msg: msg_str,
             to: this.contact,
             ext: {"user_list":[user_info, contact_info]},
             roomType: false,
+            chatType: 'singleChat',
             success: function (id, serverMsgId) {
                 var message = txt_message_handler(false, serverMsgId, this, "", "");
                 func(true, message);
@@ -86,7 +90,38 @@ function Conversation(message) {
                 func(false, message);
             }
         });
-        msg.body.chatType = 'singleChat';
+
+        conn.send(msg.body);
+    };
+
+    this.send_img_message = function (file, user_info, func) {
+        var id = conn.getUniqueId();
+        var msg = new WebIM.message("img", id);
+
+        msg.set({
+            apiUrl: WebIM.config.apiURL,
+            file: file,
+            to: this.contact,
+            ext: {"user_list":[user_info, current_conversation.user_info]},
+            roomType: false,
+            chatType: 'singleChat',
+            onFileUploadError: function () {      // 消息上传失败
+                console.log('onFileUploadError');
+            },
+            onFileUploadComplete: function () {
+                console.log('onFileUploadComplete');
+            },
+            success: function (id, serverMsgId) {
+                var message = image_message_handler(false, serverMsgId, this, "", "");
+                func(true, message);
+            },
+            fail: function (id, serverMsgId) {
+                var message = image_message_handler(true, serverMsgId, this, "500", "");
+                func(false, message);
+            },
+            flashUpload: WebIM.flashUpload
+        });
+
         conn.send(msg.body);
     }
 }
@@ -156,8 +191,7 @@ function logout_success() {
 
 // 接收到文本消息
 function receive_text_message(message) {
-    var audio = document.getElementById("audio-msg-play");
-    audio.play();
+    play_message_audio();
     // 接收到消息后，需要讲消息追加到回话中
     add_message_to_conversation(message);
 }
@@ -170,7 +204,11 @@ function receive_emoji_message(message) {
 
 // 接收到图片消息
 function receive_pic_message(message) {
-    
+    console.log("图片消息:",message);
+    play_message_audio();
+    // 修改图片类型，EaseMob没有做区分
+    message.type = "img";
+    add_message_to_conversation(message);
 }
 
 // 接收到透传消息
@@ -280,6 +318,23 @@ function txt_message_handler(error, id, send_msg, errorCode, errorText) {
     return msg;
 }
 
+function image_message_handler(error, id, send_msg, errorCode, errorText) {
+    console.log(send_msg);
+    var msg = {
+        id: id,
+        type: send_msg.body.type,
+        from: current_user_id,
+        to: send_msg.to,
+        url: send_msg.body.url,
+        secret: send_msg.body.secret,
+        ext: send_msg.ext,
+        error: error,
+        errorCode: errorCode,
+        errorText: errorText
+    };
+    return msg;
+}
+
 function time_message_handler() {
     var time_stamp = new Date().getTime();
     var msg = {
@@ -308,6 +363,12 @@ function query_user_info_from_message(message, ease_mob) {
 }
 
 /*=================  Util ===========*/
+// 播放收到消息的音效
+function play_message_audio() {
+    var audio = document.getElementById("audio-msg-play");
+    audio.play();
+}
+
 // TODO: 内存缓存设计 1.hash_key->value 2.内存回收 3.命中率 参考：Memcached
 function query_user_info(ease_mob, func) {
     // 1.查找缓存

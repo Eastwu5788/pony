@@ -1,6 +1,7 @@
 {% extends "base/base.html" %}
 
 {% block stylesheet %}
+    <link rel="stylesheet" href="/static/css/face.css">
     <link rel="stylesheet" href="/static/css/chat.css">
 {% endblock %}
 
@@ -54,6 +55,7 @@
 
             </div>
         </div>
+
         <div class="chat-content-view">
             <div class="chat-area">
                 <div class="chat-area-hd">
@@ -66,15 +68,16 @@
                 </div>
                 <div class="chat-area-control">
                     <div class="chat-tool-bar">
-                        <a class="chat-tool-emoji">
+                        <a class="chat-tool-emoji" onclick="show_face_panel_handler()">
                         </a>
                         <a class="chat-tool-screen">
                         </a>
                         <a class="chat-tool-file">
+                            <input type="file" id="chat-file-input" onchange="send_file_handler(this, {{ user_info }})">
                         </a>
                     </div>
                     <div class="chat-area-input">
-                        <textarea class="chat-input"></textarea>
+                        <pre contenteditable="true" class="chat-input"></pre>
                     </div>
                     <div class="chat-area-action">
                         <span>Press Ctrl+Enter to start a new line</span>
@@ -95,6 +98,7 @@
     <script type="text/javascript" src="/static/js/im/webim.config.js"></script>
     <script type="text/javascript" src="/static/vendor/im/js/strophe-1.2.8.min.js"></script>
     <script type="text/javascript" src="/static/vendor/im/js/websdk-1.4.12.min.js"></script>
+    <script type="text/javascript" src="/static/js/im/face.js"></script>
     <script type="text/javascript" src="/static/js/im/im_ui.js"></script>
     <script type="text/javascript" src="/static/js/im/im.js"></script>
 
