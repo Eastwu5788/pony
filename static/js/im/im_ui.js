@@ -8,6 +8,13 @@ var allow_img_type = {
     'bmp': true
 };
 
+var allow_file_type = {
+    'zip': true,
+    'txt': true,
+    'doc': true,
+    'pdf': true
+};
+
 // 增加一条新的会话
 function insert_conversation(conversation) {
 
@@ -193,23 +200,26 @@ function send_file_handler(dom, user_info) {
     }
 
     var file = WebIM.utils.getFileUrl(dom);
-    if (file.filetype.toLowerCase() in allow_img_type) {
-        send_image_handler(file, user_info);
+    var file_type = file.filetype.toLowerCase();
+
+    var type = null;
+    if (file_type in allow_img_type) {
+        type = "img";
+    }else if(file_type in allow_file_type) {
+        type = "file";
     }
-}
 
-/**
- * 发送一条图片消息
- * */
-function send_image_handler(file, user_info) {
-    // 发送一条文本消息
-    current_conversation.send_img_message(file, user_info, function (success, message) {
-        // 不论失败或者成功，都需要向会话中插入消息
-        current_conversation.add_message(message);
-        insert_message_for_conversation(current_conversation);
-    });
-}
 
+    if (type !== null) {
+        current_conversation.send_file_message(type, file, user_info, function (success, message) {
+            current_conversation.add_message(message);
+            insert_message_for_conversation(current_conversation);
+        });
+    }else{
+        toastr.error("Error", "暂不支持发送此格式文件");
+    }
+
+}
 
 
 /*
@@ -222,16 +232,15 @@ function send_message_handler(user_info) {
         return null;
     }
 
-    var new_message = $(".chat-input").val();
+    var new_message = $(".chat-input").html();
     if ($.trim(new_message).length === 0) {
         toastr.error("Error", "您要发送的内容不能为空");
         return null;
     }
-
     // 发送一条文本消息
     current_conversation.send_text_message(new_message, user_info, current_conversation.user_info, function (success, message) {
         // 清空输入框内容
-        $(".chat-input").val("");
+        $(".chat-input").html("");
         // 不论失败或者成功，都需要向会话中插入消息
         current_conversation.add_message(message);
         insert_message_for_conversation(current_conversation);
