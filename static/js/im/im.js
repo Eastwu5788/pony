@@ -93,11 +93,10 @@ function Conversation(message) {
 
         conn.send(msg.body);
     };
-
-    this.send_img_message = function (file, user_info, func) {
+    
+    this.send_file_message = function (type, file, user_info, func) {
         var id = conn.getUniqueId();
-        var msg = new WebIM.message("img", id);
-
+        var msg = new WebIM.message(type, id);
         msg.set({
             apiUrl: WebIM.config.apiURL,
             file: file,
@@ -121,7 +120,7 @@ function Conversation(message) {
             },
             flashUpload: WebIM.flashUpload
         });
-
+        console.log(msg);
         conn.send(msg.body);
     }
 }
