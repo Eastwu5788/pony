@@ -1,20 +1,35 @@
 var csrf_token = "";
 
+// 允许的图片格式
+var allow_img_type = {
+    'jpg': true,
+    'gif': true,
+    'png': true,
+    'bmp': true
+};
+
 // 增加一条新的会话
 function insert_conversation(conversation) {
+
     var con_div = conversation_factory(conversation);
     $(".chat-list-scrollbar-dynamic").prepend(con_div);
 }
 
 // 向会话中新增一条新消息
 function insert_message_for_conversation(conversition) {
-    if (current_conversation.contact !== conversition.contact) {
-        return;
-    }
 
     var message = conversition.messages[0];
     var con_div = $("#chat-conversation-"+conversition.contact);
-    con_div.find(".chat-last-message").html(message.data);
+    if (message.type === "chat") {
+        con_div.find(".chat-last-message").html(message.data);
+    }else if (message.type === "img") {
+        con_div.find(".chat-last-message").html("[图片]");
+    }
+
+
+    if (current_conversation.contact !== conversition.contact) {
+        return;
+    }
 
     // 显示会话详情
     var content_area = $(".chat-scrollbar-ares");
@@ -39,6 +54,7 @@ function config_content_head(content) {
 
 // 显示一个会话的详情
 function show_conversation_detail(conversation) {
+
     // 存储当前活跃回话
     current_conversation = conversation;
 
@@ -67,28 +83,31 @@ function show_conversation_detail(conversation) {
 }
 
 function start_conversation_with_contact(contact) {
+
     var con = query_conversation_by_from(contact);
     if (con === null) {
         // 新建一条会话，并插入到会话列表中
         con = new Conversation(null);
         con.contact = contact;
-        console.log("新建回话");
+
         con.contact_user_info(function (user_info) {
             con.user_info = user_info;
             conversation_list.unshift(con);
             show_conversation();
             show_conversation_detail(con);
-            console.log("新建回话", con);
         });
     }else{
-        show_conversation();
-        show_conversation_detail(con);
+        if(current_conversation !== con) {
+            show_conversation();
+            show_conversation_detail(con);
+        }
     }
 }
 
 
 function show_conversation() {
-    if ($(".chat-panel-tab-chat").hasClass("active")) {
+
+    if ($(".chat-panel-tab-chat").hasClass("active") && $(".chat-conversation-item").length > 0) {
         return;
     }
 
@@ -98,9 +117,10 @@ function show_conversation() {
 
 
     $(".chat-list-scrollbar-dynamic").empty();
-    $.each(conversation_list, function (index, conversation) {
+    for(var index = conversation_list.length - 1; index >= 0; index--) {
+        var conversation = conversation_list[index];
         insert_conversation(conversation);
-    });
+    }
 }
 
 function show_notification() {
@@ -148,9 +168,50 @@ function change_tab_status(class_str, active) {
 }
 
 
-
-
 // Click Handler
+/*
+* 显示表情面板
+* */
+function show_face_panel_handler() {
+    if($(".face-container").length > 0) {
+        $(".face-container").remove();
+    }else{
+        var face_panel = face_panel_factory();
+        $(".chat-tool-bar").append(face_panel);
+    }
+}
+
+
+/**
+ *  发送一条文件消息的处理函数
+ */
+function send_file_handler(dom, user_info) {
+    // 检查当前回话是否存在
+    if (current_conversation === null) {
+        toastr.error("Error", "当前回话不存在");
+        return null;
+    }
+
+    var file = WebIM.utils.getFileUrl(dom);
+    if (file.filetype.toLowerCase() in allow_img_type) {
+        send_image_handler(file, user_info);
+    }
+}
+
+/**
+ * 发送一条图片消息
+ * */
+function send_image_handler(file, user_info) {
+    // 发送一条文本消息
+    current_conversation.send_img_message(file, user_info, function (success, message) {
+        // 不论失败或者成功，都需要向会话中插入消息
+        current_conversation.add_message(message);
+        insert_message_for_conversation(current_conversation);
+    });
+}
+
+
+
 /*
 * 发送一条新消息的处理函数
 * */
@@ -179,6 +240,45 @@ function send_message_handler(user_info) {
 
 /*============     UI Factory    ==============*/
 
+function face_panel_factory() {
+    var container = $("<div class='face-container'></div>");
+    var face_panel = $("<div class='qq-face'></div>");
+    container.append(face_panel);
+
+    $.each(qq_faces, function (index, face_name) {
+        var a = $("<a class='face'></a>");
+
+        a.attr("title", face_name);
+        a.attr("index", index.toString());
+
+        var rol = parseInt(index / 15);
+        var col = index % 15;
+        var position = "-" + (29 * col).toString() + "px "+"-" + (29 * rol).toString()+"px";
+        a.css("background-position", position);
+
+
+        a.click(function () {
+            var img = $("<img class='qqemoji'>");
+            img.attr("src", "https://wx2.qq.com/zh_CN/htmledition/v2/images/spacer.gif");
+
+            var index = parseInt($(this).attr("index"));
+            var rol = parseInt(index / 15);
+            var col = index % 15;
+            var position = "-" + (24 * col).toString() + "px "+"-" + (24 * rol).toString()+"px";
+
+            img.css("background-position", position);
+            $(".chat-input").append(img);
+        });
+
+        a.html(face_name);
+
+        face_panel.append(a);
+    });
+
+
+    return container;
+}
+
 function friend_item_factory(friend) {
     var div = $("<div class='chat-friend-item'></div>");
     div.attr("id", "chat-friend-"+friend.ease_mob);
@@ -186,7 +286,7 @@ function friend_item_factory(friend) {
     var click_a = $("<a class='click-href'></a>");
     click_a.attr("data", friend.ease_mob);
     click_a.click(function () {
-        start_conversation_with_contact($(".click-href").attr("data"));
+        start_conversation_with_contact($(this).attr("data"));
     });
     div.append(click_a);
 
@@ -240,10 +340,22 @@ function message_factory(message) {
     msg_div.append(msg_user);
 
     var content_bubble = $("<div class='message-bubble'></div>");
-    var content_text = $("<p class='message-content'></p>");
-    content_text.html(message.data);
 
-    content_bubble.append(content_text);
+    if(message.type === "chat") {
+        var content_text = $("<p class='message-content'></p>");
+        content_text.html(message.data);
+        content_bubble.append(content_text);
+    }else if(message.type === "img") {
+        var img = new Image();
+        img.src = message.url;
+        img.className = 'message-img';
+        img.onload = function () {
+            content_bubble.append(img);
+            var content_area = $(".chat-scrollbar-ares");
+            content_area.stop().animate({scrollTop:content_area[0].scrollHeight},1);
+        };
+    }
+
     msg_div.append(content_bubble);
 
     var user_info = null;
@@ -254,7 +366,10 @@ function message_factory(message) {
         // 内容居于右侧
         msg_user.addClass("message-user-href-right");
         content_bubble.addClass("message-bubble-right");
-        content_text.addClass("message-content-right");
+        if (content_text !== undefined) {
+            content_text.addClass("message-content-right");
+        }
+
     }
     // 对方发送给我的消息
     else{
@@ -263,7 +378,9 @@ function message_factory(message) {
         // 内容居于右侧
         msg_user.addClass("message-user-href-left");
         content_bubble.addClass("message-bubble-left");
-        content_text.addClass("message-content-left");
+        if (content_text !== undefined) {
+            content_text.addClass("message-content-left");
+        }
     }
 
     // 用户信息存在
@@ -279,10 +396,15 @@ function conversation_factory(conversation) {
     var div = $("<div class='chat-conversation-item'></div>");
     div.attr("id", "chat-conversation-"+conversation.contact);
 
+    // 判断当前回话是否是需要被激活的
+    if(current_conversation && conversation.contact === current_conversation.contact) {
+        div.addClass("active");
+    }
+
     var click_a = $("<a class='click-href'></a>");
     click_a.attr("data", conversation.contact);
     click_a.click(function () {
-        start_conversation_with_contact($(".click-href").attr("data"));
+        start_conversation_with_contact($(this).attr("data"));
     });
     div.append(click_a);
 

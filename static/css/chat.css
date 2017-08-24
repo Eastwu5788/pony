@@ -360,6 +360,7 @@ body, html {
     font-size: 14px;
     border-radius: 3px;
     margin: 0 10px;
+    overflow: hidden;
 }
 
 .message-bubble-left {
@@ -377,6 +378,13 @@ body, html {
 .message-content {
     padding: 9px 13px;
     margin-bottom: 0;
+}
+
+.message-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .message-content-left {
@@ -400,6 +408,7 @@ body, html {
 
 .chat-area-control .chat-tool-bar {
     padding: 5px 17px;
+    position: relative;
 }
 
 .chat-tool-bar a {
@@ -426,13 +435,19 @@ body, html {
     background-size: 487px 462px;
 }
 
+.chat-tool-bar a.chat-tool-file input {
+    position: absolute;
+    display: block;
+    opacity: 0;
+}
+
 .chat-area-input .chat-input{
     height: 6em;
     overflow: auto;
     overflow-x: hidden;
-    padding-left: 20px;
+    padding: 0 0 0 20px;
     outline: none;
-    border: none;
+    border: 0;
     font-size: 14px;
     margin: 0;
     white-space: pre-wrap;
