@@ -1368,6 +1368,38 @@ ul.user-article li.user-article-item {
 
 /* ====== 授权部分结束 =======*/
 
+/* =======  榜单部分 =========*/
+.sidebar .top-list {
+    list-style: none;
+    padding: 0;
+}
+
+.top-list .top-list-item {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.top-list-item a {
+    text-align: left;
+    color: #563d7c;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    height: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    cursor: auto;
+}
+
+.top-list-item span {
+    margin-left: 10px;
+    display: inline-block;
+    height: 18px;
+    float: right;
+    padding-left: 6px;
+}
+
+/* ======  榜单部分结束 =======*/
 
 /* 关于我们 */
 .about .about_col {
