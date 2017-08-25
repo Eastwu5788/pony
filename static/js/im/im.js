@@ -13,6 +13,9 @@ var current_conversation = null;
 
 var start_contact = "";
 
+var alert_off = false;
+var sound_off = false;
+
 
 
 function user(data) {
@@ -111,11 +114,11 @@ function Conversation(message) {
                 console.log('onFileUploadComplete');
             },
             success: function (id, serverMsgId) {
-                var message = image_message_handler(false, serverMsgId, this, "", "");
+                var message = file_message_response_handler(false, serverMsgId, this, "", "");
                 func(true, message);
             },
             fail: function (id, serverMsgId) {
-                var message = image_message_handler(true, serverMsgId, this, "500", "");
+                var message = file_message_response_handler(true, serverMsgId, this, "500", "");
                 func(false, message);
             },
             flashUpload: WebIM.flashUpload
@@ -217,7 +220,11 @@ function receive_cmd_message(message) {
 
 // 接收到音频消息
 function receive_audio_message(message) {
-    
+    console.log("接收到音频消息");
+    console.log(message);
+    play_message_audio();
+    message.type = "audio";
+    add_message_to_conversation(message);
 }
 
 // 接收到地理位置消息
@@ -227,7 +234,11 @@ function receive_location_message(message) {
 
 // 接收到文件消息
 function receive_file_message(message) {
-    
+    console.log("接收到文件消息");
+    console.log(message);
+    play_message_audio();
+    message.type = "file";
+    add_message_to_conversation(message);
 }
 
 // 接收到视频消息
@@ -301,6 +312,7 @@ function query_conversation_by_from(contact) {
     return checked_conversation;
 }
 
+
 // 处理消息解析
 function txt_message_handler(error, id, send_msg, errorCode, errorText) {
     var msg = {
@@ -317,7 +329,7 @@ function txt_message_handler(error, id, send_msg, errorCode, errorText) {
     return msg;
 }
 
-function image_message_handler(error, id, send_msg, errorCode, errorText) {
+function file_message_response_handler(error, id, send_msg, errorCode, errorText) {
     console.log(send_msg);
     var msg = {
         id: id,
@@ -327,6 +339,7 @@ function image_message_handler(error, id, send_msg, errorCode, errorText) {
         url: send_msg.body.url,
         secret: send_msg.body.secret,
         ext: send_msg.ext,
+        filename: send_msg.filename,
         error: error,
         errorCode: errorCode,
         errorText: errorText
@@ -364,6 +377,11 @@ function query_user_info_from_message(message, ease_mob) {
 /*=================  Util ===========*/
 // 播放收到消息的音效
 function play_message_audio() {
+    // 判断是否播放音效
+    if (alert_off) {
+        return;
+    }
+
     var audio = document.getElementById("audio-msg-play");
     audio.play();
 }

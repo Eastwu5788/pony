@@ -8,6 +8,7 @@ var allow_img_type = {
     'bmp': true
 };
 
+// 允许的文件格式
 var allow_file_type = {
     'zip': true,
     'txt': true,
@@ -15,9 +16,15 @@ var allow_file_type = {
     'pdf': true
 };
 
+// 允许的音频格式
+var allow_audio_type = {
+    'mp3': true,
+    'amr': true,
+    'wmv': true
+};
+
 // 增加一条新的会话
 function insert_conversation(conversation) {
-
     var con_div = conversation_factory(conversation);
     $(".chat-list-scrollbar-dynamic").prepend(con_div);
 }
@@ -31,6 +38,10 @@ function insert_message_for_conversation(conversition) {
         con_div.find(".chat-last-message").html(message.data);
     }else if (message.type === "img") {
         con_div.find(".chat-last-message").html("[图片]");
+    }else if (message.type === "file") {
+        con_div.find(".chat-last-message").html("[文件]");
+    }else if (message.type === "audio") {
+        con_div.find(".chat-last-message").html("[音频]");
     }
 
 
@@ -73,6 +84,8 @@ function show_conversation_detail(conversation) {
 
     // 设置联系人
     config_content_head(conversation.user_info === null ? conversation.contact : conversation.user_info.nick_name);
+    //　显示输入框
+    $(".chat-area-control").show();
 
     // 显示会话详情
     var content_area = $(".chat-scrollbar-ares");
@@ -87,6 +100,24 @@ function show_conversation_detail(conversation) {
 
     // 滚动到底部
     content_area.scrollTop = content_area.height();
+}
+
+// 显示联系人好友的信息
+function show_friends_detail(contact) {
+    // 显示会话详情
+    var content_area = $(".chat-scrollbar-ares");
+    content_area.empty();
+    $(".chat-area-control").hide();
+
+    if (contact === null) {
+        var friend_detail = friend_detail_factory(null);
+        content_area.append(friend_detail);
+    }else{
+        query_user_info(contact, function (info) {
+            var friend_detail = friend_detail_factory(info);
+            content_area.append(friend_detail);
+        });
+    }
 }
 
 function start_conversation_with_contact(contact) {
@@ -104,7 +135,7 @@ function start_conversation_with_contact(contact) {
             show_conversation_detail(con);
         });
     }else{
-        if(current_conversation !== con) {
+        if(!$(".chat-panel-tab-chat").hasClass("active") || current_conversation !== con) {
             show_conversation();
             show_conversation_detail(con);
         }
@@ -128,6 +159,10 @@ function show_conversation() {
         var conversation = conversation_list[index];
         insert_conversation(conversation);
     }
+
+    if(current_conversation !== null) {
+        show_conversation_detail(current_conversation);
+    }
 }
 
 function show_notification() {
@@ -150,6 +185,10 @@ function show_friends() {
     change_tab_status(".chat-panel-tab-chat", false);
     change_tab_status(".chat-panel-tab-notification", false);
     change_tab_status(".chat-panel-tab-friends", true);
+
+    config_content_head("详情");
+
+    show_friends_detail(null);
 
     query_friend_list(function () {
         var panel_scroll = $(".chat-list-scrollbar-dynamic");
@@ -188,6 +227,16 @@ function show_face_panel_handler() {
     }
 }
 
+function show_setting_menu_handler() {
+    var panel = $(".chat-panel");
+    if (panel.find(".setting-container").length > 0) {
+        $(".setting-container").remove();
+        return;
+    }
+
+    var setting = setting_factory();
+    panel.append(setting);
+}
 
 /**
  *  发送一条文件消息的处理函数
@@ -203,10 +252,17 @@ function send_file_handler(dom, user_info) {
     var file_type = file.filetype.toLowerCase();
 
     var type = null;
+    // 图片格式处理
     if (file_type in allow_img_type) {
         type = "img";
-    }else if(file_type in allow_file_type) {
+    }
+    // 文件格式处理
+    else if(file_type in allow_file_type) {
         type = "file";
+    }
+    // 音频格式处理
+    else if(file_type in allow_audio_type) {
+        type = "audio";
     }
 
 
@@ -283,11 +339,47 @@ function face_panel_factory() {
 
         face_panel.append(a);
     });
-
-
     return container;
 }
 
+// 显示朋友详情工厂
+function friend_detail_factory(friend) {
+    var detail_div = $("<div class='friend-detail'></div>");
+
+    var img_avatar = $("<img class='friend-avatar'>");
+    detail_div.append(img_avatar);
+
+    if(friend === null) {
+        return detail_div;
+    }
+    img_avatar.attr("src", friend.avatar.image_a);
+
+    var info_div = $("<div class='friend-info'></div>");
+    var nickname_span = $("<span class='friend-nick-name'></span>");
+    nickname_span.html(friend.nick_name);
+
+    var gender_i = $("<i>");
+    if (friend.gender.toString() === "1") {
+        gender_i.addClass("friend-gender-men");
+    }else{
+        gender_i.addClass("friend-gender-women");
+    }
+
+    info_div.append(nickname_span);
+    info_div.append(gender_i);
+    detail_div.append(info_div);
+
+    var message_btn = $("<a class='friend-message-btn'>Messages</a>");
+    message_btn.attr("data", friend.ease_mob);
+    message_btn.click(function () {
+         start_conversation_with_contact($(this).attr("data"));
+    });
+    detail_div.append(message_btn);
+
+    return detail_div;
+}
+
+// 用户列表元素工厂
 function friend_item_factory(friend) {
     var div = $("<div class='chat-friend-item'></div>");
     div.attr("id", "chat-friend-"+friend.ease_mob);
@@ -295,7 +387,8 @@ function friend_item_factory(friend) {
     var click_a = $("<a class='click-href'></a>");
     click_a.attr("data", friend.ease_mob);
     click_a.click(function () {
-        start_conversation_with_contact($(this).attr("data"));
+        show_friends_detail($(this).attr("data"));
+        // start_conversation_with_contact();
     });
     div.append(click_a);
 
@@ -335,6 +428,71 @@ function time_message_factory(message) {
     return time_div;
 }
 
+// 文件消息
+function file_message_content_factory(message) {
+    var file_content = $("<div class='message-file'></div>");
+
+    var cover = $("<div class='message-file-cover'></div>");
+    file_content.append(cover);
+
+    var file_info = $("<div class='message-file-info'></div>");
+    file_content.append(file_info);
+
+    var title = $("<p class='message-file-title'></p>");
+    title.html(message.filename);
+    file_info.append(title);
+
+    var download = $("<a class='message-file-download' download=''>点击下载</a>");
+    download.attr("href", message.url);
+    file_info.append(download);
+
+    return file_content;
+}
+
+// 图片消息内容
+function image_message_content_factroy(message) {
+    var img = new Image();
+    img.src = message.url;
+    img.className = 'message-img';
+    img.onload = function () {
+        var content_area = $(".chat-scrollbar-ares");
+        content_area.stop().animate({scrollTop:content_area[0].scrollHeight},1);
+    };
+    return img;
+}
+
+function audio_message_content_factory(message) {
+
+    var audio_content = $("<div class='message-audio'></div>");
+    audio_content.attr("url", message.url);
+    audio_content.click(function () {
+        $(this).find(".message-audio-icon").addClass("message-audio-playing");
+
+        var audio = $(this).find("audio");
+        audio.get(0).play();
+        audio.bind('ended', function () {
+            $(this).next("i").removeClass("message-audio-playing");
+        });
+    });
+
+    var audio = $("<audio preload='metadata'>");
+    audio.attr("id", message.id.toString());
+    audio.attr("src", message.url);
+    audio_content.append(audio);
+
+    var audio_icon = $("<i class='message-audio-icon'></i>");
+    audio_content.append(audio_icon);
+
+    // 我发送给对方的消息
+    if (message.from === current_user_id) {
+        audio_icon.addClass("audio-right");
+    }else{
+        audio_icon.addClass("audio-left");
+    }
+
+    return audio_content;
+}
+
 // 对话消息
 function message_factory(message) {
     if (message.type === "time") {
@@ -342,6 +500,7 @@ function message_factory(message) {
     }
 
     var msg_div = $("<div class='message-container'></div>");
+    msg_div.attr("id", message.id.toString());
 
     var msg_user = $("<a class='message-user-href'></a>");
     var msg_user_avatar = $("<img class='message-user-avatar'>");
@@ -350,19 +509,26 @@ function message_factory(message) {
 
     var content_bubble = $("<div class='message-bubble'></div>");
 
+    // 普通文本消息处理
     if(message.type === "chat") {
         var content_text = $("<p class='message-content'></p>");
         content_text.html(message.data);
         content_bubble.append(content_text);
-    }else if(message.type === "img") {
-        var img = new Image();
-        img.src = message.url;
-        img.className = 'message-img';
-        img.onload = function () {
-            content_bubble.append(img);
-            var content_area = $(".chat-scrollbar-ares");
-            content_area.stop().animate({scrollTop:content_area[0].scrollHeight},1);
-        };
+    }
+    // 图片消息处理
+    else if(message.type === "img") {
+        var img_content = image_message_content_factroy(message);
+        content_bubble.append(img_content);
+    }
+    // 文件消息处理
+    else if(message.type === "file") {
+        var file_content = file_message_content_factory(message);
+        content_bubble.append(file_content);
+    }
+    // 音频消息处理
+    else if(message.type === "audio") {
+        var audio_content = audio_message_content_factory(message);
+        content_bubble.append(audio_content);
     }
 
     msg_div.append(content_bubble);
@@ -441,4 +607,50 @@ function conversation_factory(conversation) {
     click_a.append(con_info_div);
 
     return div;
+}
+
+
+function setting_factory() {
+    var div = $("<div class='setting-container'></div>");
+
+    var ul = $("<ul class='setting-dropdown-menu'></ul>");
+    div.append(ul);
+
+    var li_new = setting_item_factory("setting-item-new-chat", "New Chat");
+    ul.append(li_new);
+
+    var li_alert = setting_item_factory("setting-item-alert", "Alert Off");
+    if(alert_off) {
+        li_alert.find("i").addClass("alert-off");
+    }else{
+        li_alert.find("i").addClass("alert-on");
+    }
+    ul.append(li_alert);
+
+    var li_sound = setting_item_factory("setting-item-sound", "Sound Off");
+    if(sound_off) {
+        li_sound.find("i").addClass("sound-off");
+    }else{
+        li_sound.find("i").addClass("sound-on");
+    }
+    ul.append(li_sound);
+
+    var li_feedback = setting_item_factory("setting-item-feedback", "Feedback");
+    ul.append(li_feedback);
+
+    var li_logout = setting_item_factory("setting-item-logout", "Log Out");
+    ul.append(li_logout);
+
+    return div;
+}
+
+function setting_item_factory(class_name, info) {
+    var item = $("<li class='setting-item'></li>");
+    var item_a = $("<a></a>");
+    item.append(item_a);
+    var item_i = $("<i/>");
+    item_i.addClass(class_name);
+    item_a.append(item_i);
+    item_a.append(info);
+    return item;
 }
