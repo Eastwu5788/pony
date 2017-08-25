@@ -96,6 +96,88 @@ body, html {
     background-size: 487px 462px;
 }
 
+.setting-container {
+    top: 60px;
+    left: 85px;
+    position: absolute;
+    outline: none;
+    background: transparent;
+    z-index: 1000;
+    width: 180px;
+}
+
+.setting-container .setting-dropdown-menu {
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #d6d6d6;
+    box-shadow: rgba(0,0,0,.1) 2px 3px 10px;
+    min-width: 125px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.setting-dropdown-menu .setting-item {
+    list-style: none;
+}
+
+.setting-item a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    padding: 8px;
+    border-bottom: 1px solid #f1f1f1;
+    text-align: left;
+    cursor: pointer;
+}
+
+.setting-item a:hover {
+    background-color: #f5f5f5;
+}
+
+.setting-item a i {
+    margin-right: 8px;
+    width: 34px;
+    height: 34px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png") no-repeat;
+    background-size: 487px 462px;
+}
+
+.setting-item a i.setting-item-new-chat {
+    background-position: -238px -398px;
+}
+
+.setting-item a i.setting-item-alert.alert-on {
+    background-position: -68px -398px;
+}
+
+.setting-item a i.setting-item-alert.alert-off {
+    background-position: -34px -398px;
+}
+
+.setting-item a i.setting-item-sound.sound-on {
+    background-position: -170px -398px;
+}
+
+.setting-item a i.setting-item-sound.sound-off {
+    background-position: -136px -398px;
+}
+
+.setting-item a i.setting-item-feedback {
+    background-position: -306px -398px;
+}
+
+.setting-item a i.setting-item-logout {
+    background-position: -102px -398px;
+}
+
+
+
+
 .chat-panel-search-bar {
     position: relative;
     width: 244px;
@@ -241,6 +323,10 @@ body, html {
     float: left;
 }
 
+.chat-friend-item .chat-con-info{
+    margin-top: 10px;
+}
+
 .chat-con-info .chat-from-nickname {
     font-weight: 400;
     font-size: 13px;
@@ -314,6 +400,72 @@ body, html {
     padding: 0 19px;
 }
 
+.friend-detail {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.friend-avatar {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 22px auto;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    border: 0;
+}
+
+.friend-info {
+    text-align: center;
+}
+
+.friend-info span {
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.friend-info i {
+    width: 16px;
+    height: 16px;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png") no-repeat;
+    background-size: 487px 462px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.friend-info i.friend-gender-men {
+    background-position: -384px -304px;
+}
+
+.friend-info i.friend-gender-women {
+    background-position: -368px -304px;
+}
+
+.friend-message-btn {
+    display: block;
+    width: 200px;
+    text-align: center;
+    color: #fff;
+    line-height: 40px;
+    background-color: #42ac3e;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 20px auto 0 auto;
+    cursor: pointer;
+}
+
+.friend-message-btn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+
 .message-time-container {
     text-align: center;
     margin: 10px auto;
@@ -386,6 +538,93 @@ body, html {
     object-fit: cover;
     display: block;
 }
+
+.message-file {
+    padding: 10px;
+    background-color: #fff;
+    min-height: 75px;
+    border-radius: 4px;
+    min-width: 250px;
+    max-width: 300px;
+    margin: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.message-file .message-file-cover {
+    margin-right: 10px;
+    vertical-align: middle;
+    width: 76px;
+    height: 76px;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png") no-repeat;
+    background-position: 0 -322px;
+    background-size: 487px 462px;
+    float: left;
+}
+
+.message-file-info {
+    position: relative;
+    float: left;
+}
+
+.message-file-info .message-file-title {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    max-width: 200px;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.message-file-info .message-file-download {
+    color: #35ac2f;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 25px;
+    display: block;
+}
+
+.message-audio {
+    width: 80px;
+    height: 37px;
+    padding: 7px 13px;
+    max-width: 300px;
+    cursor: pointer;
+    position: relative;
+}
+
+.message-audio-icon {
+    vertical-align: middle;
+    width: 23px;
+    height: 23px;
+    display: block;
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png") no-repeat;
+    background-size: 487px 462px;
+}
+
+.message-audio-icon.audio-right {
+    float: right;
+    background-position: -464px -398px;
+}
+
+.message-audio-icon.audio-left {
+    float: left;
+    background-position: -200px -432px;
+}
+
+.audio-right.message-audio-playing {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/3Oeq2i3.gif");
+}
+
+.audio-left.message-audio-playing {
+    background: url("https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/1Rw0-Kq.gif");
+}
+
+
+
 
 .message-content-left {
     text-align: left;
