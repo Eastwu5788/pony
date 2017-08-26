@@ -404,5 +404,14 @@ function query_user_info(ease_mob, func) {
     });
 }
 
+function insert_user_info(user_info) {
+    for (var i=0, len=cache_user_info_list.length; i < len; i++) {
+        var user = cache_user_info_list[i];
+        if (user.id.toString() === user_info.id.toString()) {
+            return;
+        }
+    }
+    cache_user_info_list.unshift(user_info);
+}
 
 

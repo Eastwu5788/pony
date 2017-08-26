@@ -18,6 +18,7 @@ AUTH_CHECK_EMAIL = "/auth/api/checkemail";
 
 USER_INFO = "/user/api/info";
 USER_EASE_MOB_INFO = "/user/api/easemob";
+USER_SEARCH_API = "/user/api/search";
 
 start_app();
 
@@ -61,6 +62,15 @@ function request_user_ease_mob_info(ease_mob, func) {
     }, "json");
 }
 
+function search_user_by_nickname(nick_name, func) {
+    $.get(USER_SEARCH_API, {nick_name: nick_name, csrfmiddlewaretoken: csrf_token}, function (data) {
+        if (data.code === 200) {
+            func(data.data);
+        }else{
+            func([]);
+        }
+    }, "json");
+}
 
 
 /* ========  授权相关  ========= */
