@@ -2,6 +2,7 @@ from django.shortcuts import render
 from app.modules.common.auth import login_required
 from app.models.blog.article import BlogArticle
 from app.models.account.info import UserInfo
+from app.modules.common.util_struct import *
 from django.http.response import HttpResponse
 import json
 
@@ -33,3 +34,10 @@ def user_info_api_by_ease_mob_handler(request):
     return HttpResponse(json.dumps({"user_info": user_info}))
 
 
+def user_search_api(request):
+    nick_name = request.GET.get("nick_name")
+    if not nick_name:
+        return json_fail_response("搜索内容不能为空")
+
+    user_list = UserInfo.query_user_by_nick_name(nick_name)
+    return json_success_response(user_list)

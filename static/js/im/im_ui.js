@@ -134,24 +134,26 @@ function start_conversation_with_contact(contact) {
         con.contact_user_info(function (user_info) {
             con.user_info = user_info;
             conversation_list.unshift(con);
-            show_conversation();
+            show_conversation(true);
             show_conversation_detail(con);
         });
     }else{
-        if ($(".chat-scrollbar-ares").find(".friend-detail").length > 0) {
-            show_conversation();
+
+        if ($(".chat-scrollbar-ares").find(".friend-detail").length > 0 || current_conversation.contact !== contact ) {
+            show_conversation(false);
             show_conversation_detail(con);
         }
     }
 }
 
 
-function show_conversation() {
-
-    if ($(".chat-panel-tab-chat").hasClass("active") && $(".chat-conversation-item").length > 0) {
+function show_conversation(refresh) {
+    console.log("显示回话");
+    if (!refresh && $(".chat-panel-tab-chat").hasClass("active") && $(".chat-conversation-item").length > 0) {
         return;
     }
 
+    console.log("显示");
     change_tab_status(".chat-panel-tab-chat", true);
     change_tab_status(".chat-panel-tab-notification", false);
     change_tab_status(".chat-panel-tab-friends", false);
@@ -218,6 +220,26 @@ function change_tab_status(class_str, active) {
 
 
 // Click Handler
+/*
+* 显示搜索用户
+* */
+function show_search_nickname_handler(nick_name) {
+    var container = $(".search-result-container");
+    search_user_by_nickname(nick_name, function (result) {
+        container.empty();
+        if(result.length > 0) {
+            $.each(result, function (index, user_info) {
+                var item = search_item_factory(user_info);
+                container.append(item);
+            });
+        }else{
+            var empty = search_none_factory();
+            container.append(empty);
+        }
+    });
+}
+
+
 /*
 * 显示表情面板
 * */
@@ -307,6 +329,41 @@ function send_message_handler(user_info) {
 }
 
 /*============     UI Factory    ==============*/
+function search_none_factory() {
+    var none_div = $("<div class='search-result-none'></div>");
+
+    var text_h1 = $("<h4>No Results found</h4>");
+    none_div.append(text_h1);
+
+    return none_div;
+}
+
+function search_item_factory(user_info) {
+    var item = $("<div class='search-result-item'></div>");
+    var item_link = $("<a class='search-result-link'></a>");
+    (function (user_info) {
+        item_link.click(function () {
+            if (user_info.ease_mob === current_user_id) {
+                toastr.error("Error", "您不能自己与自己聊天");
+                return;
+            }
+            insert_user_info(user_info);
+            console.log(user_info.ease_mob);
+            start_conversation_with_contact(user_info.ease_mob);
+        });
+    })(user_info);
+    item.append(item_link);
+
+    var avatar = $("<img class='search-result-avatar'>");
+    avatar.attr("src", user_info.avatar.image_a);
+    item_link.append(avatar);
+
+    var nick = $("<h1 class='search-result-nickname'></h1>");
+    nick.html(user_info.nick_name);
+    item_link.append(nick);
+
+    return item;
+}
 
 function face_panel_factory() {
     var container = $("<div class='face-container'></div>");
@@ -584,6 +641,7 @@ function conversation_factory(conversation) {
     var click_a = $("<a class='click-href'></a>");
     click_a.attr("data", conversation.contact);
     click_a.click(function () {
+        console.log("回话列表开始新的回话");
         start_conversation_with_contact($(this).attr("data"));
     });
     div.append(click_a);

@@ -198,7 +198,7 @@ body, html {
 }
 
 .chat-panel-search-bar .chat-panel-search-input {
-    width: 214px;
+    width: 244px;
     height: 32px;
     line-height: 32px;
     border: 0;
@@ -208,6 +208,66 @@ body, html {
     padding-left: 30px;
     font-size: 12px;
 }
+
+.search-result-container {
+    width: 244px;
+    top: 36px;
+    left: 0;
+    box-shadow: 0 0 10px #2a2a2a;
+    border-radius: 2px;
+    position: absolute;
+    z-index: 100;
+    outline: none;
+    max-height: 420px;
+    overflow: hidden;
+}
+
+.search-result-item {
+    background: #393c43;
+    overflow: hidden;
+    padding: 10px 9px;
+    cursor: pointer;
+    border-bottom: 1px solid #33363b;
+}
+
+.search-result-item img {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    float: left;
+    margin-right: 10px;
+}
+
+.search-result-item h1 {
+    font-weight: 400;
+    color: #fff;
+    font-size: 14px;
+    /*width: 100%;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    margin: 0;
+    float: left;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+}
+
+.search-result-item:hover {
+    background: #595b64;
+}
+
+.search-result-none h4{
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-weight: 400;
+    padding: 3px 9px;
+    color: #787b87;
+    background-color: #393c43;
+}
+
 
 
 .chat-panel-tab {

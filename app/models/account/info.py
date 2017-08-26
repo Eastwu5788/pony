@@ -26,6 +26,19 @@ class UserInfo(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
+    def query_user_by_nick_name(nick_name):
+        try:
+
+            user_list = UserInfo.objects.filter(nick_name__contains=nick_name)[:10]
+            result = list()
+            for user in user_list:
+                result.append(UserInfo.format_user_info(user))
+            return result
+
+        except UserInfo.DoesNotExist:
+            return []
+
+    @staticmethod
     def query_format_info_by_ease_mob(ease_mob, use_cache=True):
         """
         查询格式化的用户信息，根据用户环信

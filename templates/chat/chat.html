@@ -1,5 +1,9 @@
 {% extends "base/base.html" %}
 
+{% block title %}
+    WeChat for Web
+{% endblock %}
+
 {% block stylesheet %}
     <link rel="stylesheet" href="/static/css/face.css">
     <link rel="stylesheet" href="/static/css/chat.css">
@@ -35,10 +39,11 @@
             <div class="chat-panel-search-bar">
                 <i class="chat-panel-search"></i>
                 <input class="chat-panel-search-input" placeholder="Search">
+                <div class="search-result-container"></div>
             </div>
             <div class="chat-panel-tab">
                 <div class="chat-panel-tab-item">
-                    <a onclick="show_conversation()">
+                    <a onclick="show_conversation(false)">
                         <i class="chat-panel-tab-chat active"></i>
                     </a>
                 </div>
@@ -121,8 +126,21 @@
         
         window.onload = function () {
             {% if contact %}
-                start_conversation_with_contact('{{ contact.ease_mob }}');
+                start_conversation_with_contact('{{ contact.ease_mob }}', false);
             {% endif %}
-        }
+        };
+
+        $(".chat-panel-search-input").bind("input propertychange", function () {
+            var input = $(".chat-panel-search-input").val().trim();
+            if (input.length > 0) {
+                show_search_nickname_handler(input);
+            }
+        });
+
+        $(document).ready(function () {
+            $(document).click(function () {
+                $(".search-result-container").empty();
+            });
+        });
     </script>
 {% endblock %}
