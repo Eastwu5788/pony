@@ -173,6 +173,7 @@ function login_ease_mob_im(user_name, password) {
     };
     conn.open(options);
     current_user_id = user_name;
+    show_friends_detail(current_user_id);
 }
 
 // 环信退出
@@ -181,14 +182,14 @@ function logout_ease_mob_im() {
 }
 
 // 连接成功回调
-function login_success(message) {
-    console.log(message);
+function login_success() {
 }
 
 // 断开连接回调
-function logout_success() {
+function logout_success(error) {
     // 异常断开之后，需要退出当前账号
-    logout(csrf_token);
+    console.log(error);
+    //login_ease_mob_im(current_user_id, current_user_id);
 }
 
 // 接收到文本消息
@@ -220,7 +221,6 @@ function receive_cmd_message(message) {
 
 // 接收到音频消息
 function receive_audio_message(message) {
-    console.log("接收到音频消息");
     console.log(message);
     play_message_audio();
     message.type = "audio";

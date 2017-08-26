@@ -1,3 +1,4 @@
+import hashlib
 from django.db import models
 from django.core.cache import cache
 import django.utils.timezone as timezone
@@ -71,10 +72,33 @@ class UserInfo(models.Model):
         result["ease_mob"] = user_info.ease_mob
         result["nick_name"] = user_info.nick_name
         result["gender"] = user_info.gender
-        result["avatar"] = Image.query_image_by_id(user_info.avatar)
+
+        # 生成用户头像
+        avatar = Image.query_image_by_id(user_info.avatar)
+        if not avatar:
+            avatar = user_info.generate_gr_avatar()
+        result["avatar"] = avatar
+
         result["fans"] = UserFollow.query_user_meta_count(user_info.user_id, False)
         result["follows"] = UserFollow.query_user_meta_count(user_info.user_id)
         result["articles"] = app.models.blog.article.BlogArticle.query_published_article_count(user_id=user_info.user_id)
+        return result
+
+    def generate_gr_avatar(self):
+        """
+        生成 http://www.gravatar.com的默认头像
+        """
+        import app.models.account.account as account
+        user_account = account.UserAccount.query_user_by_id(self.user_id)
+        md5 = hashlib.md5()
+        md5.update(user_account.email.strip().lower().encode("utf-8"))
+        md5 = md5.hexdigest()
+        base_url = "https://www.gravatar.com/avatar/"+md5+"?d=retro&r=PG"
+        result = dict()
+        result["image_o"] = base_url + "&s=200"
+        result["image_a"] = base_url + "&s=100"
+        result["image_width"] = 200
+        result["image_height"] = 200
         return result
 
     class Meta:

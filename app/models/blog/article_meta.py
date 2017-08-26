@@ -6,6 +6,9 @@ import django.utils.timezone as timezone
 CACHE_KEY_ID = "Pony:BlogArticleMeta:CacheId:"
 CACHE_TIME = 60*60*24
 
+CACHE_TOP_LIST_KEY = "Pony:BlogArticleMeta:Top:"
+CACHE_TOP_LIST_TIME = 60*60
+
 
 class BlogArticleMeta(models.Model):
 
@@ -17,6 +20,24 @@ class BlogArticleMeta(models.Model):
     status = models.IntegerField(default=0)
     created_time = models.DateTimeField(default=timezone.now)
     updated_time = models.DateTimeField(auto_now=True)
+
+    @staticmethod
+    def query_top_list(order="hit", use_cache=True):
+        """查询榜单"""
+        key = CACHE_TOP_LIST_KEY+order
+
+        if use_cache:
+            top_list = cache.get(key)
+            if top_list:
+                return top_list
+
+        try:
+            # 获取点击量最高的10条文章
+            top_list = BlogArticleMeta.objects.filter(status=1).order_by("-"+order)[:10]
+            cache.set(key, top_list, CACHE_TOP_LIST_TIME)
+            return top_list
+        except BlogArticleMeta.DoesNotExist:
+            return []
 
     @staticmethod
     def query_article_meta_info(share_id, use_cache=True):

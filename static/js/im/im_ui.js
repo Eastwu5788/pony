@@ -104,6 +104,9 @@ function show_conversation_detail(conversation) {
 
 // 显示联系人好友的信息
 function show_friends_detail(contact) {
+
+    config_content_head("详情");
+
     // 显示会话详情
     var content_area = $(".chat-scrollbar-ares");
     content_area.empty();
@@ -135,7 +138,7 @@ function start_conversation_with_contact(contact) {
             show_conversation_detail(con);
         });
     }else{
-        if(!$(".chat-panel-tab-chat").hasClass("active") || current_conversation !== con) {
+        if ($(".chat-scrollbar-ares").find(".friend-detail").length > 0) {
             show_conversation();
             show_conversation_detail(con);
         }
@@ -186,9 +189,9 @@ function show_friends() {
     change_tab_status(".chat-panel-tab-notification", false);
     change_tab_status(".chat-panel-tab-friends", true);
 
-    config_content_head("详情");
-
-    show_friends_detail(null);
+    // config_content_head("详情");
+    //
+    // show_friends_detail(null);
 
     query_friend_list(function () {
         var panel_scroll = $(".chat-list-scrollbar-dynamic");
@@ -369,12 +372,14 @@ function friend_detail_factory(friend) {
     info_div.append(gender_i);
     detail_div.append(info_div);
 
-    var message_btn = $("<a class='friend-message-btn'>Messages</a>");
-    message_btn.attr("data", friend.ease_mob);
-    message_btn.click(function () {
-         start_conversation_with_contact($(this).attr("data"));
-    });
-    detail_div.append(message_btn);
+    if (friend.ease_mob !== current_user_id) {
+        var message_btn = $("<a class='friend-message-btn'>Messages</a>");
+        message_btn.attr("data", friend.ease_mob);
+        message_btn.click(function () {
+            start_conversation_with_contact($(this).attr("data"));
+        });
+        detail_div.append(message_btn);
+    }
 
     return detail_div;
 }
@@ -620,6 +625,18 @@ function setting_factory() {
     ul.append(li_new);
 
     var li_alert = setting_item_factory("setting-item-alert", "Alert Off");
+    li_alert.find("a").click(function () {
+        alert_off = !alert_off;
+        var alert_i = $(this).find("i");
+        if(alert_off) {
+            alert_i.removeClass("alert-on");
+            alert_i.addClass("alert-off");
+        }else{
+            alert_i.removeClass("alert-off");
+            alert_i.addClass("alert-on");
+        }
+        $(".setting-container").remove();
+    });
     if(alert_off) {
         li_alert.find("i").addClass("alert-off");
     }else{
@@ -628,6 +645,18 @@ function setting_factory() {
     ul.append(li_alert);
 
     var li_sound = setting_item_factory("setting-item-sound", "Sound Off");
+    li_sound.find("a").click(function () {
+        sound_off = !sound_off;
+        var sound_i = $(this).find("i");
+        if (sound_off) {
+            sound_i.removeClass("sound-on");
+            sound_i.addClass("sound-off");
+        }else{
+            sound_i.removeClass("sound-off");
+            sound_i.addClass("sound-on");
+        }
+        $(".setting-container").remove();
+    });
     if(sound_off) {
         li_sound.find("i").addClass("sound-off");
     }else{
@@ -638,7 +667,12 @@ function setting_factory() {
     var li_feedback = setting_item_factory("setting-item-feedback", "Feedback");
     ul.append(li_feedback);
 
+    // 退出账号
     var li_logout = setting_item_factory("setting-item-logout", "Log Out");
+    li_logout.find("a").click(function () {
+        logout_ease_mob_im();
+        logout(csrf_token);
+    });
     ul.append(li_logout);
 
     return div;

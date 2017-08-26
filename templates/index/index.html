@@ -15,7 +15,7 @@
     <section class="main-section article-index">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 {% if user_info %} col-md-offset-2 {% endif %} main-content">
+                <main class="col-md-8 main-content">
                     {% for recommend in recommend_list %}
                         <article class="post">
                             <div class="post-head">
@@ -73,6 +73,60 @@
                     </div>
                 </aside>
                 {% endif %}
+                <!-- 阅读榜 -->
+                <aside class="col-md-4 sidebar">
+                    <div class="auth">
+                        <h4 class="tittle">
+                            阅读榜
+                        </h4>
+                        <ul class="top-list">
+                            {% for article in hit_list %}
+                                <li class="top-list-item">
+                                    <a href="/article/detail/{{ article.id }}" title={{ article.title }}>{{ article.title }}</a>
+                                    <span>({{ article.meta_info.hit }})</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+                <!-- 阅读榜结束 -->
+
+                <!-- 点赞榜单 -->
+                <aside class="col-md-4 sidebar">
+                    <div class="auth">
+                        <h4 class="tittle">
+                            点赞榜
+                        </h4>
+                        <ul class="top-list">
+                            {% for article in like_list %}
+                                <li class="top-list-item">
+                                    <a href="/article/detail/{{ article.id }}" title={{ article.title }}>{{ article.title }}</a>
+                                    <span>({{ article.meta_info.like }})</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+                <!-- 点赞榜单结束 -->
+
+                <!-- 评论榜单 -->
+                <aside class="col-md-4 sidebar">
+                    <div class="auth">
+                        <h4 class="tittle">
+                            评论榜
+                        </h4>
+                        <ul class="top-list">
+                            {% for article in comment_list %}
+                                <li class="top-list-item">
+                                    <a href="/article/detail/{{ article.id }}" title={{ article.title }}>{{ article.title }}</a>
+                                    <span>({{ article.meta_info.comment }})</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+                <!-- 评论榜单结束 -->
+
             </div>
         </div>
     </section>
