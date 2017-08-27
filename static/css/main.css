@@ -1102,6 +1102,125 @@ ul.user-article li.user-article-item {
     color: #787878;
 }
 
+/* ========   用户关注、用户粉丝列表 ========*/
+
+.triger-menu {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+.triger-menu li {
+    position: relative;
+    display: inline-block;
+    padding: 8px 0;
+    margin-bottom: -1px;
+    line-height: 20px;
+}
+
+.triger-menu li.active {
+    border-bottom: 2px solid #646464;
+}
+
+.triger-menu a {
+    padding: 13px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #969696;
+    line-height: 25px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.triger-menu li.active a {
+    color: #646464;
+}
+
+.relation-user-list {
+    list-style: none;
+    clear: both;
+    padding-left: 0;
+    min-height: 250px;
+}
+
+.relation-user-list .relation-user-item {
+    padding:  0 0 20px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: normal;
+}
+
+.relation-user-item .user-avatar-link {
+    width: 52px;
+    height: 52px;
+    margin-right: 8px;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.relation-user-item .user-avatar {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.relation-user-item .user-info {
+    max-width: 315px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.relation-user-item p {
+    margin-bottom: 0;
+}
+
+.relation-user-item .user-meta-info {
+    padding-top: 2px;
+    font-size: 12px;
+    color: #969696;
+}
+
+.relation-user-item .user-meta-info span {
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #969696;
+}
+
+
+.relation-user-item .relation-btn {
+    float: right;
+    margin-top: 8px;
+    padding: 8px 0;
+    width: 100px;
+    font-size: 15px;
+    border-radius: 40px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.relation-user-item .relation-btn.follow {
+    border-color: #42c02e;
+    color: #fff;
+    background-color: #42c02e;
+}
+
+.relation-user-item .relation-btn.followed {
+    border: 1px solid hsla(0, 0%, 59%, .6);
+    background: none;
+    color: #8c8c8c;
+}
+
+
+
+/* ========   用户关注、用户粉丝列表  结束 ========*/
+
 /* ======  用户设置(Setting) =======*/
 .user-setting-content .set-row {
     height: 90px;

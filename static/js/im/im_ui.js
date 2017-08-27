@@ -29,19 +29,10 @@ function insert_conversation(conversation) {
 
 // 向会话中新增一条新消息
 function insert_message_for_conversation(conversition) {
-
-    var message = conversition.messages[0];
     var con_div = $("#chat-conversation-"+conversition.contact);
-    if (message.type === "chat") {
-        con_div.find(".chat-last-message").html(message.data);
-    }else if (message.type === "img") {
-        con_div.find(".chat-last-message").html("[图片]");
-    }else if (message.type === "file") {
-        con_div.find(".chat-last-message").html("[文件]");
-    }else if (message.type === "audio") {
-        con_div.find(".chat-last-message").html("[音频]");
-    }
 
+    con_div.find(".chat-last-message").html(conversition.last_message());
+    con_div.find(".chat-last-time").html(conversition.last_message_time());
 
     if (current_conversation.contact !== conversition.contact) {
         return;
@@ -445,11 +436,13 @@ function friend_item_factory(friend) {
     div.attr("id", "chat-friend-"+friend.ease_mob);
 
     var click_a = $("<a class='click-href'></a>");
-    click_a.attr("data", friend.ease_mob);
-    click_a.click(function () {
-        show_friends_detail($(this).attr("data"));
-        // start_conversation_with_contact();
-    });
+
+    (function (friend) {
+        click_a.click(function () {
+            insert_user_info(friend);
+            show_friends_detail(friend.ease_mob);
+        });
+    })(friend);
     div.append(click_a);
 
     // 头像部分
@@ -639,7 +632,6 @@ function conversation_factory(conversation) {
     var click_a = $("<a class='click-href'></a>");
     click_a.attr("data", conversation.contact);
     click_a.click(function () {
-        console.log("回话列表开始新的回话");
         start_conversation_with_contact($(this).attr("data"));
     });
     div.append(click_a);
@@ -666,6 +658,10 @@ function conversation_factory(conversation) {
     con_info_div.append(message);
 
     click_a.append(con_info_div);
+
+    var msg_time = $("<span class='chat-last-time'></span>");
+    msg_time.html(conversation.last_message_time());
+    click_a.append(msg_time);
 
     return div;
 }

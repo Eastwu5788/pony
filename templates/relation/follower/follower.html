@@ -1,0 +1,54 @@
+{% extends "relation/base/relationbase.html" %}
+
+
+{% block content %}
+    {{ block.super }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {% include "relation/base/triger_menu.html" %}
+                <ul class="relation-user-list">
+                    {% for user in follower_list %}
+                         <li class="relation-user-item">
+                            <a class="user-avatar-link">
+                                <img class="user-avatar" src="{{ user.avatar.image_a }}">
+                            </a>
+                            <div class="user-info">
+                                <p>{{ user.nick_name }}</p>
+                                <div class="user-meta-info">
+                                    <span>
+                                        关注 {{ user.follows }}
+                                    </span>
+                                    <span>
+                                        粉丝 {{ user.fans }}
+                                    </span>
+                                </div>
+                            </div>
+                            {% if user.id != user_info.id %}
+                                {% if user.relation == 0 or user.relation == 2 %}
+                                    <a class="relation-btn follow" onclick="user_follow_status({{ user.id }}, 2)">
+                                        <i class="fa fa-plus"></i>
+                                        关注
+                                    </a>
+                                {% else %}
+                                    <a class="relation-btn followed">
+                                        <i class="fa fa-check"></i>
+                                        已关注
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(".triger-menu li:nth-child(2)").addClass("active");
+    </script>
+{% endblock %}

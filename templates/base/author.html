@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="user-header">
+                <img class="avatar" src="{{ author.avatar.image_a }}">
+                <div class="content-user-info">
+                    <div class="name-gender-info">
+                        <h1>
+                            {{ author.nick_name }}
+                            {% if author.gender == 1 %}
+                                <i class="fa fa-mars"></i>
+                            {% elif author.gender == 2 %}
+                                <i class="fa fa-venus"></i>
+                            {% else %}
+                                <i class="fa fa-genderless"></i>
+                            {% endif %}
+                        </h1>
+                    </div>
+                    <ul class="content-meta-info">
+                        <li class="user-meta-follows">
+                            <a href="/user/following/{{ author.id }}">
+                                <p>{{ author.follows }}</p>
+                                关注<i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                        <li class="user-meta-fans">
+                            <a href="/user/follower/{{ author.id }}">
+                                <p>{{ author.fans }}</p>
+                                粉丝<i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                        <li class="user-meta-follows">
+                            <a href="#">
+                                <p>{{ author.articles }}</p>
+                                文章<i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                        {% if author.id != user_info.id %}
+                            <li class="user-meta-chat">
+                                <a href="/chat/?contact={{ author.ease_mob }}">
+                                    私信Ta
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="user-meta-follow">
+                            {% if author.id != user_info.id %}
+                                {% if not user_info or author.relation == 0 or author.relation == 2 %}
+                                    <a onclick="user_follow_status({{ author.id }}, 2)">
+                                        关注Ta
+                                    </a>
+                                {% else %}
+                                    <a onclick="user_follow_status({{ author.id }}, 1)">
+                                        取消关注
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -47,7 +47,24 @@ function Conversation(message) {
     this.last_message = function () {
         if(this.messages.length > 0) {
             var msg = this.messages[0];
+            if (msg.type === "img") {
+                return "[图片]"
+            }else if(msg.type === "audio") {
+                return "[音频]"
+            }else if(msg.type === "file") {
+                return "[文件]"
+            }
             return msg.data;
+        }else{
+            return null;
+        }
+    };
+
+    this.last_message_time = function () {
+        if(this.messages.length > 0) {
+            var msg = this.messages[0];
+            var date = new Date(msg.timeStamp);
+            return date.getHours() + ":" + date.getMinutes();
         }else{
             return null;
         }
