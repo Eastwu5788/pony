@@ -366,6 +366,11 @@ body, html {
     background-color: #3a3f45;
 }
 
+.chat-conversation-item .click-href {
+    display: block;
+    overflow: hidden;
+}
+
 .chat-con-avatar {
     float: left;
     margin-right: 10px;
@@ -418,7 +423,15 @@ body, html {
     word-wrap: normal;
 }
 
-
+.chat-conversation-item .chat-last-time {
+    color: #fff;
+    font-size: 13px;
+    text-align: right;
+    height: 19px;
+    line-height: 1.5;
+    margin: 0;
+    float: right;
+}
 
 .chat-content-view {
     height: 100%;

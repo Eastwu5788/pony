@@ -75,6 +75,8 @@ urlpatterns = [
     url(r"^user/api/easemob", user_info_api_by_ease_mob_handler),
     url(r"^user/setting", user_setting_handler),
     url(r"^user/api/follow", change_follow_status_handler),
+    url(r"^user/follower/(\w+)", follower_list_handler),
+    url(r"^user/following/(\w+)", following_list_handler),
 
     # === Manage ===
     url(r"^manage/edit/(\w+)", edit_article_handler),

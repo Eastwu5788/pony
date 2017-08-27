@@ -53,6 +53,20 @@ class UserFollow(models.Model):
         return 0
 
     @staticmethod
+    def query_user_relation_list(user_id, is_follow=True, use_cache=True):
+        """获取用户关注或者粉丝列表"""
+        try:
+            if is_follow:
+                user_list = UserFollow.objects.filter(user_id=user_id, status=1).order_by("-id").all()
+            else:
+                user_list = UserFollow.objects.filter(follow_user=user_id, status=1).order_by("-id").all()
+
+            return user_list
+
+        except UserFollow.DoesNotExist:
+            return []
+
+    @staticmethod
     def query_user_meta_count(user_id, is_follow=True, use_cache=True):
         """
         查询用户的关注数量或者粉丝数量
