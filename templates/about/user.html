@@ -54,6 +54,17 @@
                                     </a>
                                 </li>
                                 {% endif %}
+                                <li class="user-meta-follow">
+                                    {% if not user_info or author.relation == 0 or author.relation == 2 %}
+                                        <a onclick="user_follow_status({{ author.id }}, 2)">
+                                            关注Ta
+                                        </a>
+                                    {% else %}
+                                        <a onclick="user_follow_status({{ author.id }}, 1)">
+                                            取消关注
+                                        </a>
+                                    {% endif %}
+                                </li>
                             </ul>
                         </div>
                     </div>

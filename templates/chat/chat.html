@@ -110,9 +110,6 @@
     <script type="text/javascript" src="/static/js/im/im.js"></script>
 
     <script type="text/javascript">
-        csrf_token = '{{ csrf_token }}';
-
-
 
         {% if user_info %}
             login_ease_mob_im('{{ user_info.ease_mob }}', '{{ user_info.ease_mob }}');

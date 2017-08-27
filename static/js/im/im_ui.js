@@ -1,5 +1,3 @@
-var csrf_token = "";
-
 // 允许的图片格式
 var allow_img_type = {
     'jpg': true,
