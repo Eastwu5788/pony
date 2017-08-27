@@ -156,6 +156,7 @@
         {% if section_info %}
             $(".navbar-left .menu li:nth-child({{ section_info }})").addClass("nav-current");
         {% endif %}
+        csrf_token = '{{ csrf_token }}';
     </script>
 
     {% block javascript %}

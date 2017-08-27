@@ -34,6 +34,7 @@ from app.modules.manage.edit import edit_article_handler
 from app.modules.manage.recommend import home_recommend_handler
 from app.modules.manage.recommend import remove_home_recommend_handler
 
+from app.modules.relation.follow import *
 
 urlpatterns = [
     # === Auth ===
@@ -73,6 +74,7 @@ urlpatterns = [
     url(r"^user/api/search", user_search_api),
     url(r"^user/api/easemob", user_info_api_by_ease_mob_handler),
     url(r"^user/setting", user_setting_handler),
+    url(r"^user/api/follow", change_follow_status_handler),
 
     # === Manage ===
     url(r"^manage/edit/(\w+)", edit_article_handler),

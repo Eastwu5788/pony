@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from app.modules.common.auth import login_required
 from app.models.blog.article import BlogArticle
 from app.models.account.info import UserInfo
+from app.models.account.follow import UserFollow
 from app.modules.common.util_struct import *
 from django.http.response import HttpResponse
 import json
@@ -12,8 +12,14 @@ def user_info_handler(request, user_id):
 
     result = dict()
     result["user_info"] = UserInfo.query_format_info_by_user_id(user.id) if user else None
-    result["author"] = None if id == 0 else UserInfo.query_format_info_by_user_id(user_id)
+    result["author"] = None if user_id == 0 else UserInfo.query_format_info_by_user_id(user_id)
     result["article_list"] = BlogArticle.query_articles_by_user(user_id)
+
+    # 查询双方的关系
+    if user_id != 0 and user:
+        result["author"]["relation"] = UserFollow.query_user_relation(user.id, user_id)
+    else:
+        result["author"]["relation"] = 0
 
     for article in result["article_list"]:
         if len(article["content"]) > 200:
@@ -35,6 +41,7 @@ def user_info_api_by_ease_mob_handler(request):
 
 
 def user_search_api(request):
+
     nick_name = request.GET.get("nick_name")
     if not nick_name:
         return json_fail_response("搜索内容不能为空")
