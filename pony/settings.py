@@ -76,6 +76,43 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pony.wsgi.application'
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    # 日志格式
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] [%(module)s:%(funcName)s \
+            [%(levelname)s- %(message)s]]",
+        }
+    },
+    # 过滤器
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        }
+    },
+    # 处理器
+    "handlers": {
+        "error": {
+            "level": "ERROR",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "/data/wwwlogs/pony_error.log",
+            "maxBytes": 1024*1024*5,
+            "backupCount": 5,
+            "formatter": "standard",
+        }
+    },
+    # logging管理器
+    "loggers": {
+        "pony": {
+            "handlers": ["error"],
+            "level": "ERROR",
+            "propagate": True,
+        }
+    }
+}
+
 # Session
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
@@ -177,3 +214,4 @@ UPLOAD_IMAGE_PATH = "/data/static/image/"
 # 上传视频路径
 VIDEO_HOST = "http://10.0.138.237"
 UPLOAD_VIDEO_PATH = "/data/static/video/"
+
