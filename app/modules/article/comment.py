@@ -1,5 +1,6 @@
 from app.modules.common.util_struct import *
 from app.modules.common.auth import login_required
+from app.modules.common.logger import add_error_log
 
 from app.models.blog.article import BlogArticle
 from app.models.blog.comment import BlogComment
@@ -63,6 +64,7 @@ def comment_like_edit_handler(request):
     except BlogArticle.DoesNotExist:
         """评论存在，但是动态不存在，是奇怪的现象！需要添加error_log"""
         # TODO: 数据库数据出错log
+        add_error_log(561, {"comment_id": comment_id, "share_id": comment.share_id})
         return json_fail_response("数据错误!")
 
     # 执行操作

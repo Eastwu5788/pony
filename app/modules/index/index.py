@@ -25,7 +25,6 @@ def index_handler(request):
     data["like_list"] = get_format_top_article_list(order="like")
     # 评论榜单
     data["comment_list"] = get_format_top_article_list(order="comment")
-
     return render(request, "index/index.html", data)
 
 
