@@ -12,9 +12,16 @@
 5. pillow
 6. python3-memcached
 7. redis
+8. pika
 
+# Info
+1. 项目中的邮箱发送使用了RabbitMQ异步执行，所以需要自行安装RabbitMQ。<br>
+   添加消息的生产者脚本: message_queue.py<br>
+   处理消息的消费者脚本: send_active_email.py（此脚本需要独立允许 /pony/app/modules/jobs/send_active_email.py)<br>
+        运行消费者脚本: python send_active_email.py<br>
+    
 # TODO
-1. RabbitMQ发送认证邮箱，解决注册时接口过慢问题
+1. <del>RabbitMQ发送认证邮箱，解决注册时接口过慢问题<del>
 2. <del>用户关注、取消关注、好友列表、粉丝列表功能<del>
 3. <del>聊天中的好友搜索功能 打算使用Sphinx模糊检索用户昵称<del>
 4. <del>聊天时的用户个人信息修改功能<del>
