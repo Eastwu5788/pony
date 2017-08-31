@@ -13,13 +13,17 @@
 6. python3-memcached
 7. redis
 8. pika
+9. django-sphinx
 
 # Info
 1. 项目中的邮箱发送使用了RabbitMQ异步执行，所以需要自行安装RabbitMQ。<br>
    添加消息的生产者脚本: message_queue.py<br>
    处理消息的消费者脚本: send_active_email.py（此脚本需要独立运行 /pony/app/modules/jobs/send_active_email.py)<br>
         运行消费者脚本: python send_active_email.py<br>
-    
+
+2. 项目中的文本搜索使用了Sphinx(coreseek)搜索,具体安装教程参见
+[http://www.keyunq.com/server/coreseek-sphinx.html](http://www.keyunq.com/server/coreseek-sphinx.html)
+ 
 # TODO
 1. <del>RabbitMQ发送认证邮箱，解决注册时接口过慢问题<del>
 2. <del>用户关注、取消关注、好友列表、粉丝列表功能<del>
