@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import configparser
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,6 +30,31 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "10.0.138.237",
 ]
+
+# LOAD INI CONFIG
+DEV_INI_PATH = os.path.join(BASE_DIR, 'config/develop')
+PRO_INI_PATH = os.path.join(BASE_DIR, 'config/product')
+INI_PATH = DEV_INI_PATH if DEBUG else PRO_INI_PATH
+
+# APP通用配置
+INI_CONFIG = configparser.ConfigParser()
+INI_CONFIG.read(os.path.join(INI_PATH, 'config.ini'))
+
+# Memcached配置
+INI_MEMCACHED = configparser.ConfigParser()
+INI_MEMCACHED.read(os.path.join(INI_PATH, 'memcache.ini'))
+
+# Mysql配置
+INI_MYSQL = configparser.ConfigParser()
+INI_MYSQL.read(os.path.join(INI_PATH, 'mysql.ini'))
+
+# RabbitMQ配置
+INI_RABBIT = configparser.ConfigParser()
+INI_RABBIT.read(os.path.join(INI_PATH, 'rabbit.ini'))
+
+# Redis配置
+INI_REDIS = configparser.ConfigParser()
+INI_REDIS.read(os.path.join(INI_PATH, 'redis.ini'))
 
 
 # Application definition
@@ -120,29 +146,16 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "b_django",
-        "USER": "root",
-        "PASSWORD": "123456",
-        "HOST": "localhost",
-    },
-    "b_account": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "b_account",
-        "USER": "root",
-        "PASSWORD": "123456",
-        "HOST": "localhost",
-    },
-    "b_blog": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "b_blog",
-        "USER": "root",
-        "PASSWORD": "123456",
-        "HOST": "localhost",
-    }
-}
+DATABASES = dict()
+for section in INI_MYSQL.sections():
+    item = dict()
+    item["ENGINE"] = "django.db.backends.mysql"
+    item["NAME"] = 'b_django' if section == 'default' else section
+    item["HOST"] = INI_MYSQL[section]["master.host"]
+    item["USER"] = INI_MYSQL[section]["master.username"]
+    item["PASSWORD"] = INI_MYSQL[section]["master.password"]
+    DATABASES = dict(DATABASES, **{section: item})
+
 DATABASE_ROUTERS = ["pony.db_router.DBRouter"]
 DATABASE_MAPPING = {
     "b_account": "b_account",
@@ -152,20 +165,25 @@ DATABASE_MAPPING = {
 
 # Cache
 # 缓存配置，默认使用Memcached
+MEMCACHED_LOCATIONS = []
+for section in INI_MEMCACHED.sections():
+    section = INI_MEMCACHED[section]
+    ip_address = section["host"]+":"+section["port"]
+    MEMCACHED_LOCATIONS.append(ip_address)
+
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': [
-            '127.0.0.1:11211',
-        ]
+        'LOCATION': MEMCACHED_LOCATIONS
     }
 }
 
-REDIS = {
-    "host": "127.0.0.1",
-    "port": 6379,
-}
 
+REDIS = {
+    "host": INI_REDIS["redis"]["redis.host"],
+    "port": INI_REDIS["redis"]["redis.port"],
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -207,11 +225,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 # 上传图片路径
-IMAGE_HOST = "http://10.0.138.237"
-UPLOAD_IMAGE_PATH = "/data/static/image/"
+IMAGE_HOST = INI_CONFIG["upload"]["app.imageUri"]
+UPLOAD_IMAGE_PATH = INI_CONFIG["upload"]["app.imageUploadPath"]
 
 
 # 上传视频路径
-VIDEO_HOST = "http://10.0.138.237"
-UPLOAD_VIDEO_PATH = "/data/static/video/"
+VIDEO_HOST = INI_CONFIG["upload"]["app.videoUri"]
+UPLOAD_VIDEO_PATH = INI_CONFIG["upload"]["app.videoUploadPath"]
 

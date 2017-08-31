@@ -3,13 +3,15 @@ from email.utils import parseaddr, formataddr
 from email.header import Header
 import smtplib
 
-# 网易SMTP服务器地址
-SMTP_SERVER = "smtp.ym.163.com"
-# 网易SMTP服务器端口号
-SMTP_PORT = 25
+from pony.settings import INI_CONFIG
 
-SEND_EMAIL = "wudong@eastwu.cn"
-SEND_PASSWORD = "Eastwu08.22"
+# 网易SMTP服务器地址
+SMTP_SERVER = INI_CONFIG["email"]["smtp.server"]
+# 网易SMTP服务器端口号
+SMTP_PORT = INI_CONFIG["email"]["smtp.port"]
+
+SEND_EMAIL = INI_CONFIG["email"]["smtp.email"]
+SEND_PASSWORD = INI_CONFIG["email"]["smtp.password"]
 
 
 class Email(object):
