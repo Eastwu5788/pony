@@ -31,3 +31,13 @@ def get_seed(input_str='', secret_length=32):
     hash_lib.update(bytes(input_str, encoding="utf-8"))
     hash_str = hash_lib.hexdigest()
     return hash_str[:secret_length]
+
+
+def md5(ori_str=""):
+    """
+    生成一个字符串的MD5值
+    :param ori_str: 需要进行MD5加密的字符串
+    """
+    hash_lib = hashlib.md5()
+    hash_lib.update(bytes(ori_str, encoding="utf-8"))
+    return hash_lib.hexdigest()

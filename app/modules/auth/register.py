@@ -1,16 +1,16 @@
-from django.shortcuts import render
 from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.core import serializers
+from django.shortcuts import render
 
 from app.models.account.account import UserAccount
 from app.models.account.info import UserInfo
 from app.models.account.token import AccessToken
-from app.modules.common.util_email import Email
-from app.modules.common.secret import get_secret_password
-from app.modules.common.util_struct import *
 from app.modules.common.easemob import generate_ease_mob_id
+from app.modules.common.secret import get_secret_password
+from app.modules.common.util_email import Email
+from app.modules.common.util_struct import *
 from app.modules.common.message_queue import send_active_mail
+# from app.modules.jobs.celery_script.tasks import celery_send_active_email
 
 
 def register_handler(request):
@@ -30,11 +30,15 @@ def register_handler(request):
     # 检查通过 注册用户
     result = register_new_account(nick_name, email, password)
 
+    token = result["token"]
+
     # 直接发送激活邮件，
     # send_active_email(email, result["token"])
 
-    # 使用RabbitMQ发送激活邮件
-    token = result["token"]
+    # 使用Celery+RabbitMQ发送邮件
+    # celery_send_active_email.delay({"email": email, "access_token": token.access_token, "salt": token.salt})
+
+    # 直接使用RabbitMQ发送激活邮件
     send_active_mail({"email": email, "access_token": token.access_token, "salt": token.salt})
 
     return HttpResponseRedirect("/auth/login/")

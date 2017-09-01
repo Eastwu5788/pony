@@ -4,9 +4,8 @@ from django.core.cache import cache
 import django.utils.timezone as timezone
 
 from app.models.blog.kind import BlogKind
-from app.models.account.account import UserAccount
 from app.models.blog.article_meta import BlogArticleMeta
-
+from app.modules.common.helper import python_version
 
 CACHE_KEY_ID = "Pony:BlogArticle:CacheId:"
 CACHE_TIME = 60*60*24
@@ -101,6 +100,28 @@ class BlogArticle(models.Model):
             return None
 
     @staticmethod
+    def search_article_by_keyword(key=""):
+        """
+        根据关键词搜索文章内容
+        """
+        # 至少两个字进行查询
+        if len(key) <= 1:
+            return []
+
+        version = python_version()
+        # 2.x版本的python使用sphinx进行全文检索
+        if version == 2:
+            from app.modules.common.sphinx import query_article_with_sphinx
+            result = query_article_with_sphinx(key)
+        # 3.x版本的python使用whoosh进行全文检索
+        else:
+            from app.modules.common.whoosh_api import query_article_by_key
+            result = query_article_by_key(key)
+
+        # 返回检索结果
+        return result
+
+    @staticmethod
     def format_articles(article_list):
         """
         格式化文章列表
@@ -124,6 +145,8 @@ class BlogArticle(models.Model):
         result = dict()
 
         result["id"] = article.id
+        # 放到这解决循环引用问题
+        from app.models.account.account import UserAccount
         result["user_info"] = UserAccount.query_format_user(article.user_id)
         result["kind_info"] = BlogKind.query_format_kind(article.kind_id)
         result["meta_info"] = BlogArticleMeta.query_article_meta_info(article.id)
