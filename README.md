@@ -21,8 +21,9 @@
    处理消息的消费者脚本: send_active_email.py（此脚本需要独立运行 /pony/app/modules/jobs/send_active_email.py)<br>
         运行消费者脚本: python send_active_email.py<br>
 
-2. 项目中的文本搜索使用了Sphinx(coreseek)搜索,具体安装教程参见
+2. Python2.x环境下的文本搜索使用了Sphinx(coreseek)搜索,具体安装教程参见
 [http://www.keyunq.com/server/coreseek-sphinx.html](http://www.keyunq.com/server/coreseek-sphinx.html)
+3. Python3.x环境下的文本搜索使用了Whoosh+Jieba 
  
 # TODO
 1. <del>RabbitMQ发送认证邮箱，解决注册时接口过慢问题<del>
