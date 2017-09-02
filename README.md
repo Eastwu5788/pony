@@ -25,13 +25,18 @@
 
 2. Python2.x环境下的文本搜索使用了Sphinx(coreseek)搜索,具体安装教程参见
 ```
-# 启动Sphinx
+# 定时生成Sphinx索引脚本
+* 3 * * * /bin/bash /usr/local/coreseek/script/build_index.sh >> /dev/null 2>&1
+```
+
+```
+# 启动Sphinx start_index.sh
 /usr/local/coreseek/bin/searchd -c /usr/local/coreseek/etc/sphinx.conf
 
-# 停止Sphinx
+# 停止Sphinx stop_index.sh
 /usr/local/coreseek/bin/searchd -c /usr/local/coreseek/etc/sphinx.conf --stop
 
-# 索引生成脚本
+# 索引生成脚本 build_index.sh
 /usr/local/coreseek/bin/indexer -c /usr/local/coreseek/etc/sphinx.conf --all --rotate
 ```
 
@@ -96,6 +101,9 @@ searchd
 ```
 # Whoosh 初始索引脚本 使用了Djano的context
 python manage.py runscript whoosh_script_init_index
+
+# 使用Crontab定时重建索引 每天凌晨3点重建索引
+* 3 * * * /usr/bin/python36 /path/pony/manage.py runscript whoosh_script_init_index > /dev/null 2>&1
 
 # Whoosh 索引测试脚本
 python36 manage.py runscript whoosh_script_test
