@@ -95,8 +95,10 @@ searchd
 3. Python3.x环境下的文本搜索使用了Whoosh+Jieba 
 ```
 # Whoosh 初始索引脚本 使用了Djano的context
-# path: pony/app/scripts/whoose_script_init_index.py
 python manage.py runscript whoosh_script_init_index
+
+# Whoosh 索引测试脚本
+python36 manage.py runscript whoosh_script_test
 
 # whoosh 更新索引脚本
 
