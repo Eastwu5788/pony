@@ -1,3 +1,18 @@
+""""
+this script is designed to listen send email message from Rabbit MQ
+you can run this script is the same server or other server which is support Rabbit MQ
+
+
+you can run this script use shell below directly
+
+shell: python send_active_email.py
+
+if you want to run this script in django context
+you can use shell below easily
+
+shell: python manage.py runscript whoosh_script_test
+"""
+
 import pika
 import json
 
@@ -42,5 +57,17 @@ def listen_active_email_channel():
     channel.start_consuming()
 
 
+def run():
+    """
+    support django-extension to start this script
+    shell: python manage.py runscript send_active_email
+    """
+    listen_active_email_channel()
+
+
 if __name__ == '__main__':
+    """
+    start this script directly
+    shell: python send_active_email.py
+    """
     listen_active_email_channel()
