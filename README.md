@@ -26,7 +26,7 @@
 2. Python2.x环境下的文本搜索使用了Sphinx(coreseek)搜索,具体安装教程参见
 ```
 # 定时生成Sphinx索引脚本
-* 3 * * * /bin/bash /usr/local/coreseek/script/build_index.sh >> /dev/null 2>&1
+* 3 * * * /bin/bash /usr/local/coreseek/script/build_index.sh > /dev/null 2>&1
 ```
 
 ```
