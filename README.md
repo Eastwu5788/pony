@@ -30,10 +30,10 @@
 ```
 
 ```
-# 启动Sphinx start_index.sh
+# 启动Sphinx start_sphinx.sh
 /usr/local/coreseek/bin/searchd -c /usr/local/coreseek/etc/sphinx.conf
 
-# 停止Sphinx stop_index.sh
+# 停止Sphinx stop_sphinx.sh
 /usr/local/coreseek/bin/searchd -c /usr/local/coreseek/etc/sphinx.conf --stop
 
 # 索引生成脚本 build_index.sh
@@ -108,7 +108,7 @@ python manage.py runscript whoosh_script_init_index
 # Whoosh 索引测试脚本
 python36 manage.py runscript whoosh_script_test
 
-# whoosh 更新索引脚本
+# whoosh 增量更新索引脚本
 
 ```
 # TODO
