@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "10.0.138.237",
+    "blog.localhost.com",
 ]
 
 # LOAD INI CONFIG
