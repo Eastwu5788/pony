@@ -74,13 +74,14 @@ def delete_article_handler(request):
     # 0、prepare params
     article_id = request.POST.get("article_id")
     operator = request.META["user_info"]
+    operator_role = UserInfo.query_user_role(operator.id)
 
     # 1、删除文章
     article = BlogArticle.objects.get(id=article_id)
 
     # 2、检查删除权限
-    if article.user_id != operator.id:
-        return json_fail_response("您只能删除自己的文章!")
+    if operator_role != 9 and article.user_id != operator.id:
+        return json_fail_response("您当前没有权限删除当前文章!")
 
     if article.status == 10:
         return json_fail_response("文章已经被删除了!")
