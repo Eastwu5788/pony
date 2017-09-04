@@ -29,7 +29,7 @@ class UserInfo(models.Model):
     def query_user_by_nick_name(nick_name):
         try:
 
-            user_list = UserInfo.objects.filter(nick_name__contains=nick_name)[:10]
+            user_list = UserInfo.objects.filter(nick_name__contains=nick_name).order_by("-id")[:10]
             result = list()
             for user in user_list:
                 result.append(UserInfo.format_user_info(user))
@@ -37,6 +37,18 @@ class UserInfo(models.Model):
 
         except UserInfo.DoesNotExist:
             return []
+
+    @staticmethod
+    def query_user_role(user_id):
+        """
+        查询用户角色
+        不要使用缓存
+        """
+        try:
+            user_info = UserInfo.objects.filter(user_id=user_id, status=1).get()
+            return user_info.role_id
+        except UserInfo.DoesNotExist:
+            return 0
 
     @staticmethod
     def query_format_info_by_ease_mob(ease_mob, use_cache=True):

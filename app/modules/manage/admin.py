@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from app.models.blog.recommend import HomeRecommend
 from app.models.blog.article import BlogArticle
-from app.models.account.info import UserInfo
-from app.modules.common.auth import login_required
+from app.modules.common.auth import *
 
 
 @login_required
+@manager_required
 def manage_handler(request):
-
     result = dict()
     result["home_recommend"] = HomeRecommend.query_recommend_list(0)
     result["blog_list"] = get_blog_list()

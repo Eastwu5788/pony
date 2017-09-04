@@ -219,7 +219,26 @@ body, html {
     z-index: 100;
     outline: none;
     max-height: 420px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    box-sizing: content-box;
+}
+
+.search-result-container::-webkit-scrollbar {
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 6px;
+}
+
+.search-result-container::-webkit-scrollbar-track {
+    background-color: #33363b;
+}
+
+.search-result-container::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background-color: #6c6e71;
 }
 
 .search-result-item {
