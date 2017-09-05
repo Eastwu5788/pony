@@ -19,7 +19,7 @@
 1. 项目中的邮箱发送使用了RabbitMQ异步执行，所以需要自行安装RabbitMQ
 ```
  # 运行消费者脚本 
- python send_active_email.py
+ python manage.py runscript send_active_email.py
 ```
        
 
