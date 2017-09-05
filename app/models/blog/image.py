@@ -29,10 +29,10 @@ class Image(models.Model):
     @staticmethod
     def query_image_by_id(image_id=0, use_cache=True):
         key = CACHE_KEY_ID+str(image_id)
-        if use_cache:
-            image = cache.get(key)
-            if image:
-                return image
+        #if use_cache:
+        #    image = cache.get(key)
+        #    if image:
+        #        return image
 
         try:
             image = Image.objects.get(id=image_id)

@@ -2,7 +2,7 @@
 """
 不同版本的Sphinx的api不互通，所以
 """
-from libs.sphinxapi import *
+from libs.sphinx.sphinxapi import *
 
 client = SphinxClient()
 client.SetServer("localhost", 9312)
