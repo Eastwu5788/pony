@@ -107,6 +107,7 @@ html, body, .swiper-container, .swiper-wrapper, .swiper-slide{
 }
 
 .user-info img {
+    border: 4px solid #fff;
     border-radius: 50%;
 }
 
