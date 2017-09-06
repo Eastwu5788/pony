@@ -36,8 +36,11 @@ def send_active_email(ch, method, properties, body):
     address += "&pass_port=" + pass_port
 
     message = "欢迎注册eastwu.cn，点击链接激活账号:" + address
-    email_client = Email("账号激活邮件", params["email"], message)
-    email_client.send_email()
+    try:
+        email_client = Email("账号激活邮件", params["email"], message)
+        email_client.send_email()
+    except Exception as e:
+        print(str(e))
 
     ch.basic_ack(delivery_tag=method.delivery_tag)  # 告诉生成者，消息处理完成
 

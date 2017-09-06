@@ -79,5 +79,5 @@ urlpatterns = [
 
     # === Index(首页必须放在最后一个) ===
     url(r'index', index_handler),
-    # url(r'', index_handler),
+    url(r'', index_handler),
 ]
