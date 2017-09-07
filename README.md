@@ -40,10 +40,10 @@
 /usr/local/coreseek/bin/indexer -c /usr/local/coreseek/etc/sphinx.conf --all --rotate
 ```
 
-3.Sphinx配置文件参考
+3. Sphinx配置文件参考
+[https://github.com/Eastwu5788/pony/blob/master/sphinx.conf](https://github.com/Eastwu5788/pony/blob/master/sphinx.conf)
 
-
-3. Python3.x环境下的文本搜索使用了Whoosh+Jieba 
+4. Python3.x环境下的文本搜索使用了Whoosh+Jieba 
 ```
 # Whoosh 初始索引脚本 使用了Djano的context
 python manage.py runscript whoosh_script_init_index
