@@ -25,7 +25,10 @@ class Redis(Singleton):
         """
         if not Redis.check_key(key):
             return False
-        return _redis.set(key, value=value, ex=timeout)
+        if timeout == 0:
+            return _redis.set(key, value=value)
+        else:
+            return _redis.set(key, value=value, ex=timeout)
 
     @staticmethod
     def get(key=None):
@@ -53,7 +56,10 @@ class Redis(Singleton):
             return Redis.set(key, value, timeout)
 
         import pickle
-        return _redis.set(key, value=pickle.dumps(value), ex=timeout)
+        if timeout==0:
+            return _redis.set(key, value=pickle.dumps(value))
+        else:
+            return _redis.set(key, value=pickle.dumps(value), ex=timeout)
 
     @staticmethod
     def get_model(key):
