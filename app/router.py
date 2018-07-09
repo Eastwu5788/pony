@@ -28,6 +28,8 @@ from app.modules.manage.recommend import remove_home_recommend_handler
 from app.modules.relation.follow import *
 from app.modules.skill.skill import technology_handler
 
+app_name = 'pony'
+
 urlpatterns = [
     # === Auth ===
     url(r"^auth/login", login_handler),

@@ -33,13 +33,13 @@ def register_handler(request):
     token = result["token"]
 
     # 直接发送激活邮件，
-    # send_active_email(email, result["token"])
+    send_active_email(email, result["token"])
 
     # 使用Celery+RabbitMQ发送邮件
     # celery_send_active_email.delay({"email": email, "access_token": token.access_token, "salt": token.salt})
 
     # 直接使用RabbitMQ发送激活邮件
-    send_active_mail({"email": email, "access_token": token.access_token, "salt": token.salt})
+    # send_active_mail({"email": email, "access_token": token.access_token, "salt": token.salt})
 
     return HttpResponseRedirect("/auth/login/")
 
